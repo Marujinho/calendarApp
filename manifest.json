@@ -1,0 +1,21 @@
+{
+	"short_name": "Calendar",
+	"name": "Easy Calendar",
+	"background_color": "#00b8d4",
+	"description": "",
+	"display": "standalone",
+	"gcm_sender_id": "",
+	"gcm_user_visible_only": true,
+	"icons": [{
+		"src": "img/icon.jpg",
+		"sizes": "303x303",
+		"type": "image/jpg"
+	},{
+		"src": "img/ZHB2lYg.jpg",
+		"sizes": "600x424",
+		"type": "image/jpg"
+	}],
+	"orientation": "portrait",
+	"start_url": "index.html",
+	"theme_color": "#00b8d4"
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-br" >
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="description" content="Easy Calendar">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#0097A7">
+		
+		<title>Easy Calendar</title>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="css/style.css">
+		
+		<link rel="manifest" href="manifest.json">
+
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+		<script src="https://momentjs.com/downloads/moment.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+		<script src="js/fastclick.js"></script>
+		<script src="js/init.js"></script>
+
+		<!--ANGULAR-->
+		<script type="text/javascript" src="js/angular.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</head>
+
+	<body ng-app="easyCalendarApp">
+		<!-- NAVBAR -->
+		<div class="navbar-fixed">
+			<nav class="nav-extended cyan" style="padding-left: 10px;">
+				<div class="nav-wrapper cyan">
+					<!-- <a id="hamburguer" href="#" data-target="slide-out" class="sidenav-trigger brand-logo left" style="position: relative;"><i class="material-icons">menu</i></a> -->
+					<a id="title" href="#" class="brand-logo left" style="white-space: nowrap;"></a>
+					
+					<ul class="right">
+						<li><a href="#today" class="navigation waves-effect"><i class="material-icons">today</i></a></li>
+						<li><a href="#prev" class="navigation waves-effect"><i class="material-icons">keyboard_arrow_left</i></a></li>
+						<li><a href="#next" class="navigation waves-effect"><i class="material-icons">keyboard_arrow_right</i></a></li>
+						<li><a href="#dropdown" class="dropdown-trigger" data-target="dropdown1"><i class="material-icons">more_vert</i></a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		
+		<ul id="dropdown1" class="dropdown-content">
+		  <li><a href="#!">Filtros</a></li>
+		</ul>
+	
+		<!-- SIDENAV -->
+		<ul id="slide-out" class="sidenav">
+			<li>
+				<div class="user-view">
+					<div class="background" style="top: -56px;">
+						<img src="img/polo-sul.jpg">
+					</div>
+					
+					<a href="home"><img class="circle" src="img/icon.jpg"></a>
+					<br>
+				</div>
+			</li>
+			
+			<li><a class="waves-effect" href="home">Calendário</a></li>
+		</ul>
+        
+		<!-- CONTEÚDO -->
+		<div id="content" style="height: calc(100vh - 112px);"></div>
+		<!--FIM CONTEUDO-->
+
+
+		<script>
+			if('serviceWorker' in navigator) {
+				navigator
+					.serviceWorker
+					.register('service-worker.js')
+					.then(function(registration) {
+						console.log('Service Worker Registered');
+					});
+			}
+		</script>
+	</body>
+</html>

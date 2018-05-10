@@ -1,0 +1,30 @@
+nav, .nav-wrapper, .navbar-fixed {
+	height: 56px !important;
+	line-height: 56px !important;
+	min-height: 56px !important;
+}
+
+div.fc-content-skeleton table thead tr {
+	border: none;
+}
+
+.fc-day-number {
+	color: #757575 !important;
+	font-size: 12px;
+}
+
+.fc-unthemed td.fc-today {
+	background-color: #eee;
+}
+
+.waves-effect {
+	vertical-align: baseline;
+}
+
+nav .brand-logo {
+	font-size: 1.6rem;
+}
+
+.fc-widget-content {
+	border: none;
+}
