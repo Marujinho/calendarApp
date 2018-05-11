@@ -132,24 +132,9 @@
 		<!-- NAVBAR -->
 		<div class="navbar-fixed">
 			<nav class="nav-extended cyan" style="padding-left: 10px;">
-				<div class="nav-wrapper cyan">
-					<!-- <a id="hamburguer" href="#" data-target="slide-out" class="sidenav-trigger brand-logo left" style="position: relative;"><i class="material-icons">menu</i></a> -->
-					<a id="title" href="#" class="brand-logo left" style="white-space: nowrap;"></a>
-					
-					<ul class="right">
-						<li><a href="#today" class="navigation waves-effect"><i class="material-icons">today</i></a></li>
-						<li><a href="#prev" class="navigation waves-effect"><i class="material-icons">keyboard_arrow_left</i></a></li>
-						<li><a href="#next" class="navigation waves-effect"><i class="material-icons">keyboard_arrow_right</i></a></li>
-						<li><a href="#dropdown" class="dropdown-trigger" data-target="dropdown1"><i class="material-icons">more_vert</i></a></li>
-					</ul>
-				</div>
+				
 			</nav>
 		</div>
-		
-		<ul  id="dropdown1" class="dropdown-content">
-		    <li><a href="#!">Filtros</a></li>
-		</ul>
-	
 		<!-- SIDENAV -->
 		<ul id="slide-out" class="sidenav">
 			<li>
@@ -165,16 +150,7 @@
 			
 			<li><a class="waves-effect" href="home">Calendário</a></li>
 		</ul>
-        <div ui-view>
-
-        <!-- CONTEÚDO -->
-		<div id="content" style="height: calc(100vh - 112px);"></div>
-		<!-- FIM CONTEUDO -->
-
-        </div>
-		
-
-
+        <div ui-view></div>
 		<script>
 			if('serviceWorker' in navigator) {
 				navigator
