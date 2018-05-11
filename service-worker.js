@@ -1,21 +1,22 @@
-let cacheName = 'vida-no-extremo';
-let filesToCache = [
+var cacheName = 'calendarAppV1';
+var filesToCache = [
 	// HTML
 	'./',
 	'index.html',
 	'./css/style.css',
-	'./js/app.js'
+	'app.js'
 ];
 
 self.addEventListener('install', function(e) {
 	console.log('[ServiceWorker] Install');
 	e.waitUntil(
 		caches.open(cacheName).then(function(cache) {
-			console.log('[ServiceWorker] Caching app shell');
+			console.log('[ServiceWorker] Caching filesToCache');
 			return cache.addAll(filesToCache);
 		})
 	);
 });
+
 
 
 
