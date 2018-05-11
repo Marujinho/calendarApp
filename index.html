@@ -1,25 +1,46 @@
 <!doctype html>
 <html lang="pt-br" >
 	<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="description" content="Easy Calendar">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#0097A7">
+		
+		<title>Easy Calendar</title>
         
+        <!--ANGULAR-->
        
-
-        <!-- angular -->
-        <script src="lib/angular/angular.js"></script>
+        <script src="js/angular.js"></script>
         <script src="lib/angular/angular-ui-router.js"></script>
         <script src="lib/angular/ngMask.js"></script>
+        <script type="text/javascript" src="app.js"></script>    
+        
+        <!-- inicio do uso do angularJS -->
+        <script src="app.js"></script>
+        <script src="config/routeRun.js"></script>
+        <script src="config/routeConfig.js"></script>
 
-        <script src="js.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="css/style.css">
+		
+		<link rel="manifest" href="manifest.json">
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+		<script src="https://momentjs.com/downloads/moment.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+		<script src="js/fastclick.js"></script>
+		<script src="js/init.js"></script>
 
         <link rel="stylesheet" href="lib/materialize/css/materialize.min.css">
         <!-- css -->
-        <link rel="stylesheet" href="/easy_calendar.css" >
-        <link rel="stylesheet" href="/icon.css" >
+        <link rel="stylesheet" href="css/easy_calendar.css" >
+        <link rel="stylesheet" href="css/icon.css" >
         <!-- fullcalendar -->
-        <link rel="stylesheet" href="lib/fullcalendar/css/fullcalendar.min.css">
+        <link rel="stylesheet" href="css/fullcalendar.min.css">
         <!--select2 -->
         <!-- datatable -->
         <link rel="stylesheet" href="lib/select2/css/select2.min.css">
@@ -29,11 +50,11 @@
         <link rel="stylesheet" href="lib/datatable/css/responsive.dataTables.min.css">
         <link rel="stylesheet" href="lib/datatable/css/dataTables.checkboxes.css">
         <link rel="stylesheet" href="lib/datatable/css/jquery-ui.multidatespicker.css">
-        <link rel="stylesheet" href="/select2-materialize.css">
+        <link rel="stylesheet" href="css/select2-materialize.css">
 
         <!-- jquery -->
         <script src="lib/jquery/js/jquery.maskMoney.js"></script>
-       
+        
         <!-- materialize -->
         <script src="lib/materialize/js/materialize.min.js"></script>
         <!-- javascript -->
@@ -70,10 +91,7 @@
         
         <script src="lib/fileUpload/jquery.fileDownload.min.js"></script>
         <script src="lib/jspdf/jspdf.min.js"></script>
-        <!-- inicio do uso do angularJS -->
-        <script src="app.js"></script>
-        <script src="config/routeRun.js"></script>
-        <script src="config/routeConfig.js"></script>
+        
         <!-- appJs -->
         <!-- controllers -->
         <!-- agenda -->
@@ -109,11 +127,9 @@
 
         <!-- Factory -->
         <script src="factorys/controleDeLogin.js"></script>
-        <script>console.log('instanciou legal');</script>
-
 	</head>
 
-	<body ng-app="angularApp">
+	<body ng-app="calendarApp">
 		<!-- NAVBAR -->
 		<div class="navbar-fixed">
 			<nav class="nav-extended cyan" style="padding-left: 10px;">
