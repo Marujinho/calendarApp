@@ -1,0 +1,255 @@
+<div id="calendar">
+</div>
+<div id="modalConfiguracoes" style="display:none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; bottom: 0; right: 0;  z-index: 10;">
+    <div class="filter z-depth-5 row" id="filter">
+        <div class="input-field col s12">
+            <label for="filterConsultores" class="active">Consultores</label>
+            <select multiple id="filterConsultores" class="filterConsultores" data-live-search="true">
+                        <option value="" disabled selected>Selecione</option>
+                        <!-- <option value="">Todos</option> -->
+                        <option value="1">Jessiley</option>
+                        <option value="2">Raoni</option>
+                        <option value="3">Kelvin</option>
+                </select>
+        </div>
+        <div class="input-field col s12">
+            <label for="filterClientes" class="active">Clientes</label>
+            <select multiple id="filterClientes">
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="1">Unimed</option>
+                        <option value="2">Vipal</option>
+                        <option value="3">Ypê</option>
+                </select>
+        </div>
+        <div class="input-field col s12">
+            <label for="filterProjetos" class="active">Projetos</label>
+            <select multiple id="filterProjetos">
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="1">Instalação</option>
+                        <option value="2">Suporte</option>
+                        <option value="3">Implantação</option>
+                </select>
+        </div>
+        <p class="col s12">
+            <input type="checkbox" class="filled-in" id="atrasados" />
+            <label for="atrasados">Apontamentos atrasados</label>
+        </p>
+        <p class="col s12">
+            <input type="checkbox" class="filled-in" id="livres" />
+            <label for="livres">Consultores Livres</label>
+        </p>
+    </div>
+</div>
+<!-- Modal Structure -->
+<div id="modalDiaSelecionado" style="display:none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,0.38); z-index: 10;">
+    <div class="z-depth-4" id="diaSelecionado" style="background: #FFFFFF; position: absolute; z-index: 11; padding: 10px; overflow-y: scroll">
+        <div class="modal-content">
+            <div style="float: right; cursor: pointer" onClick="javascript: $(this).parent().parent().parent().css('display', 'none')">X</div>
+            <a id="agendaItemMenu" ng-click="marcaItem(this)" onClick="javascript: $('#agendaItem').css('display', 'block'); $('#solicitacaoItem').css('display', 'none');" class="itemModal itemModalSelect col s3">Agenda</a>
+            <a onClick="marcaItem(this)" class="itemModal col s3">Férias</a>
+            <a onClick="marcaItem(this)" class="itemModal col s3">Feriado</a>
+            <a id="solicitacaoItemMenu" ng-click="marcaItem(this)" onClick="javascript: $('#solicitacaoItem').css('display', 'block'); $('#agendaItem').css('display', 'none');  " class="itemModal col s3">Solicitação de agenda</a>
+        </div>
+        <div id="agendaItem">
+            <div class="checkDays">
+                <div style="width: 14.285%; text-align: center">Dom <br /><input type="checkBox" name="agendaDomingo" id="agendaDomingo" class="filled-in" /><label for="agendaDomingo" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Seg <br /><input type="checkBox" name="agendaSegunda" id="agendaSegunda" class="filled-in" checked /><label for="agendaSegunda" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Ter <br /><input type="checkBox" name="agendaTerca" id="agendaTerca" class="filled-in" checked /><label for="agendaTerca" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Qua <br /><input type="checkBox" name="agendaQuarta" id="agendaQuarta" class="filled-in" checked /><label for="agendaQuarta" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Qui <br /><input type="checkBox" name="agendaQuinta" id="agendaQuinta" class="filled-in" checked /><label for="agendaQuinta" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Sex <br /><input type="checkBox" name="agendaSexta" id="agendaSexta" class="filled-in" checked /><label for="agendaSexta" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Sab <br /><input type="checkBox" name="agendaSabado" id="agendaSabado" class="filled-in" /><label for="agendaSabado" style="padding-left: 20px;"></label></div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="consultor" class="select2">
+                                <option value="" selected>Selecione</option>
+                                <option value="1">Jessiley</option>
+                                <option value="2">Raoni</option>
+                                <option value="3">Kelvin</option>
+                        </select>
+                    <label class="active">Consultor</label>
+                </div>
+            </div>
+            <div class="row" id="solicitacaoAgendaDiv" style="display: none;">
+                <div class="input-field col s12">
+                    <textarea id="solicitacaoAgenda" placeholder="Digite aqui a atividade a ser desenvolvida ;)" class="materialize-textarea" disabled></textarea>
+                    <label for="solicitacaoAgenda">Solicitação</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="select2">
+                                <option value="" selected>Selecione</option>
+                                <option value="1">Unimed</option>
+                                <option value="2">Vipal</option>
+                                <option value="3">Totvs</option>
+                            </select>
+                    <label class="active">Cliente</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="select2">
+                                <option value="" selected>Selecione</option>
+                                <option value="1">Implantação</option>
+                                <option value="2">Instalação Quality</option>
+                            </select>
+                    <label class="active">Projeto</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="inicioAgenda" class="datepicker" type="text" value="26/02/2018">
+                    <label for="inicioAgenda" class="active">Data Inicio</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="finalAgenda" class="datepicker" type="text" value="28/02/2018">
+                    <label for="finalAgenda" class="active">Data Final</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="horas" type="text" value="08:30 - 17:30">
+                    <label for="horas">Horas</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="obs">Observação</label>
+                    <textarea id="obs" placeholder="Digite aqui a atividade a ser desenvolvida ;)" class="materialize-textarea"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <a class="waves-effect waves-light btn cyan accent-4" ng-click="salvaAgenda()">Salvar</a>
+            </div>
+        </div>
+        <div id="solicitacaoItem" style="display: none">
+            <div style="display: flex; width: 100%">
+                <div style="width: 14.285%; text-align: center">Dom <br /><input type="checkBox" name="domingo" id="domingo" class="filled-in" /><label for="domingo" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Seg <br /><input type="checkBox" name="segunda" id="segunda" class="filled-in" checked /><label for="segunda" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Ter <br /><input type="checkBox" name="terca" id="terca" class="filled-in" checked /><label for="terca" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Qua <br /><input type="checkBox" name="quarta" id="quarta" class="filled-in" checked /><label for="quarta" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Qui <br /><input type="checkBox" name="quinta" id="quinta" class="filled-in" checked /><label for="quinta" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Sex <br /><input type="checkBox" name="sexta" id="sexta" class="filled-in" checked /><label for="sexta" style="padding-left: 20px;"></label></div>
+                <div style="width: 14.285%; text-align: center">Sab <br /><input type="checkBox" name="sabado" id="sabado" class="filled-in" /><label for="sabado" style="padding-left: 20px;"></label></div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="obsSol" placeholder="Digite aqui a sua solicitação :)" class="materialize-textarea"></textarea>
+                    <label for="obsSol">Solicitação</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="inicialSolicitacao" class="datepicker" type="text" value="">
+                    <label for="inicialSolicitacao" class="active">Data Inicial</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="finalSolicitacao" class="datepicker" type="text" value="">
+                    <label for="finalSolicitacao" class="active">Data Final</label>
+                </div>
+            </div>
+            <div class="row">
+                <a class="waves-effect waves-light btn cyan accent-4" ng-click="salvaSolicitacao()">Salvar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalApontar" style="display:none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,0.38); z-index: 10;">
+    <div class="z-depth-4" id="divApontar" style="background: #FFFFFF; position: absolute; z-index: 11; padding: 10px; overflow-y: scroll; max-height: 100%; min-width: 420px">
+        <div style="float: right; cursor: pointer" onClick="javascript: $(this).parent().parent().css('display', 'none')"><i class="material-icons ">close</i></div>
+        <div class="modal-content" style="margin-left:10px;">
+            <h5>Apontar</h5>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select disabled>
+                            <option value="">Selecione</option>
+                            <option value="1">Implantação</option>
+                            <option value="2" selected>Instalação Quality</option>
+                        </select>
+                <label>Projeto</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="data" disabled type="text" value="26/02/2018">
+                <label for="data">Data</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s4">
+                <input id="horas" type="text" value="08:30">
+                <label for="horas">Hora entrada</label>
+            </div>
+            <div class="input-field col s4">
+                <input id="horas" type="text" value="01:00">
+                <label for="horas">Horas de almoço</label>
+            </div>
+            <div class="input-field col s4">
+                <input id="horas" type="text" value="17:30">
+                <label for="horas">Hora saida</label>
+            </div>
+        </div>
+        <div class="row" style="margin-left:10px;">
+            <p>
+                <input class="with-gap" name="radio" type="radio" id="radio1" checked />
+                <label for="radio1">Remoto</label>
+                <input class="with-gap" name="radio" type="radio" id="radio2" />
+                <label for="radio2">Cliente</label>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col s12">Aberto</div>
+            <div class="input-field col s5">
+                <input id="tipo" type="text" value="">
+                <label for="tipo">Tipo de Despesa</label>
+            </div>
+            <div class="input-field col s5">
+                <input id="valor" type="text" value="">
+                <label for="valor">Valor</label>
+            </div>
+            <div class="input-field col s1" style="text-align: center;">
+                <a class="btn-floating waves-effect waves-light grey lighten-3" id="addphone">
+                    <i class="material-icons grey-text text-darken-4">close</i>
+                </a>
+            </div>
+            <div class="input-field col s1" style="text-align: center;">
+                <a class="btn-floating waves-effect waves-light blue" id="addphone">
+                    <i class="material-icons pink accent-3">add</i>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">Fechado</div>
+            <div class="input-field col s6">
+                <input id="despesa" type="text" value="125,00" disabled>
+                <label for="despera">Despesa</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea id="ati" disabled class="materialize-textarea"></textarea>
+                <label for="ati">Atividade</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea id="obs" placeholder="Digite aqui a atividade a ser desenvolvida ;)" class="materialize-textarea"></textarea>
+                <label for="obs">Observação</label>
+            </div>
+        </div>
+        <div class="row">
+            <a class="waves-effect waves-light btn cyan accent-4 salvarApontamento" id="salvarApontamento">Salvar</a>
+        </div>
+    </div>
+</div>
+<div id="snackbar"></div>
+<a class="btn-floating btn-large waves-effect waves-light pink accent-3" style="position: fixed; bottom: -56px; left: calc(50% - 56px);" ng-click="moreItem()" id="trash"><i class="material-icons">delete</i></a>
+<style>
+    h2 {
+        font-size: 20px !important;
+    }
+</style>

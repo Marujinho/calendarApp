@@ -1,0 +1,81 @@
+<div class="container caditem" id="container">
+    <div class="row">
+        <form class="col m12 s12" name="insertUser" ng-submit="insertUsers();">
+            <div class="row">
+                <div class="col m12 s12 input-field" >
+                    <i class="material-icons prefix">person</i>
+                    <select ng-model="user.code" id="usuariosFluig" class="usuariosFluig select2" required="">
+                        <option value="" disabled selected></option>
+                        <option data-ng-repeat="code in codes" value="{{code['colleaguePK.colleagueId']}}" data-ng-if="listUser.indexOf(code['colleaguePK.colleagueId']) == -1 || code['colleaguePK.colleagueId'] == user.code">{{code.colleagueName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m6 s12">
+                    <i class="material-icons prefix">recent_actors</i>
+                    <input id="cpf" name="cpf" type="text" ng-model="user.cpfcnpj" clean="true" mask="999.999.999-99" class="validate" required="" minlength="14" maxlength="14">   
+                    <label for="cpf">CPF/CNPJ</label>
+                    <small data-ng-show="!insertUser.cpf.$pristine && insertUser.cpf.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertUser.cpf.$pristine && insertUser.cpf.$error.mask">O campo deve conter 11 caracteres</small>
+                </div>
+                <div class="input-field col m6 s12">
+                    <input id="rg" name="rg" type="text" ng-model="user.rg" class="validate" clean="true" mask="99.999.999-9" required="" minlength="12" maxlength="12">
+                    <label for="cpf">RG</label>
+                    <small data-ng-show="!insertUser.rg.$pristine && insertUser.rg.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertUser.rg.$pristine && insertUser.rg.$error.mask">O campo deve conter 9 caracteres</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <i class="material-icons prefix">attach_money</i>
+                    <input type="text" id="remuneration" name="remuneration" ng-model="user.remuneration" restrict="reject" class="validate" ng-change="changeMask('user', 'remuneration')" minlength="3" maxlength="60" required="">
+                    <label for="remuneration">Remuneração</label>
+                    <small data-ng-show="!insertUser.remuneration.$pristine && insertUser.remuneration.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertUser.remuneration.$pristine && insertUser.remuneration.$error.mask">O campo deve conter no minimo 3 caracteres</small>
+                </div>
+                <div class="col s12 m6">
+                    <p>
+                        <input name="remunerationType" type="radio" value="0" id="remunerationCLT"  ng-model="user.remunerationType" class="with-gap" checked/>
+                        <label for="remunerationCLT">Remuneração Fixa</label>
+
+                        <input name="remunerationType" type="radio"  value="1" id="remunerationHour"  ng-model="user.remunerationType" class="with-gap"/>
+                        <label for="remunerationHour">Remuneração por Hora</label>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m6 s12">
+                    <i class="material-icons prefix">supervisor_account</i>
+                    <select class="perfis select2" id="perfis" ng-model="user.profileId" data-ng-options="p.idProfile as p.name for p in perfil" required="">
+                        <option value="" disabled selected></option>
+                    </select>
+                </div>
+                <div class="input-field col m6 s12">
+                    <i class="material-icons prefix">cake</i>
+                    <input type="text" name="date" placeholder="Data de Aniversário" id="dataaniversario"  ng-model="user.birthDay" class="datepicker">
+                    <!-- <small data-ng-show="!insertUser.date.$pristine && insertUser.date.$error.required">Campo obrigatório</small> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m6 s12">
+                    <i class="material-icons prefix">phone</i>
+                    <input id="telephone" name="telephone" type="text" ng-model="user.telephone" clean="true" mask="(99) 9?9999-9999" restrict="reject" class="validate" required="" minlength="14" maxlength="15">
+                    <label for="telephone">Telefone</label>
+                    <small data-ng-show="!insertUser.telephone.$pristine && insertUser.telephone.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertUser.telephone.$pristine && insertUser.telephone.$error.mask">O campo deve conter o DDD+Número </small>
+                </div>
+                <div class="input-field col m6 s12">
+                    <input id="email" name="email" type="text" pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$" ng-model="user.email" class="validate" required="">
+                    <label for="email">Email</label>
+                    <small data-ng-show="insertCustomer.email.$error.email">Email inválido</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12 s12 right-align">
+                    <button class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listUsers">Cancelar</button>
+                    <button data-ng-disabled="insertUser.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="listUsers" ng-click="insertUsers();">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

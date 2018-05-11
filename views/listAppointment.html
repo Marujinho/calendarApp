@@ -1,0 +1,93 @@
+<div class="row">
+    <div  id="divApontamentos" class="container col s12 m12" style="min-width: 100%;">
+        <div class="table-responsive">
+            <div class="row" id="filtrosData" style="float:right;">
+                <div class="col s12 m6">                                 
+                    <input style="cursor: pointer;" name="min" id="min" type="text" placeholder="Data de ínicio">                         
+                </div>
+                <div class="col s12 m6">                
+                    <input style="cursor: pointer;" name="max" id="max" type="text" placeholder="Data de fim">
+                </div>
+                <i class="material-icons grey-text" style="float: right; position: absolute; font-size: 30px; margin: 10px 0px 0px -400px;">date_range</i>
+            </div>
+            <table id="dtAppointment" class="mdl-data-table nowrap" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Dia</th>
+                        <th> Recurso</th>
+                        <th>Cliente</th>
+                        <th>Projeto</th>
+                        <th>Entrada</th>
+                        <th>Almoço</th>
+                        <th>Saída</th>
+                        <th>Quantidade de horas</th>
+                        <th>Horas improdutivas</th>
+                        <th>KM</th>
+                        <th>Estacionamento</th>
+                        <th>Refeição</th>
+                        <th>Pedágio</th>
+                        <th>Hospedagem</th>
+                        <th>Taxi</th>
+                        <th>Outros</th>
+                        <th>Despesa</th>
+                        <th>Traslado</th>
+                        <th>Status do apontamento</th>
+                        <th style="max-width: 455px;">Atividade</th>
+                    </tr>
+                    <tr id="filters">
+                        <th></th>
+                        <th class="inputDatePicker"></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th style="max-width: 455px;"></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Total</th>
+                        <th></th>
+                        <th class="qtdHours"></th>
+                        <th class="hrUnproductive"></th>
+                        <th class="expense"></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th class="km"></th>
+                        <th class="transfer"></th>
+                        <th></th>
+                        <th style="max-width: 455px; "></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="modal1" class="modal">
+    <!-- aqui dentro abre o modal de visualização -->
+</div>

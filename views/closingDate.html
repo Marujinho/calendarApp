@@ -1,0 +1,18 @@
+<div class="container caditem">
+    <div class="row">
+        <form class="col m12 s12" name="insertClosingDate" ng-submit="closingDateSave();">
+            <div class="row">
+                <div class="input-field col m12 s12">
+                    <i class="material-icons prefix">assignment</i>
+                    <input type="text" name="date" ng-model="closingDateval.date" class="validate" id="date" required="" restrict="reject" mask="9?9?" minlength="1" maxlength="2"/>
+                    <label for="date">Dia</label>
+                    <small data-ng-show="!insertClosingDate.date.$pristine && insertClosingDate.date.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertClosingDate.date.$pristine && insertClosingDate.date.$error.minlength">O campo deve conter no mínimo 1 caracter</small>
+                </div>
+            </div>
+            <div class="col m12 s12 right-align">
+                <button data-ng-disabled="insertClosingDate.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="closingDate" type="submit" ng-click="closingDateSave();"  >Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>

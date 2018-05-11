@@ -1,0 +1,78 @@
+<div class="container" id="container">
+    <div class="row">
+        <form class="col m12 s12">
+            <div class="row">
+                <div class="input-field col s12 m4">
+                    <i class="material-icons prefix">person</i>
+                    <select type="text" ng-model="appointment.userId" ng-options="u.idUser as u.code for u in user" id="userId" class="validate" >
+                    </select>
+                </div>
+                <div class="input-field col s12 m4">
+                    <i class="material-icons prefix">assignment</i>
+                    <select type="text" ng-model="appointment.projectId" ng-options="a.idProject as a.name for a in project" id="projectId" class="validate" >
+                    </select>
+                </div>
+                <div class="input-field col s12 m4">
+                    <i class="material-icons prefix">business</i>
+                    <select type="text" ng-model="appointment.customerId" ng-options="c.idCustomer as c.name for c in customer" id="customerId" class="validate">
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m2">
+                    <i class="material-icons prefix">today</i>
+                    <input id="initalDate" placeholder="Dia atuado" ng-model="appointment.initialDate" class="datepicker" >
+                </div>
+                <div class="input-field col s12 m2">
+                    <i class="material-icons prefix">access_time</i>
+                    <input id="initialHour" placeholder="Horário de Entrada" ng-model="appointment.initialHour" class="timepicker">
+                </div>
+                <div class="input-field col s12 m2">
+                    <i class="material-icons prefix">access_time</i>
+                    <input id="hourLunch" placeholder="Horário de Almoço" ng-model="appointment.hourLunch" class="timepicker">
+                </div>
+                <div class="input-field col s12 m2">
+                    <i class="material-icons prefix">access_time</i>
+                    <input id="lastHour" placeholder="Horário de Saída" ng-model="appointment.lastHour" class="timepicker">
+                </div>
+                <div class="input-field col s12 m2">
+                    <i class="material-icons prefix">access_time</i>
+                    <input id="unproductiveHours" placeholder="Horas Improdutivas" ng-model="appointment.unproductiveHours" class="timepicker">
+                </div>
+                <div class="input-field col s12 m2">
+                    <i class="material-icons prefix">access_time</i>
+                    <input id="transfer" placeholder="Traslado" ng-model="appointment.transfer" class="timepicker">
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col s12 m12">
+                    <p>
+                        <input type="radio" ng-value="1" value="1" name="apontamento" ng-model="appointment.workplace" class="with-gap" id="apontamentoRemoto" />
+                        <label for="apontamentoRemoto">Remoto</label>
+                        <input type="radio" ng-value="2" value="2" name="apontamento" ng-model="appointment.workplace" class="with-gap" id="apontamentoCliente" />
+                        <label for="apontamentoCliente">Cliente</label>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row">               
+                <div class="input-field col m12 s12">
+                    <i class="material-icons prefix">work</i>
+                    <textarea id="executed" ng-model="appointment.executed" type="text" class="materialize-textarea validate" ></textarea>
+                    <label for="executed">Atividade a fazer</label>
+                </div>
+                <div class="input-field col m12 s12">
+                    <i class="material-icons prefix">build</i>
+                    <textarea id="activity" ng-model="appointment.activity" type="text" class="materialize-textarea validate" disabled></textarea>
+                    <label for="executed">Atividade executada</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12 s12 right-align botoesSave-Cancel">
+                    <a class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listAppointment">Cancelar</a>
+                    <a class="waves-effect waves-light btn cyan accent-4" ui-sref="listAppointment" ng-click="insertAppointment();">Salvar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

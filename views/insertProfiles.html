@@ -1,0 +1,242 @@
+<div class="container" id="container">
+    <div class="row">
+        <form class="col m12 s12" name="insertProfile" ng-submit="insertProfiles();">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">supervisor_account</i>
+                    <input id="perfil" name="perfil" type="text" class="validate" ng-model="profile.name" required="" minlength="3" maxlength="30">
+                    <label for="icon_prefix">Nome</label>
+                    <small data-ng-show="!insertProfile.perfil.$pristine && insertProfile.perfil.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertProfile.perfil.$pristine && insertProfile.perfil.$error.minlength">O campo deve conter 3 caracteres</small>
+                </div>
+            </div>
+            <div class="row">   
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.profile == 1" data-ng-click="profile.profile = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">supervisor_account</i>
+                                </div>
+                                <p class="permissao4 center-align"><b>Perfil</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Perfis</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.profile == 0" data-ng-click="profile.profile = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">supervisor_account</i>
+                                </div>
+                                <p class="permissao4 center-align"><b>Perfil</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Perfis</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.user == 1" data-ng-click="profile.user = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">person</i>
+                                </div>
+                                <p class="permissao3 center-align"><b>Usuário</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Usuários</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.user == 0" data-ng-click="profile.user = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">person</i>
+                                </div>
+                                <p class="permissao3 center-align"><b>Usuário</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Usuários</small>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.customer == 1" data-ng-click="profile.customer = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator ">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">business</i>
+                                </div>
+
+                                <p class="permissao2 center-align"><b>Cliente</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Clientes</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.customer == 0" data-ng-click="profile.customer = 1">
+                        <div class="card-content">
+                            <span class="card-title activator ">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">business</i>
+                                </div>
+
+                                <p class="permissao2 center-align"><b>Cliente</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Clientes</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align" >
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.project == 1" data-ng-click="profile.project = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class="medium material-icons prefix">assignment</i>
+                                </div>
+                                <p class="permissao1 center-align"><b>Projeto</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Projetos</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.project == 0" data-ng-click="profile.project = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class="medium material-icons prefix">assignment</i>
+                                </div>
+                                <p class="permissao1 center-align"><b>Projeto</b></p>
+                            </span>
+                            <samll>Cadastre / Altere / Inative Projetos</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.agenda == 1" data-ng-click="profile.agenda = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">date_range</i>
+                                </div>
+                                <p class="permissao9 center-align"><b>Agenda</b></p>
+                            </span>
+                            <samll>Crie Agendas e Feriados, aprove solicitações</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.agenda == 0" data-ng-click="profile.agenda = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">date_range</i>
+                                </div>
+                                <p class="permissao9 center-align"><b>Agenda</b></p>
+                            </span>
+                            <samll>Crie Agendas e Feriados, aprove solicitações</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.requestConsultant == 1" data-ng-click="profile.requestConsultant = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">perm_contact_calendar</i>
+                                </div>
+                                <p class="permissao5 center-align"><b>Solicita consultores</b></p>
+                            </span>
+                            <samll>Faça solicitações de Agenda</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.requestConsultant == 0" data-ng-click="profile.requestConsultant = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">perm_contact_calendar</i>
+                                </div>
+                                <p class="permissao5 center-align"><b>Solicita consultores</b></p>
+                            </span>
+                            <samll>Faça solicitações de Agenda</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.appointment == 1" data-ng-click="profile.appointment = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">touch_app</i>
+                                </div>
+                                <p class="permissao6 center-align"><b>Apontar</b></p>
+                            </span>
+                            <samll>Faça apontamentos</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.appointment == 0" data-ng-click="profile.appointment = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">touch_app</i>
+                                </div>
+                                <p class="permissao6 center-align"><b>Apontar</b></p>
+                            </span>
+                            <samll>Faça apontamentos</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.report == 1" data-ng-click="profile.report = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">receipt</i>
+                                </div>
+                                <p class="permissao7 center-align"><b>Relatório</b></p>
+                            </span>
+                            <samll>Extraia relatórios</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.report == 0" data-ng-click="profile.report = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">receipt</i>
+                                </div>
+                                <p class="permissao7 center-align"><b>Relatório</b></p>
+                            </span>
+                            <samll>Extraia relatórios</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l4 center-align">
+                    <div class="card cardProfile card1 grey-text text-darken-4 cyan accent-4 height200" data-ng-if="profile.closure == 1" data-ng-click="profile.closure = 0" >
+                        <div class="card-content" style="color: #ffffff">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">chrome_reader_mode</i>
+                                </div>
+                                <p class="permissao8 center-align"><b>Fechamento</b></p>
+                            </span>
+                            <samll>Cadastre datas de balanço mensal</small>
+                        </div>
+                    </div>
+                    <div class="card cardProfile card1 grey-text text-darken-4 height200" data-ng-if="profile.closure == 0" data-ng-click="profile.closure = 1">
+                        <div class="card-content">
+                            <span class="card-title activator">
+                                <div class="row">
+                                    <i class=" medium material-icons prefix">chrome_reader_mode</i>
+                                </div>
+                                <p class="permissao8 center-align"><b>Fechamento</b></p>
+                            </span>
+                            <samll>Cadastre datas de balanço mensal</small>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-s12 right-align">
+                    <button class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listProfiles">Cancelar</button>
+                    <button data-ng-disabled="insertProfile.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="listProfiles" ng-click="insertProfiles();">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
