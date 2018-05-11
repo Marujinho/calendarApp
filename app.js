@@ -1,3 +1,3 @@
 'use strict'
-let angularApp = angular.module('easyCalendar', ['ui.router', 'ngMask']);
+var angularApp = angular.module('easyCalendar', ['ui.router', 'ngMask']);
 
