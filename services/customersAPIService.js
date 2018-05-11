@@ -1,0 +1,44 @@
+angularApp.service('customersAPIService', function($http, $rootScope) {
+
+    let _getallCustomers = function() {
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/customer/getall',
+
+        });
+    };
+    let _getByIdCust = function(idCustomer) {
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/customer/getbyid',
+            data: {
+                idCustomer: idCustomer
+            }
+
+        });
+    };
+    let _saveCustomers = function(customer) {
+        customer.login = $rootScope.global.idUser;
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/customer/save',
+            data: customer
+        });
+    };
+    let _delete =  function(idCustomer){
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/customer/delete',
+            data: {
+                idCustomer: idCustomer,
+                login: $rootScope.global.idUser
+            }
+        });      
+    };
+    return {
+        delete: _delete,
+        getByIdCust: _getByIdCust,
+        getall: _getallCustomers,
+        save: _saveCustomers,
+    }
+});

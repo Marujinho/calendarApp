@@ -1,2 +1,3 @@
 'use strict'
-let angularApp = angular.module('easyCalendarApp', []);
+let angularApp = angular.module('easyCalendar', []);
+
