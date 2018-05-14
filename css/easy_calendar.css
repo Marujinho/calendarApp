@@ -590,6 +590,10 @@ table.dataTable tbody td {
     position: absolute;
 }
 
+.fc-toolbar{
+    margin-top: -40px;
+}
+
 .birthBack{
     background: url(/easy_calendar/resources/images/birthday2.jpg);
     background-position: center center;
