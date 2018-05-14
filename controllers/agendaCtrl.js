@@ -2544,7 +2544,7 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
     // )
 
     // consultar
-    var datarecebe = [{}];
+    var datarecebe = [];
     $.ajax({
         method: 'POST',
         url: 'https://demofluig.iv2.com.br/webdesk/ECMColleagueService?wsdl',
@@ -2563,8 +2563,8 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
 
         success: function (data) {
             //console.log($(data).find('colleagueId').text());
-            datarecebe = data.find('colleagueId').text();
-            console.log(datarecebe);
+            datarecebe = data;
+            //console.log(datarecebe);
         },
 
         error: function (err) {
@@ -2572,7 +2572,7 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
         }
 
     });
-    //console.log(datarecebe);
+    console.log(datarecebe);
 
     $('#calendar').fullCalendar({
         header: {
