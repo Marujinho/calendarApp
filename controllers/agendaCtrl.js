@@ -2562,7 +2562,7 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
    </soapenv:Envelope>',
 
         success: function (data) {
-            console.log($(data).find('colleagueId').text());
+            //console.log($(data).find('colleagueId').text());
             dataRecebe = data;
         },
 
@@ -2571,7 +2571,7 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
         }
 
     });
-    console.log(datarecebe);
+    console.log(datarecebe.find('colleagueId').text());
 
     $('#calendar').fullCalendar({
         header: {
