@@ -2564,7 +2564,7 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
         success: function (data) {
             //console.log($(data).find('colleagueId').text());
             dataRecebe = data.find('colleagueId').text();
-            console.log(dataRecebe);
+            console.log($(dataRecebe));
         },
 
         error: function (err) {
