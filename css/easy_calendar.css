@@ -603,3 +603,7 @@ table.dataTable tbody td {
     height: 100%;
     position: absolute;
 }
+
+.fc-header-toolbar{
+    margin-top: -40px;
+}
