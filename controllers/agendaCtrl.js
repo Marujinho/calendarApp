@@ -1,4 +1,4 @@
-angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
+angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
     // usersAPIService.login(WCMAPI.userCode).then(function(responseUser) {
     //         if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -930,7 +930,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //                         $scope.listEvents.push(eventData);
     //                     });
     //                     $scope.filterData();
-                        
+
     //                 }
     //             });
 
@@ -2377,7 +2377,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //                     $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].title = idUser[0].code+" - Particular";
 
     //                     $scope.filterData();
-                            
+
     //                 },
     //                 function(){
     //                     $(".toast").fadeOut("slow");
@@ -2444,7 +2444,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //                     $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].title = idUser[0].code+" - Férias";
 
     //                     $scope.filterData();
-                            
+
     //                 },
     //                 function(){
     //                     $(".toast").fadeOut("slow");
@@ -2503,7 +2503,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //                     $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].end = $scope.viewFeriadoData.date;
 
     //                     $scope.filterData();
-                            
+
     //                 },
     //                 function(){
     //                     $(".toast").fadeOut("slow");
@@ -2542,189 +2542,220 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //         Materialize.toast('Erro 03 - contate o administrador', 5500, 'toast-container');
     //     }
     // )
+
+    // consultar
+    var datarecebe = [{}];
+    $.ajax({
+        method: 'POST',
+        url: 'https://demofluig.iv2.com.br/webdesk/ECMColleagueService?wsdl',
+        dataType: 'xml',
+
+        data: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.foundation.ecm.technology.totvs.com/">\
+      <soapenv:Header/>\
+      <soapenv:Body>\
+         <ws:getColleagues>\
+            <username>demo</username>\
+            <password>demo</password>\
+            <companyId>1</companyId>\
+         </ws:getColleagues>\
+      </soapenv:Body>\
+   </soapenv:Envelope>',
+
+        success: function (data) {
+            console.log($(data).find('colleagueId').text());
+            dataRecebe = data;
+        },
+
+        error: function (err) {
+            console.error(err);
+        }
+
+    });
+    console.log(datarecebe);
+
     $('#calendar').fullCalendar({
-                        header: {
-                            left: '',
-                            center: 'today, prev, next, title',
-                            right: ''
-                        },
-    
-                        height: $(window).height() - 65,
-                        windowResizeDelay: true,
-                        handleWindowResize: true,
-                        showNonCurrentDates: true,
-                        fixedWeekCount: false,
-                        selectable: true,
-                        defaultDate: moment().format("YYYY-MM-DD"),
-                        navLinks: true, // can click day/week names to navigate views
-                        editable: true,
-                        eventLimit: true, // allow "more" link when too many events
-                        events: [{}],
-                        displayEventTime: false,
-                        select: function(start, end, resource) {
-    
-                            $scope.localTab = "new";
-                            if ($rootScope.global.permission.requestConsultant == 1 || $rootScope.global.permission.agenda == 1) {
-                                var getCustomerid;
-                                var getProjectId;
-                                $('#agendaCustomerId').on("select2:select", function(e) {
-                                    getCustomerid = $('#agendaCustomerId').val();
-                                });
-                                $scope.appointment.workplace = "1";
-                                $scope.appointment.initialHour = moment("08:30", "HH:mm").format("HH:mm");
-                                $scope.appointment.hourLunch = moment("01:00", "HH:mm").format("HH:mm");
-                                $scope.appointment.lastHour = moment("17:30", "HH:mm").format("HH:mm");
-                                $scope.appointment.unproductiveHours = moment("00:00", "HH:mm").format("HH:mm");
-                                $("#solinitialHour, #solinitialHourParticular, #solhourLunch, #sollastHour, #sollastHourParticular, #solunproductiveHours").addClass("active");
-                                $('#tabs').tabs();
-    
-                                $('#inicioFerias').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#inicioParticular').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#fimFerias').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#fimParticular').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#fimAgenda').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#inicioAgenda').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#fimAgenda').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                });
-    
-                                $('#initAgendaRequest').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#endAgendaRequest').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-    
-                                $('#dateHoliday').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
-                                    format: 'dd/mm/yyyy'
-                                }).trigger("change");
-                                $('#diaSelecionado').modal('open');
-                            }
-                        },
-                        eventRender: function( event, element, view ) {
-                            var title = element.find('.fc-title');          
-                            title.attr("title", title.text());
-                        },
-                        eventClick: function(calEvent, jsEvent, view) {
-                            if ((calEvent.type == "apontamentoNaoEfetuado" || calEvent.type == "apontamentoEfetuado") && (calEvent.user == $rootScope.global.idUser || $rootScope.global.permission.agenda == 1) && $rootScope.global.permission.appointment == 1) {
-                                $scope.newAppointment.idAppointment = calEvent.id;
-                                $('#modalApontar')
-                                    .modal('open');
-    
-                            } else if (calEvent.type == "feriado") {
-                                $scope.viewFeriado(calEvent.id);
-                            } else if (calEvent.type == "solicitacao") {
-                                if ($rootScope.global.permission.agenda == 1) {
-                                    $scope.request.idCalendarRequest = calEvent.id;
-                                    $('#modalAcceptSolicitação').modal('open');
-                                    $scope.localTab = "solicitacao";
-                                }
-                            } else if (calEvent.type == "SolicitacaoAtraso" && $rootScope.global.permission.agenda == 1) {
-                                $scope.atraso.idappointment = calEvent.id;
-                                $('#modalAceitarAtraso').modal('open');
-                            } else if (calEvent.type == "particular") {
-                                $scope.viewParticular(calEvent.id);
-                            } else if (calEvent.type == "ferias") {
-                                $scope.viewFerias(calEvent.id);
-                            } else if (calEvent.type == "aniversario") {
-                                $scope.viewAniversario(calEvent.user);
-                            }
-                        },
-                        eventDragStart: function(calEvent, jsEvent, ui, view) {
-                            $("#trash").animate({
-                                bottom: "10px"
-                            }, 200);
-                        },
-                        eventDragStop: function(event, jsEvent, ui, view) {
-                            $("#trash").animate({
-                                bottom: "-56px"
-                            }, 200);
-    
-                            if (isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
-                                //method remove appointments/requests/holidat
-                                if (event.type == "apontamentoNaoEfetuado") {
-                                    appointmentAPIService.delete(event.id).then(function() {
-                                        Materialize.toast('A agenda foi removida', 1500, 'toast-container');
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                    }, function() {
-                                        Materialize.toast('Erro 10 - contate o administrador', 5500, 'toast-container')
-    
-                                    });
-                                } else
-                                if (event.type == "feriado") {
-                                    holidayAPIService.delete(event.id).then(function() {
-                                        Materialize.toast('O feriado foi removido', 1500, 'toast-container');
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                    }, function() {
-                                        Materialize.toast('Erro 11 - contate o administrador', 5500, 'toast-container')
-    
-                                    });
-                                } else
-                                if (event.type == "ferias") {
-                                    appointmentAPIService.delete(event.id).then(function() {
-                                        Materialize.toast('O dia de férias foi removido', 1500, 'toast-container');
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                    }, function() {
-                                        Materialize.toast('Erro 12 - contate o administrador', 5500, 'toast-container')
-    
-                                    });
-                                } else
-                                if (event.type == "particular") {
-                                    appointmentAPIService.delete(event.id).then(function() {
-                                        Materialize.toast('O dia particular foi removido', 1500, 'toast-container');
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                    }, function() {
-                                        Materialize.toast('Erro 13 - contate o administrador', 5500, 'toast-container')
-    
-                                    });
-                                } else
-                                if (event.type == "apontamentoEfetuado") {
-                                    appointmentAPIService.delete(event.id).then(function() {
-                                        Materialize.toast('O apontamento foi removido', 1500, 'toast-container');
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                    }, function() {
-                                        Materialize.toast('Erro 14 - contate o administrador', 5500, 'toast-container')
-    
-                                    });
-                                } else
-                                if (event.type == "solicitacao") {
-                                    calendarRequestAPIService.delete(event.id).then(function() {
-                                        Materialize.toast('A solicitação foi removida', 1500, 'toast-container');
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                    }, function() {
-                                        Materialize.toast('Erro 15 - contate o administrador', 5500, 'toast-container')
-    
-                                    });
-                                }
-    
-                                var removeThisItem = $scope.listEvents.filter(
-                                    function(val) {
-                                        return val.type == event.type && val.id == event.id;
-                                    }
-                                );
-    
-                                $scope.listEvents.splice($scope.listEvents.indexOf(removeThisItem[0]), 1);
-                            }
-                        }
+        header: {
+            left: '',
+            center: 'today, prev, next, title',
+            right: ''
+        },
+
+        height: $(window).height() - 65,
+        windowResizeDelay: true,
+        handleWindowResize: true,
+        showNonCurrentDates: true,
+        fixedWeekCount: false,
+        selectable: true,
+        defaultDate: moment().format("YYYY-MM-DD"),
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: [{}],
+        displayEventTime: false,
+        select: function (start, end, resource) {
+
+            $scope.localTab = "new";
+            if ($rootScope.global.permission.requestConsultant == 1 || $rootScope.global.permission.agenda == 1) {
+                var getCustomerid;
+                var getProjectId;
+                $('#agendaCustomerId').on("select2:select", function (e) {
+                    getCustomerid = $('#agendaCustomerId').val();
+                });
+                $scope.appointment.workplace = "1";
+                $scope.appointment.initialHour = moment("08:30", "HH:mm").format("HH:mm");
+                $scope.appointment.hourLunch = moment("01:00", "HH:mm").format("HH:mm");
+                $scope.appointment.lastHour = moment("17:30", "HH:mm").format("HH:mm");
+                $scope.appointment.unproductiveHours = moment("00:00", "HH:mm").format("HH:mm");
+                $("#solinitialHour, #solinitialHourParticular, #solhourLunch, #sollastHour, #sollastHourParticular, #solunproductiveHours").addClass("active");
+                $('#tabs').tabs();
+
+                $('#inicioFerias').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#inicioParticular').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#fimFerias').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#fimParticular').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#fimAgenda').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#inicioAgenda').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#fimAgenda').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                });
+
+                $('#initAgendaRequest').pickadate('picker').set('select', moment(start).format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#endAgendaRequest').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+
+                $('#dateHoliday').pickadate('picker').set('select', moment(end).add(-1, 'days').format("DD/MM/YYYY"), {
+                    format: 'dd/mm/yyyy'
+                }).trigger("change");
+                $('#diaSelecionado').modal('open');
+            }
+        },
+        eventRender: function (event, element, view) {
+            var title = element.find('.fc-title');
+            title.attr("title", title.text());
+        },
+        eventClick: function (calEvent, jsEvent, view) {
+            if ((calEvent.type == "apontamentoNaoEfetuado" || calEvent.type == "apontamentoEfetuado") && (calEvent.user == $rootScope.global.idUser || $rootScope.global.permission.agenda == 1) && $rootScope.global.permission.appointment == 1) {
+                $scope.newAppointment.idAppointment = calEvent.id;
+                $('#modalApontar')
+                    .modal('open');
+
+            } else if (calEvent.type == "feriado") {
+                $scope.viewFeriado(calEvent.id);
+            } else if (calEvent.type == "solicitacao") {
+                if ($rootScope.global.permission.agenda == 1) {
+                    $scope.request.idCalendarRequest = calEvent.id;
+                    $('#modalAcceptSolicitação').modal('open');
+                    $scope.localTab = "solicitacao";
+                }
+            } else if (calEvent.type == "SolicitacaoAtraso" && $rootScope.global.permission.agenda == 1) {
+                $scope.atraso.idappointment = calEvent.id;
+                $('#modalAceitarAtraso').modal('open');
+            } else if (calEvent.type == "particular") {
+                $scope.viewParticular(calEvent.id);
+            } else if (calEvent.type == "ferias") {
+                $scope.viewFerias(calEvent.id);
+            } else if (calEvent.type == "aniversario") {
+                $scope.viewAniversario(calEvent.user);
+            }
+        },
+        eventDragStart: function (calEvent, jsEvent, ui, view) {
+            $("#trash").animate({
+                bottom: "10px"
+            }, 200);
+        },
+        eventDragStop: function (event, jsEvent, ui, view) {
+            $("#trash").animate({
+                bottom: "-56px"
+            }, 200);
+
+            if (isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
+                //method remove appointments/requests/holidat
+                if (event.type == "apontamentoNaoEfetuado") {
+                    appointmentAPIService.delete(event.id).then(function () {
+                        Materialize.toast('A agenda foi removida', 1500, 'toast-container');
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                    }, function () {
+                        Materialize.toast('Erro 10 - contate o administrador', 5500, 'toast-container')
+
                     });
+                } else
+                if (event.type == "feriado") {
+                    holidayAPIService.delete(event.id).then(function () {
+                        Materialize.toast('O feriado foi removido', 1500, 'toast-container');
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                    }, function () {
+                        Materialize.toast('Erro 11 - contate o administrador', 5500, 'toast-container')
+
+                    });
+                } else
+                if (event.type == "ferias") {
+                    appointmentAPIService.delete(event.id).then(function () {
+                        Materialize.toast('O dia de férias foi removido', 1500, 'toast-container');
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                    }, function () {
+                        Materialize.toast('Erro 12 - contate o administrador', 5500, 'toast-container')
+
+                    });
+                } else
+                if (event.type == "particular") {
+                    appointmentAPIService.delete(event.id).then(function () {
+                        Materialize.toast('O dia particular foi removido', 1500, 'toast-container');
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                    }, function () {
+                        Materialize.toast('Erro 13 - contate o administrador', 5500, 'toast-container')
+
+                    });
+                } else
+                if (event.type == "apontamentoEfetuado") {
+                    appointmentAPIService.delete(event.id).then(function () {
+                        Materialize.toast('O apontamento foi removido', 1500, 'toast-container');
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                    }, function () {
+                        Materialize.toast('Erro 14 - contate o administrador', 5500, 'toast-container')
+
+                    });
+                } else
+                if (event.type == "solicitacao") {
+                    calendarRequestAPIService.delete(event.id).then(function () {
+                        Materialize.toast('A solicitação foi removida', 1500, 'toast-container');
+                        $('#calendar').fullCalendar('removeEvents', event._id);
+                    }, function () {
+                        Materialize.toast('Erro 15 - contate o administrador', 5500, 'toast-container')
+
+                    });
+                }
+
+                var removeThisItem = $scope.listEvents.filter(
+                    function (val) {
+                        return val.type == event.type && val.id == event.id;
+                    }
+                );
+
+                $scope.listEvents.splice($scope.listEvents.indexOf(removeThisItem[0]), 1);
+            }
+        }
+    });
 
 });
