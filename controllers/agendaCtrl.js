@@ -2571,7 +2571,7 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
         }
 
     });
-    console.log(datarecebe.find('colleagueId').text());
+    console.log(datarecebe);
 
     $('#calendar').fullCalendar({
         header: {
