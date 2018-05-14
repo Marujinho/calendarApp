@@ -7,13 +7,13 @@
 	"gcm_sender_id": "",
 	"gcm_user_visible_only": true,
 	"icons": [{
-		"src": "img/icon.jpg",
+		"src": "img/easy_calendar.png",
 		"sizes": "303x303",
-		"type": "image/jpg"
+		"type": "image/png"
 	},{
-		"src": "img/ZHB2lYg.jpg",
+		"src": "img/easy_calendar.jpg",
 		"sizes": "600x424",
-		"type": "image/jpg"
+		"type": "image/png"
 	}],
 	"orientation": "portrait",
 	"start_url": "index.html",
