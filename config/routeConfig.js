@@ -4,97 +4,97 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $stateProvider.state('agenda', {
             url: '/agenda',
-            templateUrl: 'views/agenda.html',
+            templateUrl: '/easy_calendar/resources/js/views/agenda.html',
             controller: 'agendaCtrl'
         })
         .state('login', {
             url: '/login',
-            templateUrl: 'views/login.html',
+            templateUrl: '/easy_calendar/resources/js/views/login.html',
             controller: 'loginCtrl'
         })
         .state('listCustomers', {
             url: '/listCustomers',
-            templateUrl: 'views/listCustomers.html',
+            templateUrl: '/easy_calendar/resources/js/views/listCustomers.html',
             controller: 'listCustomersCtrl'
         })
         .state('listAppointment', {
             url: '/listAppointment',
-            templateUrl: 'views/listAppointment.html',
+            templateUrl: '/easy_calendar/resources/js/views/listAppointment.html',
             controller: 'listAppointmentCtrl'
         })
         .state('insertAppointment', {
             url: '/insertAppointment',
-            templateUrl: 'views/insertAppointment.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertAppointment.html',
             controller: 'insertAppointmentCtrl'
         })
         .state('insertAppointment/:id', {
             url: '/insertAppointment/:id',
-            templateUrl: 'views/insertAppointment.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertAppointment.html',
             controller: 'insertAppointmentCtrl'
         })
         .state('listProfiles', {
             url: '/listProfiles',
-            templateUrl: 'views/listProfiles.html',
+            templateUrl: '/easy_calendar/resources/js/views/listProfiles.html',
             controller: 'listProfilesCtrl'
         })
         .state('listProjects', {
             url: '/listProjects',
-            templateUrl: 'views/listProjects.html',
+            templateUrl: '/easy_calendar/resources/js/views/listProjects.html',
             controller: 'listProjectsCtrl'
         })
         .state('reports', {
             url: '/reports',
-            templateUrl: 'views/reports.html',
+            templateUrl: '/easy_calendar/resources/js/views/reports.html',
             controller: 'reportsCtrl'
         })
         .state('listUsers', {
             url: '/listUsers',
-            templateUrl: 'views/listUsers.html',
+            templateUrl: '/easy_calendar/resources/js/views/listUsers.html',
             controller: 'listUsersCtrl'
         })
         .state('insertCustomers', {
             url: '/insertCustomers',
-            templateUrl: 'views/insertCustomers.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertCustomers.html',
             controller: 'insertCustomersCtrl'
         })
         .state('insertCustomers/:id', {
             url: '/insertCustomers/:id',
-            templateUrl: 'views/insertCustomers.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertCustomers.html',
             controller: 'insertCustomersCtrl'
         })
         .state('insertProfiles', {
             url: '/insertProfiles',
-            templateUrl: 'views/insertProfiles.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertProfiles.html',
             controller: 'insertProfilesCtrl'
         })
         .state('insertProfiles/:id', {
             url: '/insertProfiles/:id',
-            templateUrl: 'views/insertProfiles.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertProfiles.html',
             controller: 'insertProfilesCtrl'
         })
         .state('insertProjects', {
             url: '/insertProjects',
-            templateUrl: 'views/insertProjects.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertProjects.html',
             controller: 'insertProjectsCtrl'
         })
         .state('insertProjects/:id', {
             url: '/insertProjects/:id',
-            templateUrl: 'views/insertProjects.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertProjects.html',
             controller: 'insertProjectsCtrl'
         })
         .state('insertUsers', {
             url: '/insertUsers',
-            templateUrl: 'views/insertUsers.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertUsers.html',
             controller: 'insertUsersCtrl'
         })
         .state('insertUsers/:id', {
             url: '/insertUsers/:id',
-            templateUrl: 'views/insertUsers.html',
+            templateUrl: '/easy_calendar/resources/js/views/insertUsers.html',
             controller: 'insertUsersCtrl'
         })
         .state('closingDate', {
             url: '/closingDate',
-            templateUrl: 'views/closingDate.html',
+            templateUrl: '/easy_calendar/resources/js/views/closingDate.html',
             controller: 'closingDateCtrl'
         })
 
