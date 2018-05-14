@@ -1,6 +1,6 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    usersAPIService.login(WCMAPI.userCode).then(function(responseUser) {
+    usersAPIService.login('acacio.magno').then(function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
                 local = local.split("portal");
@@ -1572,7 +1572,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     </table>\
                                     <table width="700">\
                                         <tr>\
-                                            <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>' + WCMAPI.user + '</td>\
+                                            <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>' + 'Acacio Magno' + '</td>\
                                         </tr>\
                                     </table>\
                                     <table width="700">\
@@ -1621,7 +1621,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 var destinatarioNome = 'Grupo IV2';
                                 var descricaoOS = 'Anexo referente ao serviço prestado.';
                                 var nomeArquivoOS = 'Ordem de serviço';
-                                var tituloOS = 'Grupo IV2 - OS ' +  moment($scope.newAppointment.appointmentDate, "DD/MM/YYYY").format('DD/MM/YYYY') + ' - ' + WCMAPI.user;
+                                var tituloOS = 'Grupo IV2 - OS ' +  moment($scope.newAppointment.appointmentDate, "DD/MM/YYYY").format('DD/MM/YYYY') + ' - ' + 'Acacio Magno';
 
                                 $.ajax({
                                     method: 'POST',
