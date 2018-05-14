@@ -2544,11 +2544,12 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
     // )
 
     // consultar
-    $scope.datarecebe = [{}];
+    $scope.datarecebe = null;
     $.ajax({
         method: 'POST',
         url: 'https://demofluig.iv2.com.br/webdesk/ECMColleagueService?wsdl',
         dataType: 'xml',
+        async: false,
 
         data: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.foundation.ecm.technology.totvs.com/">\
       <soapenv:Header/>\
@@ -2563,8 +2564,8 @@ angularApp.controller('agendaCtrl', function ($scope, appointmentAPIService, $ro
 
         success: function (data) {
             //console.log($(data).find('colleagueId').text());
-            $scope.datarecebe = data.find('colleagueId').text();
-            
+            $scope.datarecebe = data;
+            console.log();
         },
 
         error: function (err) {
