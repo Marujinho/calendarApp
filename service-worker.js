@@ -37,8 +37,7 @@ var filesToCache = [
 	'factorys/controleDeLogin.js',
 	'index.html',
 	'./css/style.css',
-	'app.js',
-	'sss.js'
+	'app.js'
 ];
 
 self.addEventListener('install', function(e) {
