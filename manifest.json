@@ -10,6 +10,10 @@
 		"src": "img/easy_calendar.png",
 		"sizes": "881x882",
 		"type": "image/png"
+	},{
+		"src": "img/easy_calendar.png",
+		"sizes": "600x424",
+		"type": "image/png"
 	}],
 	"orientation": "portrait",
 	"start_url": "index.html",
