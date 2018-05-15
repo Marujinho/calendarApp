@@ -8,11 +8,7 @@
 	"gcm_user_visible_only": true,
 	"icons": [{
 		"src": "img/easy_calendar.png",
-		"sizes": "303x303",
-		"type": "image/png"
-	},{
-		"src": "img/easy_calendar.jpg",
-		"sizes": "600x424",
+		"sizes": "881x882",
 		"type": "image/png"
 	}],
 	"orientation": "portrait",
