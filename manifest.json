@@ -18,6 +18,14 @@
 		"src": "img/Calendar.png",
 		"sizes": "569x570",
 		"type": "image/png"
+	},{
+		"src": "img/icon.png",
+		"sizes": "303x303",
+		"type": "image/png"
+	},{
+		"src": "img/144x144.png",
+		"sizes": "144x144",
+		"type": "image/png"
 	}],
 	"orientation": "portrait",
 	"start_url": "index.html",
