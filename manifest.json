@@ -1,7 +1,7 @@
 {
 	"short_name": "Calendar",
 	"name": "Easy Calendar",
-	"background_color": "#00b8d4",
+	"background_color": "#ffffff",
 	"description": "",
 	"display": "standalone",
 	"gcm_sender_id": "",
@@ -13,6 +13,10 @@
 	},{
 		"src": "img/640x1136.png",
 		"sizes": "640x1136",
+		"type": "image/png"
+	},{
+		"src": "img/Calendar.png",
+		"sizes": "569x570",
 		"type": "image/png"
 	}],
 	"orientation": "portrait",
