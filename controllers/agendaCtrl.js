@@ -24,7 +24,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 }
 
                 $scope.filter = {
-                    filterConsultores: [$rootScope.global.idUser],
+                    filterConsultores: [],
                     filterClientes: [],
                     filterProjetos: []
                 }
