@@ -192,6 +192,8 @@
         -->
         <div ui-view></div>
 		<script>
+
+
 			if('serviceWorker' in navigator) {
 				navigator
 					.serviceWorker
@@ -199,7 +201,12 @@
 					.then(function(registration) {
 						console.log('Service Worker Registered');
 					});
-			}
+            }
+            
+            //ATIVA AS TABS DO LOGIN
+            $(document).ready(function(){
+                $('.tabs').tabs();
+            });
 		</script>
 	</body>
 </html>
