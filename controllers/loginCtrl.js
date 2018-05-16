@@ -3,7 +3,11 @@ angularApp.controller('loginCtrl', function($scope, $rootScope) {
 
     //ATIVA AS TABS DO LOGIN
     $(document).ready(function(){
-        $('.tabs').tabs();
+        $('.tabs').tabs({
+
+            "swipeable" : true
+
+        });
     });
 
 });
