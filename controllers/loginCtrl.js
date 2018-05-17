@@ -6,7 +6,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     
 
     //ATIVA AS TABS DO LOGIN
-    
+   /* 
     $scope.initTab = function(){
         $('.tabs').tabs({swipeable: true});
         //ANIMAÇÃO FORMULARIO
