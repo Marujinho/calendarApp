@@ -1,7 +1,7 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     $rootScope.local = "";
     $rootScope.titulo = "LOGIN";
-    $scope.login = {};
+    $scope.login = {login: 'qualquer'}
  
     
 
@@ -14,8 +14,6 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         $('input#input_text, textarea#textarea2').characterCounter();
 
     }
-
-   
 
     $scope.initTab();
 });
