@@ -1,12 +1,8 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     $rootScope.local = "";
     $rootScope.titulo = "LOGIN";
-    $scope.login = [{server: "123"},
-                    {cnpj: "1234342"},
-                    {access: "joao"},
-                    {password:"999"}];
- 
-    
+    $scope.login = {server: "123"};
+                       
 
     //ATIVA AS TABS DO LOGIN
     
@@ -14,7 +10,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         $('.tabs').tabs();
         //ANIMAÇÃO FORMULARIO
         //$('input#input_text, textarea#textarea2').characterCounter();
-
+        //{swipable: true}
     }
     $scope.initTab();
     
