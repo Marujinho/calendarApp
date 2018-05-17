@@ -1,7 +1,7 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     $rootScope.local = "";
     $rootScope.titulo = "LOGIN";
-    $scope.login = {login: 'qualquer'}
+    $scope.login = {server: 'qualquer'}
  
     
 
