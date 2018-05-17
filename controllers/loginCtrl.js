@@ -8,9 +8,9 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     //ATIVA AS TABS DO LOGIN
     
     $scope.initTab = function(){
-        $('.tabs').tabs();
+        $('.tabs').tabs({swipeable: true});
         //ANIMAÇÃO FORMULARIO
-        $('input#input_text, textarea#textarea2').characterCounter();
+        //$('input#input_text, textarea#textarea2').characterCounter();
 
     }
     $scope.initTab();
