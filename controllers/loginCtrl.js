@@ -1,8 +1,8 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     $rootScope.local = "";
     $rootScope.titulo = "LOGIN";
-    $scope.login = {};
-    $scope.cu = "cu";
+    $scope.login = [];
+    
 
     //ATIVA AS TABS DO LOGIN
     $scope.initTab = function(){
