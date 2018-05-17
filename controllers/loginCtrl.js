@@ -1,7 +1,7 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     $rootScope.local = "";
     $rootScope.titulo = "LOGIN";
-    $scope.login = {server: "123"};
+    
                        
 
     //ATIVA AS TABS DO LOGIN
@@ -13,7 +13,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         //
     }
     $scope.initTab();
-    
+    $scope.login = {server: "123"};
     /*
     $('.tabs').tabs({swipeable: true});
     //ANIMAÇÃO FORMULARIO
