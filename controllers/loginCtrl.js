@@ -1,7 +1,10 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     $rootScope.local = "";
     $rootScope.titulo = "LOGIN";
-    $scope.login = {};
+    $scope.login = [{server: "123"},
+                    {cnpj: "1234342"},
+                    {access: "joao"},
+                    {password:"999"}];
  
     
 
