@@ -1,5 +1,8 @@
 angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIService, customersAPIService, profilesAPIService, $stateParams, $timeout, $state, $rootScope) {
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -8,6 +11,7 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                 alert("Você não tem acesso ao Easy Calendar");
                 window.location.href = local[0];
             } else {
+                
                 $rootScope.global.idUser = responseUser.data[0].idUser;
                 $rootScope.global.code = responseUser.data[0].code;
                 $rootScope.global.permission = {
@@ -111,6 +115,7 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                     },
                     success: function (data) { // se tudo ocorrer bem
                         $scope.codes = data.content.values;
+                        $scope.user.name = WCMAPI.user;
                     },
                     error: function (err) {
                         console.log(err); // explode erro se nao entrar
@@ -142,7 +147,7 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                         $scope.user.birthDay = moment(context.select).format('YYYY-MM-DD');
                     },
                 });
-
+                
                 $scope.insertUsers = function () {
                     if ($scope.user.remuneration == undefined || $scope.user.remuneration == '') {
                         $scope.user.remuneration = "0.00";

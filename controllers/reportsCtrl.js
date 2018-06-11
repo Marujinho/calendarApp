@@ -1,4 +1,8 @@
 angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appointmentAPIService, customersAPIService, usersAPIService, expenseTypeOpenAPIService, $state) {
+    
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -92,9 +96,14 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                       i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
                       j = (j = i.length) > 3 ? j % 3 : 0;
                     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-                  };
+                };
                 
+                // var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+                // var firstDay = new Date(y, m, 1);
+                // var lastDay = new Date(y, m + 1, 0);
+
                 appointmentAPIService.getallAppointment().then(function(response) {
+                //appointmentAPIService.getFromRangeDate(moment(firstDay).format("DD/MM/YYYY"), moment(lastDay).format("DD/MM/YYYY")).then(function(response) {
                     $scope.appointment = response.data;
                     $scope.diferenca = [];
                     $scope.despesa = [];
@@ -103,7 +112,6 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                         dom: 'Bfrtip',
                         data: $scope.appointment,
                         columns: [
-                            { data: "idAppointment" },
                             {
                                 data: "initialDate",
                                 render: function(data, type, row) {
@@ -111,7 +119,7 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                     return type === "display" || type === "filter" ? dateSplit[2] + '/' + dateSplit[1] + '/' + dateSplit[0] : data
                                 }, width : '50px'
                             },
-                            { data: "userId.code"},
+                            { data: "userId.name"},
                             { data: "customerId.name"},
                             { data: "projectId.name"},
                             { data: "initialHour"},
@@ -123,11 +131,13 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                     var diferenca = diffHoras(row.initialHour, row.lastHour, row.hourLunch);
 
                                     $scope.diferenca.push(diferenca);
+                                    
+                                    
                                     return diferenca
                                 },
                                 className: "total",
                             },
-                            { data: "unproductiveHours", className: "total",width : '100%' },
+                            { data: "unproductiveHours", type:"time" , className: "total",width : '100%' },
                             {
                                 data: "appointmentExpense",
                                 render: function(data, type, row) {
@@ -268,12 +278,15 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                         return data
                                     }
                                 }
-                            }
+                            },
+                            {data: "projectId.hourConsultantCost", visible:false},
+                            {data: "projectId.hourGPCost", visible:false},
+                            {data: "projectId.percentGP", visible:false}
                         ],
                         initComplete: function() {
                             this.api().columns().every(function() {
                                     var column = this;
-                                     if(column.index() != 1 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 14 && column.index() != 15 && column.index() != 16 && column.index() != 17) {
+                                     if(column.index() != 0 && column.index() != 9 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 15 && column.index() != 15 && column.index() != 16) {
                                         var select = $('<select class="select2" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filters").find("th").eq(column.index()))
                                             .on('change', function () {
                                                 var list = $(this).val();
@@ -295,12 +308,12 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                         var traslado = [];
                                         column.data().unique().sort().each(function(d, j) {
                                                 // select 
-                                                 if (column.index() == 18) {
+                                                 if (column.index() == 16) {
                                                     if (traslado.indexOf($scope.traslado[j]) == -1) {
                                                         traslado.push($scope.traslado[j]);
                                                         select.append('<option value="' + $scope.traslado[j] + '" style="width:100%;">' + $scope.traslado[j] + '</option>');
                                                     }
-                                                } else if (column.index() == 8) {
+                                                } else if (column.index() == 6) {
                                                     if (diferenca.indexOf($scope.diferenca[j]) == -1) {
                                                         diferenca.push($scope.diferenca[j]);
                                                         select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
@@ -314,38 +327,12 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                 }
                             );
                         },
-                        buttons: [
-                            { extend: 'copy', title:'Relatório de Apontamentos',  text: 'Copiar', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'excel', title:'Relatório de Apontamentos', text: 'Excel', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            // { extend: 'pdf', 
-                            //     customize: function (doc) {
-                            //     doc.defaultStyle.fontSize = 6;
-                            //     doc.styles.tableHeader.fontSize = 7;
-                            //     doc.styles.title.fontSize = 8;
-                            //     doc.styles.tableFooter.fontSize = 7;
-                            //     doc.styles.tableHeader.fillColor = '#00b8d4';
-                            //     doc.styles.tableFooter.fillColor = '#00b8d4';
-                                
-                            // }, title:'Relatório de Apontamentos', text: 'PDF', orientation: 'landscape', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'print',   customize: function (doc) {
-                                doc.defaultStyle.fontSize = 9.5;
-                                doc.styles.tableHeader.fontSize = 9.5;
-                                doc.styles.title.fontSize = 11;
-                                doc.styles.tableFooter.fontSize = 9.5;
-                            },
-                            title:'Relatório de Apontamentos', text: 'Imprimir',  footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
-                        ],
-                        columnDefs: [{
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                            className: 'mdl-data-table__cell--non-numeric'
-                        }],
                         "footerCallback": function(row, data, start, end, display) {                
                             var api = this.api();
                             api.columns('.total', { search: 'applied' }).every(function() {                   
                                 var sum = api.cells(null, this.index(), { search: 'applied' })
                                     .render('display')
                                     .reduce(function(total, item, posicao , data) {
-
                                         var splitado = item.split(':');
                                         if (splitado.length > 1) {
                                             if(total  == 0){
@@ -365,8 +352,189 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                     }, 0);
                                 $(this.footer()).html(sum);
                             });
-                        },    
-                        
+                        },
+                        buttons: [         
+                            { extend: 'excel', title:'Relatório de Apontamentos', sheetName: "relatorio", text: 'Excel', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2',
+                                customize: function (xlsx, data) {
+                                    
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    var numrows = 0;
+                                    var clR = $('row', sheet);
+                                    var ind = 0;
+
+                                    clR.each(function () {
+                                        var attr = $(this).attr('r');
+                                        ind = parseInt(attr);
+                                        ind = ind + numrows;
+                                        $(this).attr("r",ind);             
+                                    });
+                    
+                                    // Cria linhas depois do data 
+                                    $('row c ', sheet).each(function () {
+                                        var attr = $(this).attr('r');
+                                        /////////////////////////////////////////////////////////////////////
+                                        // ele ira retira a letra das colunas e linhas do excel para somar//
+                                        // e salvar na variavel para adicionar na colunas que recebeu + a linha//
+                                        var pre = attr.substring(0, 1); 
+                                        ind = parseInt(attr.substring(1, attr.length));
+                                        ind = ind + numrows;
+                                        
+                                        //momento em que coloca na linha com a LETRA + NUMERO(POSICAO)
+                                        $(this).attr("r", pre + ind);
+                                    });
+
+                                    var qtdHORAS = [];
+                                    var hrConsultor = [];
+                                    var hrGP = [];
+                                    var percentGP = [];
+                                    $('row c ', sheet).each(function () {
+                                        if($(this).attr('r').substring(0, 1) == 'H') {
+                                            qtdHORAS.push($(this).text());
+                                        }    
+                                        
+                                        if($(this).attr('r').substring(0, 1) == 'U') {
+                                            hrConsultor.push($(this).text());
+                                        }  
+
+                                        if($(this).attr('r').substring(0, 1) == 'V') {
+                                            hrGP.push($(this).text());
+                                        } 
+                                        
+                                        if($(this).attr('r').substring(0, 1) == 'W') {
+                                            percentGP.push($(this).text());
+                                        } 
+                                    });
+
+                                    qtdHORAS.pop();//remove last item to array
+
+                                    function Addrow(index,data) {           
+                                        // funcao que add os campos novos
+                                        msg='<row r="'+index+'">'
+                                        for(i=0; i < data.length; i++){
+                                            var key = data[i].key;
+                                            var value = data[i].value;
+                                            msg += '<c t="inlineStr" r="' + key + index + '" s="2">';
+                                            msg += '   <is>';
+                                            msg += '      <t>'+value+'</t>';
+                                            msg += '   </is>';
+                                            msg += '</c>';
+                                        }
+                                        msg += '</row>';
+                                        return msg;
+                                    }
+                                    
+                                    Number.prototype.formatarMoney = function (c, d, t) {
+                                        var n = this,
+                                          c = isNaN(c = Math.abs(c)) ? 2 : c,
+                                          d = d == undefined ? "," : d,
+                                          t = t == undefined ? "." : t,
+                                          s = n < 0 ? "-" : "",
+                                          i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                                          j = (j = i.length) > 3 ? j % 3 : 0;
+                                        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                                    };
+
+                                    // aqui encontra o item para colocar dentro dos values
+                                    var hrTotal = $($($(sheet).find('row:last-child')[0]).find('c[r^=H] is t')[0]).text();// pegando total de hroas
+
+                                    var arr = hrTotal.split(':');
+                                    var dec = parseInt((arr[1]/6)*10, 10);
+                                    
+                                    hrTotal = parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
+
+                                    var despesaTotal = $($($(sheet).find('row:last-child')[0]).find('c[r^=Q] is t')[0]).text(); // pegando total de despesa
+                                    var tributo =  0.8632;// valor tributo para calculo
+                                    var totaisHReQt = [];  // array que recebe o total das horas * valorhr
+                                    var totalGP = [];  ///mesmo para gp
+                                    
+
+                                    $.each(qtdHORAS, function(posicao, valorHr) {
+                                        if(posicao != 0){
+                                            var splitadoHR = valorHr.split(':');    
+                                            if(valorHr == '00:00:00'){
+                                                totaisHReQt[posicao] = 0;
+                                                totalGP[posicao] = 0;
+                                            }else{
+
+                                                totaisHReQt[posicao] = (splitadoHR[0] * parseFloat(hrConsultor[posicao])) 
+                                                    + (splitadoHR[1] * parseFloat(hrConsultor[posicao] / 60)) 
+                                                    + (splitadoHR[2] * parseFloat((hrConsultor[posicao] / 60) / 60) );   
+
+                                                totalGP[posicao] = ((splitadoHR[0] * (percentGP[posicao]/100)) * parseFloat(hrGP[posicao]) 
+                                                    + (splitadoHR[1] * (percentGP[posicao]/100)) * parseFloat(hrGP[posicao] / 60) 
+                                                    + (splitadoHR[2] * (percentGP[posicao]/100)) * parseFloat((hrGP[posicao] / 60) / 60));    
+                                            };
+                                        }
+                                    });
+                                    
+                                    var totaisHRMaisGP = 0.00;
+                                    var calculoTotalGP = 0.00;
+                                    var totalConsultorValor = 0.00;
+
+                                    for(var j = 1; j < totaisHReQt.length; j++){  
+                                        //so recurso 
+                                        totalConsultorValor += totaisHReQt[j];
+                                        //so gp  
+                                        calculoTotalGP += totalGP[j];                                            
+                                    }   
+                                    
+                                    //total só consultor///
+                                    var totalHRSEMGPFormat  ='R$ ' + totalConsultorValor.formatarMoney(2, ',', '.').replaceAll('R$ ','');
+                                    //só GP
+                                    var formatGPTotal = 'R$ ' + calculoTotalGP.formatarMoney(2, ',', '.').replaceAll('R$ ','');
+                                    //consultor+gp
+                                    totaisHRMaisGP = parseFloat(totalConsultorValor) + parseFloat(calculoTotalGP);
+                                    var consultorMAISGPFormat = 'R$ ' + totaisHRMaisGP.formatarMoney(2, ',', '.').replaceAll('R$ ','');
+                                    //////gp+consultor com impostos
+                                    var totaisHRMaisGPIMPOSTOS = totaisHRMaisGP / tributo;
+                                    var totalcomImpostoFormat = 'R$ ' + totaisHRMaisGPIMPOSTOS.formatarMoney(2, ',', '.').replaceAll('R$ ','');
+                                    ////passando format para despesa e imposto
+                                    var converterDespesa = despesaTotal.replace('R$',' ').replace(',',' ').replace('.',' ');
+                                    var despesaNAOFormat = parseInt(converterDespesa);
+                                    var despesaIMPOSTO = despesaNAOFormat / tributo;
+                                    var despesaImpostoFormat = 'R$ ' + despesaIMPOSTO.formatarMoney(2, ',', '.').replaceAll('R$ ','');
+                                    
+                                    //items para add nas colunas
+                                    var totalHoras = 'Total de horas';
+                                    var totalGPHoras = 'Total de Horas GP';
+                                    var totalHRConsultor = 'Total Recurso';
+                                    var totalHRGP = 'Total GP';
+                                    var totalDespesas = 'Total despesas';
+                                    var totalSemImpostos = 'Total s/ impostos';
+                                    var totalComImpostos = 'Total c/ impostos';
+                                    var totalDespesasComImpostos = 'Despesas c/ impostos';
+
+
+                                    //add nas linhas
+                                    var r1 = Addrow(sheet.childNodes[0].childNodes[1].childElementCount+2, 
+                                                    [   { key: 'C', value: totalHoras },
+                                                        { key: 'D', value: totalHRConsultor },
+                                                        { key: 'E', value: totalHRGP},
+                                                        { key: 'F', value: totalSemImpostos},
+                                                        { key: 'G', value: totalComImpostos},
+                                                        { key: 'H', value: totalDespesas}
+                                                        // { key: 'J', value: totalDespesasComImpostos}
+                                                    ]);
+                                    var r2 = Addrow(sheet.childNodes[0].childNodes[1].childElementCount+3, 
+                                                    [   { key: 'C', value: hrTotal },
+                                                        { key: 'D', value: totalHRSEMGPFormat },
+                                                        { key: 'E', value: formatGPTotal},
+                                                        { key: 'F', value: consultorMAISGPFormat},
+                                                        { key: 'G', value: totalcomImpostoFormat},
+                                                        { key: 'H', value: despesaTotal}
+                                                        // { key: 'J', value: despesaImpostoFormat}
+                                                    ]);                                           
+                                    sheet.childNodes[0].childNodes[1].innerHTML = sheet.childNodes[0].childNodes[1].innerHTML + r1 + r2;
+                                },
+                                exportOptions: {
+                                    // columns: "thead tr th:display:none"
+                                } 
+                            },                          
+                        ],
+                        columnDefs: [{
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                            className: 'mdl-data-table__cell--non-numeric'
+                        }],                        
                         fixedColumns: true,
                         colReorder: true,
                         orderCellsTop: true,
@@ -407,9 +575,9 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                     $('.dt-button').removeClass('dt-button');
                     $('.atividade').css("text-overflow", "ellipsis");
 
-                    $("#min").pickadate({
+                    $("#min, #max").pickadate({
                         closeOnSelect: true,
-                        buttonText: 'Data de ínicio',
+                        buttonText: 'Data',
                         buttonImageOnly: true,
                         buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
                         monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -426,52 +594,31 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                         selectMonths: true,
                         selectYears: 80,
                         format: 'dd/mm/yyyy',
-                        default: 'now'
-                    });
-
-                    $("#max").pickadate({
-                        closeOnSelect: true,
-                        buttonText: 'Data de fim',
-                        buttonImageOnly: true,
-                        buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
-                        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
-                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                        today: 'Hoje',
-                        clear: 'Limpar',
-                        close: 'Pronto',
-                        labelMonthNext: 'Próximo mês',
-                        labelMonthPrev: 'Mês anterior',
-                        labelMonthSelect: 'Selecione um mês',
-                        labelYearSelect: 'Selecione um ano',
-                        selectMonths: true,
-                        selectYears: 80,
-                        format: 'dd/mm/yyyy',
-                        default: 'now'
+                        default: 'now',
+                        onSet: function () { 
+                            appointment.draw(); 
+                        }
                     });
 
                     $.fn.dataTable.ext.search.push(
-                        function(settings, data, dataIndex) {
+                        function (settings, data, dataIndex) {
+                            var min = $('#min').val() == "" ? "" : moment($('#min').val(), 'DD/MM/YYYY');
+                            var max = $('#max').val() == "" ? "" : moment($('#max').val(), 'DD/MM/YYYY');
+                            var startDate = moment(data[0], 'DD/MM/YYYY');
+                            if (min == "" && max == "") { return true; }
+                            if (min == "" && startDate <= max) { return true;}
+                            if(max == "" && startDate >= min) {return true;}
+                            if (startDate <= max && startDate >= min) { return true; }
 
-                            var dataIni = parseInt($('#min').val(), 10);
-                            var dataFim = parseInt($('#max').val(), 10);
-                            var dateRes = parseFloat(data[1]) || 0;
-
-                            if ((isNaN(dataIni) && isNaN(dataFim)) ||
-                                (isNaN(dataIni) && dateRes <= dataFim) ||
-                                (dataIni <= dateRes && isNaN(dataFim)) ||
-                                (dataIni <= dateRes && dateRes <= dataFim)) {
-                                return true;
-                            }
                             return false;
-                        }
-                    );
-                    $('#min, #max').on('keyup change', function() {
+                    });                    
+            
+                    $('#min, #max').on('keyup change', function () {
                         appointment.draw();
                     });
+
+
                 });
-                
                 // relatori de os
                 appointmentAPIService.getallAppointment().then(function(response) {         
                     $scope.ordemServico = response.data;                 
@@ -485,7 +632,8 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                             {data:null, 
                                 render: function(data, type, row){
                                     return '<a class="grey-text" id="chamarPDF" style="z-index:9999; cursor:pointer;"><i style="font-size:25px;" class="material-icons">file_download</i></a>'
-                                }
+                                },
+                                width:'60px'
                             },
                             { data: "initialDate",
                                 render: function(data, type, row) {
@@ -495,7 +643,7 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                 width : '50px'},
                             { data:"customerId.name" },
                             { data:"projectId.name" },
-                            { data:"userId.code" },
+                            { data:"userId.name" },
                             { data:"initialHour" },
                             { data:"hourLunch" },
                             { data:"lastHour" },
@@ -533,7 +681,7 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                         initComplete: function() {
                             this.api().columns().every(function() {
                                 var column = this;
-                                if(column.index() != 0 && column.index() != 1 && column.index() != 10 && column.index() != 11){
+                                if(column.index() != 0 && column.index() != 9 && column.index() != 10){
                                     var select = $('<select class="selectOs" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filtrosDEOS").find("th").eq(column.index()))
                                         .on('change', function() {
                                             var list = $(this).val();
@@ -553,8 +701,8 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                         $('.selectOs').select2();
                                         var diferenca = [];
                                         column.data().unique().sort().each(function(d, j) {
-                                            // select 
-                                            if (column.index() == 9) {
+                                     
+                                            if (column.index() == 8) {
                                                 if (diferenca.indexOf($scope.diferenca[j]) == -1) {
                                                     diferenca.push($scope.diferenca[j]);
                                                     select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
@@ -570,13 +718,14 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                       
                         buttons:[],                        
                         columnDefs: [{
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11],
                             className: 'mdl-data-table__cell--non-numeric'
                         }],
                         
-                        scrollX:true ,
-                        colReorder: false,
+                        fixedColumns: true,
+                        colReorder: true,
                         orderCellsTop: true,
+                        scrollX: false,
                         responsive: true,
                         "bPaginate": true,
                         "bLengthChange": false,
@@ -606,11 +755,49 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                             }
                         }
                     });
-                
+                    $("#minimo, #maximo").pickadate({
+                        closeOnSelect: true,
+                        buttonText: 'Data',
+                        buttonImageOnly: true,
+                        buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
+                        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                        today: 'Hoje',
+                        clear: 'Limpar',
+                        close: 'Pronto',
+                        labelMonthNext: 'Próximo mês',
+                        labelMonthPrev: 'Mês anterior',
+                        labelMonthSelect: 'Selecione um mês',
+                        labelYearSelect: 'Selecione um ano',
+                        selectMonths: true,
+                        selectYears: 80,
+                        format: 'dd/mm/yyyy',
+                        default: 'now',
+                        onSet: function () {
+                            dtOServico.api().draw(); 
+                        }
+                    });
 
+                    $.fn.dataTable.ext.search.push(
+                        function (settings, data, dataIndex) {
+                            var minimo = $('#minimo').val() == "" ? "" : moment($('#minimo').val(), 'DD/MM/YYYY');
+                            var maximo = $('#maximo').val() == "" ? "" : moment($('#maximo').val(), 'DD/MM/YYYY');
+                            var startData = moment(data[1], 'DD/MM/YYYY');
+                            if (minimo == "" && maximo == "") { return true; }
+                            if (minimo == "" && startData <= maximo) { return true;}
+                            if(maximo == "" && startData >= minimo) {return true;}
+                            if (startData <= maximo && startData >= minimo) { return true; }
+
+                            return false;
+                    });
+            
+                    $('#minimo, #maximo').on('keyup change', function () {
+                        dtOServico.api().draw();
+                    });
                     $('#dtOrdemServico tbody').on('click', 'td #chamarPDF', function() {                       
-                            var tr = $(this).closest('tr');     
-                            console.log(dtOServico);                                          
+                            var tr = $(this).closest('tr');                            
                             var row = dtOServico.api().row(tr);
                             var relatorio = '<style>\
                             td {\
@@ -652,7 +839,7 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                 </table>\
                                 <table width="700">\
                                     <tr>\
-                                        <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>'+row.data().userId.code+'</td>\
+                                        <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>'+row.data().userId.name+'</td>\
                                     </tr>\
                                 </table>\
                                 <table width="700">\
@@ -712,176 +899,8 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                     );
                     $('.tooltip').tooltip();
                     $('.dt-button').removeClass('dt-button');
-                    $('.atividade').css("text-overflow", "ellipsis");
-
-                    $("#minimo").pickadate({
-                        closeOnSelect: true,
-                        buttonText: 'Data de ínicio',
-                        buttonImageOnly: true,
-                        buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
-                        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
-                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                        today: 'Hoje',
-                        clear: 'Limpar',
-                        close: 'Pronto',
-                        labelMonthNext: 'Próximo mês',
-                        labelMonthPrev: 'Mês anterior',
-                        labelMonthSelect: 'Selecione um mês',
-                        labelYearSelect: 'Selecione um ano',
-                        selectMonths: true,
-                        selectYears: 80,
-                        format: 'dd/mm/yyyy',
-                        default: 'now'
-                    });
-
-                    $("#maximo").pickadate({
-                        closeOnSelect: true,
-                        buttonText: 'Data de fim',
-                        buttonImageOnly: true,
-                        buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
-                        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
-                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                        today: 'Hoje',
-                        clear: 'Limpar',
-                        close: 'Pronto',
-                        labelMonthNext: 'Próximo mês',
-                        labelMonthPrev: 'Mês anterior',
-                        labelMonthSelect: 'Selecione um mês',
-                        labelYearSelect: 'Selecione um ano',
-                        selectMonths: true,
-                        selectYears: 80,
-                        format: 'dd/mm/yyyy',
-                        default: 'now'
-                    });
-
-                    $.fn.dataTable.ext.search.push(
-                        function(settings, data, dataIndex) {
-                            var dataIni = parseInt($('#minimo').val(), 10);
-                            var dataFim = parseInt($('#maximo').val(), 10);
-                            var dateRes = parseFloat(data[1]) || 0;
-
-                            if ((isNaN(dataIni) && isNaN(dataFim)) ||
-                                (isNaN(dataIni) && dateRes <= dataFim) ||
-                                (dataIni <= dateRes && isNaN(dataFim)) ||
-                                (dataIni <= dateRes && dateRes <= dataFim)) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    );
-                    //moemnto que filtra 
-                    $('#minimo, #maximo').on('keyup change', function() {
-                        os.draw();
-                    }); 
-                });
-
-
-                ///relatorio de clientes
-                customersAPIService.getall().then(function(response) {
-                    $scope.endereco = [];
-                    $scope.contact = [{}];
-                    var customers = $scope.customer = response.data;
-                    var customer = $('#dtCustomer').DataTable({
-                        dom: 'Bfrtip',
-                        data: customers,
-                        columns: [
-                            { data: "idCustomer" },
-                            { data: "name" },
-                            {
-                                data: null,
-                                render: function(data, type, row) {
-                                    var endereco = row.address + ' ' + row.district + ', nº: ' + row.number + ' ' + row.city + '-' + row.state + '-' + row.zipCode + ' ' + row.complement;
-                                    $scope.endereco.push(endereco);
-                                    return row.address + ' ' + row.district + ', nº: ' + row.number + ' ' + row.city + '-' + row.state + '-' + row.zipCode + ' ' + row.complement
-                                }
-                            }
-                        ],
-                        initComplete: function() {
-                            this.api().columns().every(function() {
-                                var column = this;
-                                if (column.index() == -1) {
-
-                                } else {
-                                    var select = $('<select class="selectClientes" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filtros").find("th").eq(column.index()))
-                                        .on('change', function() {
-                                            var list = $(this).val();
-                                            var val = '';
-                                            if (list != null) {
-                                                for (var i = 0; i < list.length; i++) {
-
-                                                    val += $.fn.dataTable.util.escapeRegex(list[i]);
-                                                    if (i != list.length - 1) {
-                                                        val += "|"
-                                                    }
-                                                }
-                                            }
-                                            column.search(val ? '^' + val + '$' : '', true, false).draw();;
-                                        });
-                                    var endereco = [];
-                                    column.data().unique().sort().each(function(d, j) {
-
-                                        if (column.index() == 2) {
-                                            if (endereco.indexOf($scope.endereco[j]) == -1) {
-                                                endereco.push($scope.endereco[j]);
-                                                select.append('<option value="' + $scope.endereco[j] + '" style="width:100%;">' + $scope.endereco[j] + '</option>');
-                                            }
-                                        } else {
-                                            select.append('<option value="' + d + '" style="width:100%;">' + d + '</option>')
-                                        }
-                                    });
-                                }
-
-                            });
-                        },
-                        buttons: [
-                            { extend: 'copy', text: 'Copiar', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'excel', text: 'Excel', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'pdf', text: 'PDF', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'print', text: 'Imprimir', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
-                        ],
-                        columnDefs: [{
-                            targets: [0, 1, 2],
-                            className: 'mdl-data-table__cell--non-numeric'
-                        }],
-
-                        colReorder: true,
-                        scrollX:true,
-                        orderCellsTop: true,
-                        responsive: false,
-                        "bPaginate": true,
-                        "bLengthChange": false,
-                        "bFilter": true,
-                        "bInfo": false,
-                        "bAutoWidth": false,
-                        "language": {
-                            "sEmptyTable": "Nenhum registro encontrado",
-                            "sInfo": "Mostrando do Início ao Final de todos os registros",
-                            "sInfoEmpty": "Mostrando 0 á 0 de 0 de todos registros",
-                            "sInfoFiltered": "(Filtrados de MAX registros)",
-                            "sInfoPostFix": "",
-                            "sInfoThousands": ".",
-                            "sLengthMenu": "_MENU_ resultados por página",
-                            "sLoadingRecords": "Carregando...",
-                            "sProcessing": "Processando...",
-                            "sZeroRecords": "Nenhum registro encontrado",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
-                            "oAria": {
-                                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                                "sSortDescending": ": Ordenar colunas de forma descendente"
-                            }
-                        }
-                    });
-                    $('.dt-button').removeClass('dt-button');
-                });
+                    $('.atividade').css("text-overflow", "ellipsis");                 
+                });             
             }
         }
     );

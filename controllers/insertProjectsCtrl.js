@@ -1,7 +1,10 @@
-angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService, customersAPIService, usersAPIService, $timeout, $state, $stateParams, $rootScope) {
+angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService, customersAPIService, usersAPIService, $timeout, $state, $stateParams, $rootScope){
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
-        function(responseUser) {
+        function (responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
                 local = local.split("portal");
@@ -15,18 +18,18 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     user: responseUser.data[0].profileId.user,
                     customer: responseUser.data[0].profileId.customer,
                     project: responseUser.data[0].profileId.project,
-                    agenda: responseUser.data[0].profileId.agenda, 
-                    requestConsultant: responseUser.data[0].profileId.requestConsultant, 
-                    appointment: responseUser.data[0].profileId.appointment, 
-                    report: responseUser.data[0].profileId.report,  
+                    agenda: responseUser.data[0].profileId.agenda,
+                    requestConsultant: responseUser.data[0].profileId.requestConsultant,
+                    appointment: responseUser.data[0].profileId.appointment,
+                    report: responseUser.data[0].profileId.report,
                     closure: responseUser.data[0].profileId.closure
                 }
 
-                if($rootScope.global.permission.project != 1){
+                if ($rootScope.global.permission.project != 1) {
                     $state.go('agenda');
                 }
 
-                $scope.changeMask= function(myData, myData2){
+                $scope.changeMask = function (myData, myData2) {
                     $scope[myData][myData2] = formatMoney($scope[myData][myData2]);
                 }
 
@@ -44,7 +47,9 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
 
                 $rootScope.local = "";
                 $scope.sp = $stateParams;
-                $('.select2').select2({placeholder: 'Selecione'});
+                $('.select2').select2({
+                    placeholder: 'Selecione'
+                });
                 $scope.customer = {};
                 if ($scope.sp.id) {
                     $rootScope.titulo = 'Editar Projetos';
@@ -67,15 +72,15 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     $rootScope.titulo = 'Cadastrar Projetos';
 
                     $scope.project = {
-                        
-                        projectType:"0",
-                        expenseType:"0",
-                        projectCost: "0,00", 
+
+                        projectType: "0",
+                        expenseType: "0",
+                        projectCost: "0,00",
                         expense: "0,00",
-                        hourGPCost: "0,00", 
+                        hourGPCost: "0,00",
                         hourConsultantCost: "0,00"
                     }
-                    
+
                 }
                 $timeout(function () {
                     Materialize.updateTextFields();
@@ -84,35 +89,35 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                 customersAPIService.getall().then(function (response) {
                     $scope.customer = response.data;
                 });
-                
-                
+
+
                 $scope.insertProjects = function () {
                     if ($scope.project.complement == undefined) {
                         $scope.project.complement = "";
                     }
                     if ($scope.project.expense == undefined || $scope.project.expense == '') {
                         $scope.project.expense = "0.00";
-                    }else{
+                    } else {
                         $scope.project.expense = $scope.project.expense.replaceAll(".", "").replaceAll(",", ".")
                     }
                     if ($scope.project.transfer == undefined || $scope.project.transfer == '') {
                         $scope.project.transfer = "0.00";
-                    }else{
+                    } else {
                         $scope.project.transfer = $scope.project.transfer.replaceAll(".", "").replaceAll(",", ".")
                     }
                     if ($scope.project.projectCost == undefined || $scope.project.projectCost == '') {
                         $scope.project.projectCost = "0.00";
-                    }else{
+                    } else {
                         $scope.project.projectCost = $scope.project.projectCost.replaceAll(".", "").replaceAll(",", ".")
                     }
                     if ($scope.project.hourGPCost == undefined || $scope.project.hourGPCost == '') {
                         $scope.project.hourGPCost = "0.00";
-                    }else{
+                    } else {
                         $scope.project.hourGPCost = $scope.project.hourGPCost.replaceAll(".", "").replaceAll(",", ".")
                     }
                     if ($scope.project.hourConsultantCost == undefined || $scope.project.hourConsultantCost == '') {
                         $scope.project.hourConsultantCost = "0.00";
-                    }else{
+                    } else {
                         $scope.project.hourConsultantCost = $scope.project.hourConsultantCost.replaceAll(".", "").replaceAll(",", ".")
                     }
 
@@ -122,14 +127,14 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     });
                 };
 
-                $scope.buscaCep = function(){
+                $scope.buscaCep = function () {
                     var cep = $scope.project.zipCode.replaceAll("-", "");
-                    if(cep.length == 8){
+                    if (cep.length == 8) {
                         var endereco = buscaCep(cep,
-                            function(response){
-                                if(response == "Erro"){
+                            function (response) {
+                                if (response == "Erro") {
                                     Alert("Erro ao consultar CEP!")
-                                }else{
+                                } else {
                                     $scope.project.district = response.bairro;
                                     $scope.project.address = response.logradouro;
                                     $scope.project.city = response.localidade;
@@ -141,7 +146,32 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                             }
                         );
                     }
-                }
+                };
+
+                $scope.getValueResponsible = function () {
+                    $.each($scope.customer, function (position, value) {
+                        $scope.isCustomerAddress = $scope.project.customerId;
+
+                        if ($scope.isCustomerAddress === value.idCustomer) {                          
+                            Materialize.updateTextFields();
+                            $scope.project.city = value.city;
+                            $scope.project.address = value.address;
+                            $scope.project.district = value.district;
+                            $scope.project.zipCode = value.zipCode;
+                            $scope.project.number = value.number;
+                            $scope.project.complement = value.complement;
+                            
+                        } else{
+                            $scope.project.city = "";
+                            $scope.project.address = "";
+                            $scope.project.district = "";
+                            $scope.project.zipCode = "";
+                            $scope.project.number = "";
+                            $scope.project.complement = "";
+                            $scope.isCustomerAddress = "";
+                        }
+                    });
+                };
             }
         }
     )

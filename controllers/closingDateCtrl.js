@@ -1,5 +1,8 @@
 angularApp.controller('closingDateCtrl', function ($scope, usersAPIService, $timeout, $state, $stateParams, $rootScope, closingDateAPIService) {
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {

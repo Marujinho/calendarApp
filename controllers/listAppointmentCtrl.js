@@ -1,5 +1,8 @@
 angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appointmentAPIService, $compile, $state, usersAPIService) {
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -110,7 +113,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                                     return type === "display" || type === "filter" ? dateSplit[2] + '/' + dateSplit[1] + '/' + dateSplit[0] : data
                                 }, width : '50px'
                             },
-                            { data: "userId.code"},
+                            { data: "userId.name"},
                             { data: "customerId.name"},
                             { data: "projectId.name"},
                             { data: "initialHour"},
@@ -255,7 +258,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                                 className: "total"
                             },
                             { data: "appointmentStatusId.description"},
-                            { data: "activity" , 
+                            { data: "activity",
                                 render: function ( data, type, row ) {
                                     $('.tooltip').tooltip({
                                             transitionMovement:200
@@ -271,52 +274,50 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         ],
                         initComplete: function() {
                             this.api().columns().every(function() {
-                                    var column = this;
-                                     if( column.index() != 0 && column.index() != 1 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 14 && column.index() != 15 && column.index() != 16 && column.index() != 17) {
-                                        var select = $('<select class="select2" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filters").find("th").eq(column.index()))
-                                            .on('change', function () {
-                                                var list = $(this).val();
-                                                var val = '';
-                                                if(list != null){
-                                                    for(var i = 0; i < list.length; i++){
-                                                        val += $.fn.dataTable.util.escapeRegex(list[i]);
-                                                        if(i != list.length-1){
-                                                            val += "|"
-                                                        }
+                                var column = this;
+                                    if( column.index() != 0 && column.index() != 1 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 14 && column.index() != 15 && column.index() != 16 && column.index() != 17) {
+                                    var select = $('<select class="select2" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filters").find("th").eq(column.index()))
+                                        .on('change', function () {
+                                            var list = $(this).val();
+                                            var val = '';
+                                            if(list != null){
+                                                for(var i = 0; i < list.length; i++){
+                                                    val += $.fn.dataTable.util.escapeRegex(list[i]);
+                                                    if(i != list.length-1){
+                                                        val += "|"
                                                     }
                                                 }
-                                                column.search(val ? '^' + val + '$' : '', true, false).draw();
                                             }
-                                        );  
-                                        $('.select2').select2();
-                                        var diferenca = [];
-                                        var despesa = [];
-                                        var traslado = [];
-                                        column.data().unique().sort().each(function(d, j) {
-                                                // select 
-                                                 if (column.index() == 18) {
-                                                    if (traslado.indexOf($scope.traslado[j]) == -1) {
-                                                        traslado.push($scope.traslado[j]);
-                                                        select.append('<option value="' + $scope.traslado[j] + '" style="width:100%;">' + $scope.traslado[j] + '</option>');
-                                                    }
-                                                } else if (column.index() == 8) {
-                                                    if (diferenca.indexOf($scope.diferenca[j]) == -1) {
-                                                        diferenca.push($scope.diferenca[j]);
-                                                        select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
-                                                    }
-                                                } else {
-                                                    select.append('<option value="' + d + '" style="width:100%;">' + d + '</option>')
-                                                }
+                                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                        }
+                                    );  
+                                    $('.select2').select2();
+                                    var diferenca = [];
+                                    var despesa = [];
+                                    var traslado = [];
+                                    column.data().unique().sort().each(function(d, j) {
+                                        // select 
+                                        if (column.index() == 18) {
+                                            if (traslado.indexOf($scope.traslado[j]) == -1) {
+                                                traslado.push($scope.traslado[j]);
+                                                select.append('<option value="' + $scope.traslado[j] + '" style="width:100%;">' + $scope.traslado[j] + '</option>');
                                             }
-                                        );  
-                                    }
+                                        } else if (column.index() == 8) {
+                                            if (diferenca.indexOf($scope.diferenca[j]) == -1) {
+                                                diferenca.push($scope.diferenca[j]);
+                                                select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
+                                            }
+                                        } else {
+                                            select.append('<option value="' + d + '" style="width:100%;">' + d + '</option>')
+                                        }
+                                    });  
                                 }
-                            );
+                            });
                         },
                         buttons: [
-                            { extend: 'copy', title:'Relatório de Apontamentos',  text: 'Copiar', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
+                            { extend: 'copy', title:'Relatório de Apontamentos', text: 'Copiar', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
                             { extend: 'excel', title:'Relatório de Apontamentos', text: 'Excel', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'print',   customize: function (doc) {
+                            { extend: 'print', customize: function (doc) {
                                 doc.defaultStyle.fontSize = 9.5;
                                 doc.styles.tableHeader.fontSize = 9.5;
                                 doc.styles.title.fontSize = 11;
@@ -391,14 +392,12 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                     });
                                       
                     $('.tooltip').tooltip({
-                            transitionMovement:200
-                        }
-                    );
-                    $('.dt-button').removeClass('dt-button');
+                        transitionMovement:200
+                    });
                     $('.atividade').css("text-overflow", "ellipsis");
-                    $("#min").pickadate({         
-                        closeOnSelect: true,      
-                        buttonText: 'Data de ínicio',
+                    $("#minAppointment, #maxAppointment").pickadate({
+                        closeOnSelect: true,
+                        buttonText: 'Data',
                         buttonImageOnly: true,
                         buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
                         monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -415,53 +414,36 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         selectMonths: true,
                         selectYears: 80,
                         format: 'dd/mm/yyyy',
-                        default: 'now'                
+                        default: 'now',
+                        onSet: function () { 
+                            dtAppointment.draw(); 
+                        }
                     });
-                    
-                    $("#max").pickadate({        
-                        closeOnSelect: true,       
-                        buttonText: 'Data de fim',
-                        buttonImageOnly: true,
-                        buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
-                        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
-                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                        today: 'Hoje',
-                        clear: 'Limpar',
-                        close: 'Pronto',
-                        labelMonthNext: 'Próximo mês',
-                        labelMonthPrev: 'Mês anterior',
-                        labelMonthSelect: 'Selecione um mês',
-                        labelYearSelect: 'Selecione um ano',
-                        selectMonths: true,
-                        selectYears: 80,
-                        format: 'dd/mm/yyyy',
-                        default: 'now'
+            
+                    $('#minAppointment, #maxAppointment').on('keyup change', function () {
+                        dtAppointment.draw();
                     });
+
+                    console.log($.fn.dataTable.ext.search);
 
                     $.fn.dataTable.ext.search.push(
-                        function( settings, data, dataIndex) {
+                        function (conf, data) {
+                            var min = $('#minAppointment').val() == "" ? "" : moment($('#minAppointment').val(), 'DD/MM/YYYY');
+                            var max = $('#maxAppointment').val() == "" ? "" : moment($('#maxAppointment').val(), 'DD/MM/YYYY');
+                            var startDate = moment(data[1], 'DD/MM/YYYY');
+                            if (min == "" && max == "") { return true; }
+                            if (min == "" && startDate <= max) { return true;}
+                            if(max == "" && startDate >= min) {return true;}
+                            if (startDate <= max && startDate >= min) { return true; }
 
-                            var dataIni = parseInt( $('#min').val(), 10 );
-                            var dataFim = parseInt( $('#max').val(), 10 );
-                            var dateRes = parseFloat( data[1] ) || 0; 
-                        
-                            if ( ( isNaN( dataIni ) && isNaN( dataFim ) ) ||
-                                    ( isNaN( dataIni ) && dateRes <= dataFim ) ||
-                                    ( dataIni <= dateRes   && isNaN( dataFim ) ) ||
-                                    ( dataIni <= dateRes   && dateRes <= dataFim ) )
-                            {
-                                return true;
-                            }
                             return false;
                         }
                     );
-                    $('#min, #max').on('keyup change', function() {
-                        dtAppointment.draw();
-                    });
+
+                    console.log($.fn.dataTable.ext.search);
+
                     $('.modal').modal();
-                    $('.dt-button').removeClass('dt-button'); 
+                    $('.dt-button').removeClass('dt-button');
                     $('#dtAppointment tbody').on('click', 'tr td:not(td:first-child)', function() { // ele nao funcionara na primeira td do filho
                         var data = dtAppointment.row(this).data();
                         var selectedRow = this;
@@ -482,7 +464,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Usuário"><i class="material-icons grey-text ">person</i></div>';
-                        html += '               <div class="conteudoModais">'+ data.userId.code +'</div>';
+                        html += '               <div class="conteudoModais">'+ data.userId.name +'</div>';
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '                <div class="iconesModais tooltipped" data-position="left" data-tooltip="Status de apontamento"><i class="material-icons grey-text ">autorenew</i></div>';
@@ -574,7 +556,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             </table>\
                             <table width="700">\
                                 <tr>\
-                                    <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>'+row.data().userId.code+'</td>\
+                                    <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>'+row.data().userId.name+'</td>\
                                 </tr>\
                             </table>\
                             <table width="700">\
@@ -631,7 +613,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             }
                         });              
                     });
-                };
+            };
 
                 if($rootScope.global.permission.requestConsultant == 1){
                     appointmentAPIService.getallAppointment().then(function(response) {

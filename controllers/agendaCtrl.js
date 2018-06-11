@@ -1,5 +1,8 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
+    //necessario para remover o search customizado
+   // $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login('acacio.magno').then(function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
@@ -24,11 +27,12 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 }
 
                 $scope.filter = {
-                    filterConsultores: [],
+                    filterConsultores: [$rootScope.global.idUser],
                     filterClientes: [],
                     filterProjetos: []
                 }
 
+                $(".toast").fadeOut("slow");
                 Materialize.toast('Carregando informações!', 30000, 'toast-container');
                 $rootScope.local = "agenda";
                 $('.global-alert-popover')
@@ -96,6 +100,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         if ($scope.freeUsersMonth.indexOf(month + "/" + year) < 0) {
                             $scope.freeUsersMonth.push(month + "/" + year);
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Carregando informações!', 30000, 'toast-container');
                             appointmentAPIService.getmonthappointment(month, year).then(function(response) {
                                     $.each($scope.user, function(key, obj) {
@@ -121,7 +126,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                                                         var eventData = {
                                                             id: obj.idUser + year + month + day,
-                                                            title: obj.code + " - Livre",
+                                                            title: obj.name + " - Livre",
                                                             start: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                             end: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                             color: "#FFFFFF",
@@ -141,7 +146,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                                     var day = i <= 9 ? "0" + i.toString() : i;
                                                     var eventData = {
                                                         id: obj.idUser + year + month + i,
-                                                        title: obj.code + " - Livre",
+                                                        title: obj.name + " - Livre",
                                                         start: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                         end: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                         color: "#FFFFFF",
@@ -174,6 +179,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     }
                                 },
                                 function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 04 - contate o administrador', 5500, 'toast-container')
 
                                 });
@@ -311,6 +317,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                         format: 'dd/mm/yyyy'
                                     }).trigger("change");
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 05 - contate o administrador', 5500, 'toast-container')
 
                                 });
@@ -341,8 +348,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 $scope.$apply();
                             }
                         });
-
-                        Materialize.toast('Carregando informações', 30000, 'toast-container');
                         appointmentAPIService.getById($scope.atraso.idappointment).then(
                             function(response) {
                                 $scope.atual = response.data[0];
@@ -368,6 +373,9 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                                     }
                                 )
+
+                                $(".toast").fadeOut("slow");
+                                Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
                             },
                             function() {
                                 $(".toast").fadeOut("slow");
@@ -443,91 +451,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     return horas + ":" + minutos + ":" + segundos;
                 };
 
-                $('#modalApontar').modal({
-                    ready: function(a) {
-                        appointmentAPIService.getById($scope.newAppointment.idAppointment).then(function(response) {
-                            var dadosApontamento = response.data[0];
-                            // console.log(dadosApontamento);
-
-                            if (moment($scope.closingDate, "YYYY-MM-DD") > moment(response.data[0].initialDate, "YYYY-MM-DD")) {
-                                $scope.Salvar = "Solicitar aprovação";
-                            } else {
-                                $scope.Salvar = "Salvar";
-                            }
-                            var city = $scope.newAppointment.appointmentProject = response.data[0].projectId.city;
-                            var address = $scope.newAppointment.appointmentProject = response.data[0].projectId.address;
-                            var district = $scope.newAppointment.appointmentProject = response.data[0].projectId.district;
-                            var number = $scope.newAppointment.appointmentProject = response.data[0].projectId.number;
-                            var complement = $scope.newAppointment.appointmentProject = response.data[0].projectId.complement;
-                            var uf = $scope.newAppointment.appointmentProject = response.data[0].projectId.state;
-                            var tootlipHTML = ' ';
-                            tootlipHTML += '<div class="">';
-                            tootlipHTML += '     <h5 style="font-size: 17px;">Endereço</h5>';
-                            tootlipHTML += '     <div class="input-field col s12 m12">';
-                            tootlipHTML += '         <p style="">Cidade: ' + city + '-' + uf + '</p>';
-                            tootlipHTML += '     </div>';
-                            tootlipHTML += '     <div class="input-field col s12 m12">';
-                            tootlipHTML += '         <p>Endereço: ' + address + '</p>';
-                            tootlipHTML += '     </div>';
-                            tootlipHTML += '     <div class="input-field col s12 m12">';
-                            tootlipHTML += '         <p>Número: ' + number + '</p>';
-                            tootlipHTML += '     </div>';
-                            tootlipHTML += '     <div class="input-field col s12 m12">';
-                            tootlipHTML += '         <p>Bairro: ' + district + '</p>';
-                            tootlipHTML += '     </div>';
-                            tootlipHTML += '     <div class="input-field col s12 m12">';
-                            tootlipHTML += '         <p>Complemento: ' + complement + '</p>';
-                            tootlipHTML += '     </div>';
-                            tootlipHTML += '</div>';
-                            $('.tooltipped').tooltip({
-                                delay: 300,
-                                html: true,
-                                tooltip: tootlipHTML
-                            });
-                            $scope.newAppointment.expenseType = response.data[0].projectId.expenseType;
-                            if (response.data[0].appointmentStatusId.idAppointmentStatus == "1") {
-                                $.each(response.data[0].appointmentExpense, function(key, value) {
-                                    response.data[0].appointmentExpense[key].cost = formatMoney(value.cost.replaceAll(".", ","));
-                                    response.data[0].appointmentExpense[key].expenseOpenTypeId = value.expenseOpenTypeId.idExpenseOpenType;
-                                })
-                                $scope.newAppointment.expense = response.data[0].appointmentExpense;
-                            } else {
-                                $scope.newAppointment.expense = []
-                            }
-                            $scope.newAppointment.workplace = response.data[0].workplace.toString();
-                            $scope.newAppointment.appointmentCustomer = response.data[0].customerId.name;
-                            $("#labelCustomer").addClass("active");
-                            $scope.newAppointment.executed = response.data[0].executed;
-                            $scope.newAppointment.appointmentProject = response.data[0].projectId.name;
-                            $("#labelProject").addClass("active");
-                            $scope.newAppointment.appointmentDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
-                            $("#labelAppointmentDate").addClass("active");
-
-                            $scope.newAppointment.initialHour = moment(response.data[0].initialHour, "HH:mm:ss").format("HH:mm");
-                            $("#labelInitialHour").addClass("active");
-                            $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").format("HH:mm");
-                            $("#labelHourLunch").addClass("active");
-                            $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").format("HH:mm");
-                            $("#labelLastHour").addClass("active");
-                            $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").format("HH:mm");
-                            $("#labelUnproductiveHours").addClass("active");
-
-                            $scope.newAppointment.expenseType = response.data[0].projectId.expenseType
-                            if ($scope.newAppointment.expenseType == 1) {
-                                $scope.newAppointment.despesa = formatMoney(response.data[0].projectId.expense);
-                            }
-                            $scope.newAppointment.activity = response.data[0].activity;
-                            $("#labelActivity").addClass("active");
-                        }, function() {
-                            Materialize.toast('Erro 08 - contate o administrador', 5500, 'toast-container')
-
-                        })
-                    },
-                    complete: function() {
-                        $scope.newAppointment = {};
-                    }
-                });
-
                 $scope.addExpense = function() {
                     $scope.newAppointment.expense.push({
                         expenseOpenTypeId: '',
@@ -545,6 +468,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 expenseTypeOpenAPIService.getall().then(function(response) {
                     $scope.expenseOpenType = response.data;
                 }, function() {
+                    $(".toast").fadeOut("slow");
                     Materialize.toast('Erro 09 - contate o administrador', 5500, 'toast-container')
 
                 });
@@ -638,27 +562,42 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         title.attr("title", title.text());
                     },
                     eventClick: function(calEvent, jsEvent, view) {
-                        if ((calEvent.type == "apontamentoNaoEfetuado" || calEvent.type == "apontamentoEfetuado") && (calEvent.user == $rootScope.global.idUser || $rootScope.global.permission.agenda == 1) && $rootScope.global.permission.appointment == 1) {
+                        if (calEvent.type == "apontamentoNaoEfetuado" || calEvent.type == "apontamentoEfetuado") {
                             $scope.newAppointment.idAppointment = calEvent.id;
-                            $('#modalApontar')
-                                .modal('open');
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
+                            $('#modalApontar').modal('open');
 
                         } else if (calEvent.type == "feriado") {
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
                             $scope.viewFeriado(calEvent.id);
                         } else if (calEvent.type == "solicitacao") {
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
                             if ($rootScope.global.permission.agenda == 1) {
                                 $scope.request.idCalendarRequest = calEvent.id;
                                 $('#modalAcceptSolicitação').modal('open');
                                 $scope.localTab = "solicitacao";
+                            }else{
+                                $scope.viewRequest(calEvent.id);
                             }
                         } else if (calEvent.type == "SolicitacaoAtraso" && $rootScope.global.permission.agenda == 1) {
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
                             $scope.atraso.idappointment = calEvent.id;
                             $('#modalAceitarAtraso').modal('open');
                         } else if (calEvent.type == "particular") {
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
                             $scope.viewParticular(calEvent.id);
                         } else if (calEvent.type == "ferias") {
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
                             $scope.viewFerias(calEvent.id);
                         } else if (calEvent.type == "aniversario") {
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Carregando...', 30000, 'toast-container');
                             $scope.viewAniversario(calEvent.user);
                         }
                     },
@@ -676,54 +615,66 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             //method remove appointments/requests/holidat
                             if (event.type == "apontamentoNaoEfetuado") {
                                 appointmentAPIService.delete(event.id).then(function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('A agenda foi removida', 1500, 'toast-container');
                                     $('#calendar').fullCalendar('removeEvents', event._id);
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 10 - contate o administrador', 5500, 'toast-container')
 
                                 });
                             } else
                             if (event.type == "feriado") {
                                 holidayAPIService.delete(event.id).then(function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('O feriado foi removido', 1500, 'toast-container');
                                     $('#calendar').fullCalendar('removeEvents', event._id);
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 11 - contate o administrador', 5500, 'toast-container')
 
                                 });
                             } else
                             if (event.type == "ferias") {
                                 appointmentAPIService.delete(event.id).then(function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('O dia de férias foi removido', 1500, 'toast-container');
                                     $('#calendar').fullCalendar('removeEvents', event._id);
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 12 - contate o administrador', 5500, 'toast-container')
 
                                 });
                             } else
                             if (event.type == "particular") {
                                 appointmentAPIService.delete(event.id).then(function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('O dia particular foi removido', 1500, 'toast-container');
                                     $('#calendar').fullCalendar('removeEvents', event._id);
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 13 - contate o administrador', 5500, 'toast-container')
 
                                 });
                             } else
                             if (event.type == "apontamentoEfetuado") {
                                 appointmentAPIService.delete(event.id).then(function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('O apontamento foi removido', 1500, 'toast-container');
                                     $('#calendar').fullCalendar('removeEvents', event._id);
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 14 - contate o administrador', 5500, 'toast-container')
 
                                 });
                             } else
                             if (event.type == "solicitacao") {
                                 calendarRequestAPIService.delete(event.id).then(function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('A solicitação foi removida', 1500, 'toast-container');
                                     $('#calendar').fullCalendar('removeEvents', event._id);
                                 }, function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 15 - contate o administrador', 5500, 'toast-container')
 
                                 });
@@ -748,6 +699,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                     if ($scope.findDates.indexOf(month + "/" + year) < 0) {
                         $scope.findDates.push(month + "/" + year);
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Carregando informações!', 30000, 'toast-container');
                         appointmentAPIService.getmonthappointment(month, year)
                             .then(
@@ -759,14 +711,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $.each(response.data, function(key, objAppoint) {
                                         switch (parseInt(objAppoint.appointmentStatusId.idAppointmentStatus)) {
                                             case 1:
-                                                title = objAppoint.customerId.name + " - " + objAppoint.userId.code;
+                                                title = objAppoint.customerId.name + " - " + objAppoint.userId.name;
                                                 color = "#00b8d4";
                                                 textColor = "#FFFFFF";
                                                 borderColor = '#00b8d4'
                                                 type = 'apontamentoEfetuado';
                                                 break;
                                             case 2:
-                                                title = objAppoint.customerId.name + " - " + objAppoint.userId.code;
+                                                title = objAppoint.customerId.name + " - " + objAppoint.userId.name;
                                                 color = "#FFFFFF";
                                                 textColor = "#000000";
                                                 if (dataAtual > moment(objAppoint.initialDate).format("YYYY/MM/DD")) {
@@ -777,21 +729,21 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                                 type = 'apontamentoNaoEfetuado';
                                                 break;
                                             case 3:
-                                                title = objAppoint.userId.code + " - " + objAppoint.projectId.name;
+                                                title = objAppoint.userId.name + " - " + objAppoint.projectId.name;
                                                 color = "#00FF5B";
                                                 textColor = "#000000";
                                                 borderColor = "#00FF5B";
                                                 type = 'ferias';
                                                 break;
                                             case 4:
-                                                title = objAppoint.userId.code + " - " + objAppoint.projectId.name;
+                                                title = objAppoint.userId.name + " - " + objAppoint.projectId.name;
                                                 color = "#eda65e";
                                                 textColor = "#FFFFFF";
                                                 borderColor = "#eda65e";
                                                 type = 'particular';
                                                 break;
                                             case 5:
-                                                title = objAppoint.customerId.name + " - " + objAppoint.userId.code;
+                                                title = objAppoint.customerId.name + " - " + objAppoint.userId.name;
                                                 color = "#cddc39";
                                                 textColor = "#FFFFFF";
                                                 borderColor = "#cddc39";
@@ -826,6 +778,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $(".toast").fadeOut("slow");
                                 },
                                 function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 16 - contate o administrador', 5500, 'toast-container')
 
                                 }
@@ -836,6 +789,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         if ($scope.freeUsersMonth.indexOf(month + "/" + year) < 0) {
                             $scope.freeUsersMonth.push(month + "/" + year);
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Carregando informações!', 30000, 'toast-container');
                             appointmentAPIService.getmonthappointment(month, year).then(
                                 function(response) {
@@ -862,7 +816,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                                                         var eventData = {
                                                             id: obj.idUser + year + month + day,
-                                                            title: obj.code + " - Livre",
+                                                            title: obj.name + " - Livre",
                                                             start: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                             end: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                             color: "#FFFFFF",
@@ -882,7 +836,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                                     var day = i <= 9 ? "0" + i.toString() : i;
                                                     var eventData = {
                                                         id: obj.idUser + year + month + i,
-                                                        title: obj.code + " - Livre",
+                                                        title: obj.name + " - Livre",
                                                         start: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                         end: moment(year.toString() + "-" + month.toString() + "-" + day.toString(), "YYYY-MM-DD").format("YYYY-MM-DD"),
                                                         color: "#FFFFFF",
@@ -903,6 +857,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $scope.filterData();
                                 },
                                 function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 17 - contate o administrador', 5500, 'toast-container')
 
                                 }
@@ -914,7 +869,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.listBirth.push(year);
                         $.each($scope.user, function(key, obj) {
                             var eventData = {
-                                title: "Aniversário - " + obj.code,
+                                title: "Aniversário - " + obj.name,
                                 start: year + "-" + moment(obj.birthDay, "YYYY-MM-DD").format("MM-DD"),
                                 end: year + "-" + moment(obj.birthDay, "YYYY-MM-DD").format("MM-DD"),
                                 color: "#990099",
@@ -942,7 +897,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.user = response.data;
                         $.each($scope.user, function(key, obj) {
                             var eventData = {
-                                title: "Aniversário - " + obj.code,
+                                title: "Aniversário - " + obj.name,
                                 start: year + "-" + moment(obj.birthDay, "YYYY-MM-DD").format("MM-DD"),
                                 end: year + "-" + moment(obj.birthDay, "YYYY-MM-DD").format("MM-DD"),
                                 color: "#990099",
@@ -959,6 +914,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         });
                         $scope.filterData();
                     }, function() {
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Erro 18 - contate o administrador', 5500, 'toast-container')
 
                     });
@@ -969,6 +925,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         projectsAPIService.getbyCustomer(id).then(function(response) {
                             $scope.project = response.data;
                         }, function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 19 - contate o administrador', 5500, 'toast-container')
 
                         });
@@ -981,12 +938,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 customersAPIService.getall().then(function(response) {
                     $scope.customer = response.data;
                 }, function() {
+                    $(".toast").fadeOut("slow");
                     Materialize.toast('Erro 20 - contate o administrador', 5500, 'toast-container')
 
                 });
 
                 //insert agenda
                 $scope.insertAgenda = function() {
+                    $(".toast").fadeOut("slow");
                     Materialize.toast('Inserindo itens', 5000, 'toast-container');
                     var dia = moment($("#inicioAgenda").val().trim(), "DD/MM/YYYY");
                     var dataFinal = moment($("#fimAgenda").val().trim(), "DD/MM/YYYY");
@@ -1037,7 +996,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         $scope.user.forEach(function(v) {
                             if (v.idUser == $scope.appointment.userId) {
-                                $scope.appointment.code = v.code;
+                                $scope.appointment.name = v.name;
                             }
                         });
 
@@ -1061,7 +1020,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             }
                             eventData = {
                                 id: "",
-                                title: $scope.appointment.nameCustomer + ' - ' + $scope.appointment.code,
+                                title: $scope.appointment.nameCustomer + ' - ' + $scope.appointment.name,
                                 start: dia,
                                 end: dia,
                                 color: "#FFFFFF",
@@ -1108,9 +1067,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 }
                             });
                             $scope.filterData();
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Agenda inserida de ' + moment(itens[0].start._d).format("DD/MM/YYYY") + " até " + moment(itens[itens.length - 1].start._d).format("DD/MM/YYYY"), 5000, 'toast-container');
                         },
                         function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 21 - contate o administrador', 5500, 'toast-container')
 
                         }
@@ -1170,7 +1131,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         $scope.user.forEach(function(v) {
                             if (v.idUser == $scope.appointment.userId) {
-                                $scope.appointment.code = v.code;
+                                $scope.appointment.name = v.name;
                             }
                         });
 
@@ -1190,7 +1151,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                             eventData = {
                                 id: "",
-                                title: 'Férias - ' + $scope.appointment.code,
+                                title: 'Férias - ' + $scope.appointment.name,
                                 start: dia,
                                 end: dia,
                                 color: "#00FF5B",
@@ -1202,9 +1163,9 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.appointment.projectId = 1;
                             $scope.appointment.customerId = 1;
                             $scope.appointment.transfer = 0;
-                            $scope.appointment.initialHour = "08:30:00";
-                            $scope.appointment.hourLunch = "01:00:00";
-                            $scope.appointment.lastHour = "17:30:00";
+                            $scope.appointment.initialHour = "00:00:00";
+                            $scope.appointment.hourLunch = "00:00:00";
+                            $scope.appointment.lastHour = "00:00:00";
                             $scope.appointment.unproductiveHours = "00:00:00";
                             $scope.appointment.activity = "Férias";
                             $scope.appointment.executed = "Férias";
@@ -1228,17 +1189,19 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $scope.listEvents.push(itens[key]);
                                 });
                                 $scope.filterData();
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Agenda inserida de ' + moment(itens[0].start._d).format("DD/MM/YYYY") + " até " + moment(itens[itens.length - 1].start._d).format("DD/MM/YYYY"), 5000, 'toast-container');
                                 $('.modal').modal('close');
                             },
                             function() {
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Erro 22 - contate o administrador', 5500, 'toast-container')
 
                             }
                         );
                 };
 
-                // insertar ferias
+                // insertar particular
                 $scope.insertParticular = function() {
                     var dia = moment($("#inicioParticular").val().trim(), "DD/MM/YYYY");
                     var dataFinal = moment($("#fimParticular").val().trim(), "DD/MM/YYYY");
@@ -1290,7 +1253,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         $scope.user.forEach(function(v) {
                             if (v.idUser == $scope.appointment.userId) {
-                                $scope.appointment.code = v.code;
+                                $scope.appointment.name = v.name;
                             }
                         });
 
@@ -1302,7 +1265,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             }
                             eventData = {
                                 id: "",
-                                title: $scope.appointment.code + " - " + 'Particular',
+                                title: $scope.appointment.name + " - " + 'Particular',
                                 start: dia,
                                 end: dia,
                                 color: "#eda65e",
@@ -1337,10 +1300,12 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $scope.listEvents.push(itens[key]);
                                 });
                                 $scope.filterData();
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Agenda inserida de ' + moment(itens[0].start._d).format("DD/MM/YYYY") + " até " + moment(itens[itens.length - 1].start._d).format("DD/MM/YYYY"), 5000, 'toast-container');
                                 $('.modal').modal('close');
                             },
                             function() {
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Erro 23 - contate o administrador', 5500, 'toast-container')
 
                             }
@@ -1378,6 +1343,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.filterData();
                         },
                         function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 24 - contate o administrador', 5500, 'toast-container')
 
                         }
@@ -1416,6 +1382,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.filterData();
                         },
                         function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 25 - contate o administrador', 5500, 'toast-container')
 
                         }
@@ -1424,6 +1391,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 closingDateAPIService.getall().then(function(response) {
                     $scope.closingDate = moment().date(response.data[0].date).format("YYYY-MM-DD")
                 }, function() {
+                    $(".toast").fadeOut("slow");
                     Materialize.toast('Erro 26 - contate o administrador', 5500, 'toast-container')
 
                 });
@@ -1440,14 +1408,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $.each(response.data, function(key, obj) {
                             switch (parseInt(obj.appointmentStatusId.idAppointmentStatus)) {
                                 case 1:
-                                    title = obj.customerId.name + " - " + obj.userId.code,
+                                    title = obj.customerId.name + " - " + obj.userId.name,
                                         color = "#00b8d4";
                                     textColor = "#FFFFFF";
                                     borderColor = '#00b8d4'
                                     type = 'apontamentoEfetuado';
                                     break;
                                 case 2:
-                                    title = obj.customerId.name + " - " + obj.userId.code,
+                                    title = obj.customerId.name + " - " + obj.userId.name,
                                         color = "#FFFFFF";
                                     textColor = "#000000";
                                     if (dataAtual > moment(obj.initialDate).format("YYYY/MM/DD")) {
@@ -1458,21 +1426,21 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     type = 'apontamentoNaoEfetuado';
                                     break;
                                 case 3:
-                                    title = obj.userId.code + " - " + obj.projectId.name;
+                                    title = obj.userId.name + " - " + obj.projectId.name;
                                     color = "#00FF5B";
                                     textColor = "#000000";
                                     borderColor = "#00FF5B";
                                     type = 'ferias';
                                     break;
                                 case 4:
-                                    title = obj.userId.code + " - " + obj.projectId.name;
+                                    title = obj.userId.name + " - " + obj.projectId.name;
                                     color = "#eda65e";
                                     textColor = "#FFFFFF";
                                     borderColor = "#eda65e";
                                     type = 'particular';
                                     break;
                                 case 5:
-                                    title = obj.customerId.name + " - " + obj.userId.code;
+                                    title = obj.customerId.name + " - " + obj.userId.name;
                                     color = "#cddc39";
                                     textColor = "#FFFFFF";
                                     borderColor = "#cddc39";
@@ -1507,10 +1475,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         });
                         $scope.filterData();
                         $(".toast").fadeOut("slow");
+                        Materialize.toast('Dados carregados com sucesso. :)', 3000, 'toast-container')
                     },
                     function() {
-                        Materialize.toast('Erro 27 - contate o administrador', 5500, 'toast-container')
                         $(".toast").fadeOut("slow");
+                        Materialize.toast('Erro 27 - contate o administrador', 5500, 'toast-container')
 
                     }
                 );
@@ -1564,7 +1533,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     <table width="700" >\
                                         <tr>\
                                             <td width="500px" height="50px" valign="top"><span style="font-size:14px">Cliente</span><br><br><b>' + itensApontamento.appointmentCustomer + '</b></td>\
-                                            <td width="80px" height="50px" valign="top"><span style="font-size:14px">Data</span><br><br><p style="font-size: 14px; margin-left: 25px; margin-top: 0px;">' + moment($scope.newAppointment.appointmentDate, "DD/MM/YYYY").format('DD/MM/YYYY') + '</p></td>\
+                                            <td width="80px" height="50px" valign="top"><span style="font-size:14px">Data</span><br><br><p style="font-size: 14px; margin-left: 25px; margin-top: 0px;">' + moment($scope.newAppointment.initialDate, "DD/MM/YYYY").format('DD/MM/YYYY') + '</p></td>\
                                         </tr>\
                                         <tr>\
                                             <td  height="50" valign="top"><span style="font-size:12px">Projeto</span><br><br>' + itensApontamento.appointmentProject + '</td>\
@@ -1572,7 +1541,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     </table>\
                                     <table width="700">\
                                         <tr>\
-                                            <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>' + 'Acacio Magno' + '</td>\
+                                            <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>' + $scope.newAppointment.user.name + '</td>\
                                         </tr>\
                                     </table>\
                                     <table width="700">\
@@ -1591,13 +1560,28 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     </table>\
                                     <table width="700">\
                                         <tr>\
-                                            <td width="100%" height="50" valign="top"><span style="font-size:12px">Executado:</span><br><br><p style="font-size: 12px;"><b>' + itensApontamento.executed + '</b></p>\
+                                            <td width="100%" height="50" valign="top"><span style="font-size:12px">Executado </span><br><br><p style="font-size: 12px;"><b>' + itensApontamento.executed + '</b></p>\
                                             </td>\
                                         </tr>\
                                     </table>\
                                     <table width="700"  style="border: 1px solid black;">\
                                         <tr>\
-                                            <td width="160" height="50" valign="top"><span style="font-size:12px"><div style="margin-top: 12px;"></div><div style="margin-left: 10px;"><br><br>Cliente: ______________________________</span></div><div style="margin-left: 430px; margin-top: 50px;"><br><br>Recurso: ______________________________</span></div><div style="margin-top: 5px;"></div></td>\
+                                            <td width="160" height="50" valign="top">\
+                                                <span style="font-size:12px">\
+                                                    <span style="font-size:13px;">Assinatura</span> \
+                                                    <br>\
+                                                    <br>\
+                                                    <br>\
+                                                    <br>\
+                                                    <div> \
+                                                        <span>Cliente ______________________________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Recurso ______________________________ </span>\
+                                                    </div>\
+                                                    <br>\
+                                                    <br>\
+                                                </span>\
+                                                <div style="margin-top: 5px;"></div>\
+                                            </td>\
                                         </tr>\
                                         <tr>\
                                             <td width="160" height="50" valign="top">\
@@ -1617,11 +1601,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 </section>';
 
                                 var html = Mustache.render(relatorio, null);
-                                var emails = [$rootScope.global.email, "jessiley.oliveira@iv2.com.br", "kelvin.musselli@iv2.com.br"];//,'comercial@iv2.com.br','os@iv2.com.br'];
+                                var emails = [$rootScope.global.email, 'kelvin.musselli@iv2.com.br'];//,'comercial@iv2.com.br','os@iv2.com.br'];
                                 var destinatarioNome = 'Grupo IV2';
-                                var descricaoOS = 'Anexo referente ao serviço prestado.';
+                                var descricaoOS = 'Prezado(a) Cliente Segue no anexo OS referente ao atendimento realizado. Dúvidas estamos à disposição para maiores esclarecimentos. Grupo IV2 - (11) 2448-5611';
                                 var nomeArquivoOS = 'Ordem de serviço';
-                                var tituloOS = 'Grupo IV2 - OS ' +  moment($scope.newAppointment.appointmentDate, "DD/MM/YYYY").format('DD/MM/YYYY') + ' - ' + 'Acacio Magno';
+                                var tituloOS = 'Grupo IV2 - OS ' +  moment($scope.newAppointment.initialDate, "DD/MM/YYYY").format('DD/MM/YYYY') + ' - ' + $scope.newAppointment.user.name;
 
                                 $.ajax({
                                     method: 'POST',
@@ -1640,7 +1624,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                             destinatario: emails,
                                             nomeDestinatario: destinatarioNome,
                                             titulo: tituloOS,
-                                            mensagem: 'Anexo referente ao serviço prestado.',
+                                            mensagem: 'Prezado(a) Cliente Segue no anexo OS referente ao atendimento realizado. Dúvidas estamos à disposição para maiores esclarecimentos. Grupo IV2 - (11) 2448-5611',
                                             extensao: "pdf"
                                         }
 
@@ -1654,6 +1638,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                         );
                                     },
                                     error: function(error) {
+                                        $(".toast").fadeOut("slow");
                                         Materialize.toast('Erro 02 - contate o administrador', 5500, 'toast-container')
 
                                     }
@@ -1677,11 +1662,13 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.listEvents.push(event[0]);
                             $scope.filterData();
 
+                            $(".toast").fadeOut("slow");
                             Materialize.toast(mensagem, 3000, 'toast-container');
                             $("#modalApontar").modal("close");
 
                         },
                         function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 01 - Contate o ADM', 5500, 'toast-container');
                             $("#modalApontar").modal("close");
                         }
@@ -1691,6 +1678,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 //APROVANDO APONTAMENTO ATRASADO
                 $scope.insertAtrasado = function() {
                     $scope.blockAccept = true;
+                    $(".toast").fadeOut("slow");
                     Materialize.toast('Aprovando apontamento!', 30000, 'toast-container');
                     if ($scope.atual.workplace == 1 && $scope.solicitado.workplace == 1) {
                         $scope.solicitado.expense = [];
@@ -1719,7 +1707,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 var obj = $scope.solicitado;
                                 var eventData = {
                                     id: $scope.atraso.idappointment,
-                                    title: obj.customerId.name+" - "+obj.userId.code,
+                                    title: obj.customerId.name+" - "+obj.userId.name,
                                     start: moment(obj.initialDate, "DD/MM/YYYY").format("YYYY-MM--DD"),
                                     end: moment(obj.initialDate, "DD/MM/YYYY").format("YYYY-MM--DD"),
                                     color: "#00b8d4",
@@ -1771,7 +1759,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     </table>\
                                     <table width="700">\
                                         <tr>\
-                                            <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>' + obj.userId.code + '</td>\
+                                            <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>' + obj.userId.name + '</td>\
                                         </tr>\
                                     </table>\
                                     <table width="700">\
@@ -1816,11 +1804,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 </section>';
 
                                 var html = Mustache.render(relatorio, null);
-                                var emails = [$rootScope.global.email, "jessiley.oliveira@iv2.com.br", "kelvin.musselli@iv2.com.br"];//,'comercial@iv2.com.br','os@iv2.com.br'];
+                                var emails = [$rootScope.global.email];//,'comercial@iv2.com.br','os@iv2.com.br'];
                                 var destinatarioNome = 'Grupo IV2';
                                 var descricaoOS = 'Anexo referente ao serviço prestado.';
                                 var nomeArquivoOS = 'Ordem de serviço';
-                                var tituloOS = 'Grupo IV2 - OS ' + moment(obj.initialDate, "DD/MM/YYYY").format('DD/MM/YYYY') + ' - ' + obj.userId.code;
+                                var tituloOS = 'Grupo IV2 - OS ' + moment(obj.initialDate, "DD/MM/YYYY").format('DD/MM/YYYY') + ' - ' + obj.userId.name;
 
                                 $.ajax({
                                     method: 'POST',
@@ -1849,11 +1837,13 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                             $("#modalAceitarAtraso").modal("close");
                                             $scope.blockAccept = false;
                                         }, function() {
+                                            $(".toast").fadeOut("slow");
                                             Materialize.toast('Erro 28 - contate o administrador', 5500, 'toast-container');
                                             $scope.blockAccept = false;
                                         });
                                     },
                                     error: function(error) {
+                                        $(".toast").fadeOut("slow");
                                         Materialize.toast('Erro contate o administrador', 5500, 'toast-container');
                                         $scope.blockAccept = false;
 
@@ -1861,6 +1851,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 });
                             },
                             function() {
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Erro 01 - Contate o ADM', 5500, 'toast-container');
                                 $scope.blockAccept = false;
                             }
@@ -1897,12 +1888,15 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.filterData();
 
                             $('#modalAceitarAtraso').modal('close');
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('A solicitação foi cancelada', 1500, 'toast-container');
                         }, function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 29 - contate o administrador', 5500, 'toast-container')
 
                         });
                     } else {
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Operação foi recusada', 1500, 'toast-container');
                         $('#modalAceitarAtraso').modal('close');
                     }
@@ -1922,7 +1916,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 $scope.accept.executed = '';
                                 $scope.accept.appointmentStatusId = 2;
                                 $scope.request = response.data[0];
-                                $scope.request.code = response.data[0].userId.code;
+                                $scope.request.name = response.data[0].userId.name;
                                 $scope.request.userId = response.data[0].userId.idUser;
                                 $scope.request.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
                                 $scope.request.description = response.data[0].description;
@@ -1930,8 +1924,12 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 $("#lblinitAgendaRequest").addClass("active");
                                 $("#lbldescription").addClass("active");
                                 $(".select2").select2();
+
+                                $(".toast").fadeOut("slow");
+                                Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
                             },
                             function() {
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Erro 30 - contate o administrador', 5500, 'toast-container')
 
                             }
@@ -1957,7 +1955,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $.each(response.data, function(key, obj) {
                                 var eventData = {
                                     id: obj.idCalendarRequest,
-                                    title: "Solicitação: " + obj.userId.code,
+                                    title: "Solicitação: " + obj.userId.name,
                                     start: obj.initialDate,
                                     end: obj.lastDate,
                                     color: "#FF0000",
@@ -1975,12 +1973,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.filterData();
                         },
                         function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 31- contate o administrador', 5500, 'toast-container')
 
                         }
                     );
                 //solicitacao de calendario
                 $scope.requestCalendar = function() {
+                    $(".toast").fadeOut("slow");
                     Materialize.toast('Inserindo Itens', 5000, 'toast-container');
                     var dia = moment($("#initAgendaRequest").val().trim(), "DD/MM/YYYY");
                     var dataFinal = moment($("#endAgendaRequest").val().trim(), "DD/MM/YYYY");
@@ -2031,7 +2031,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         $scope.user.forEach(function(v) {
                             if (v.idUser == $scope.request.userId) {
-                                $scope.request.code = v.code;
+                                $scope.request.name = v.name;
                             }
                         });
                         if (save == true) {
@@ -2042,7 +2042,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             }
                             eventData = {
                                 id: "",
-                                title: "Solicitação: " + $scope.request.code,
+                                title: "Solicitação: " + $scope.request.name,
                                 start: dia,
                                 end: dia,
                                 color: "#FF0000",
@@ -2072,9 +2072,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $scope.listEvents.push(itens[key]);
                                 });
                                 $scope.filterData();
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Solicitação inserida de ' + moment(itens[0].start._d).format("DD/MM/YYYY") + " até " + moment(itens[itens.length - 1].start._d).format("DD/MM/YYYY"), 5000, 'toast-container');
                             },
                             function() {
+                                $(".toast").fadeOut("slow");
                                 Materialize.toast('Erro 32 - contate o administrador', 5500, 'toast-container')
 
                             }
@@ -2088,7 +2090,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                     $scope.user.forEach(function(v) { //list Users
                         if (v.idUser == $scope.accept.userId) {
-                            $scope.accept.code = v.code;
+                            $scope.accept.name = v.name;
                         }
                     });
 
@@ -2112,7 +2114,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                     var eventData = {
                         id: '',
-                        title: $scope.accept.customerName + " - " + $scope.accept.code,
+                        title: $scope.accept.customerName + " - " + $scope.accept.name,
                         start: dia,
                         end: dia,
                         color: '#FFFFFF',
@@ -2160,12 +2162,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     $scope.filterData();
                                 },
                                 function() {
+                                    $(".toast").fadeOut("slow");
                                     Materialize.toast('Erro 34 - contate o administrador', 5500, 'toast-container')
 
                                 }
                             );
                         },
                         function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 33 - contate o administrador', 5500, 'toast-container')
 
                         }
@@ -2178,6 +2182,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     if (remove == true) {
                         calendarRequestAPIService.delete($scope.request.idCalendarRequest).then(function() {
 
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('A solicitação foi cancelada', 1500, 'toast-container');
 
                             var removeThisItem = $scope.listEvents.filter(
@@ -2191,10 +2196,12 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                             $('#modalAcceptSolicitação').modal('close');
                         }, function() {
+                            $(".toast").fadeOut("slow");
                             Materialize.toast('Erro 35 - contate o administrador', 5500, 'toast-container')
 
                         });
                     } else {
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Operação foi recusada', 1500, 'toast-container');
                         $('#modalAcceptSolicitação').modal('close');
                     }
@@ -2336,7 +2343,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 appointmentAPIService.getById(id).then(
                     function(response){
                         $scope.viewParticularData = response.data[0];
-                        $scope.viewParticularData.userName = response.data[0].userId.code;
+                        $scope.viewParticularData.userName = response.data[0].userId.name;
                         $scope.viewParticularData.userId = response.data[0].userId.idUser;
                         $scope.viewParticularData.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
                         $('#modalViewParticular').modal('open');
@@ -2344,14 +2351,19 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             Materialize.updateTextFields();
                             $('.select2').select2();
                         }, 0);
+
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
                     },
                     function(){
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Erro 36 - contate o administrador', 5500, 'toast-container');
                     }
                 )
             }
 
             $scope.updateParticular = function(){
+                $(".toast").fadeOut("slow");
                 Materialize.toast('Salvando particular!', 30000, 'toast-container');
                 $('#calendar').fullCalendar('removeEvents');
                 $scope.viewParticularData.initialDate = moment($scope.viewParticularData.initialDate, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -2374,7 +2386,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         );
 
                         $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].start = $scope.viewParticularData.initialDate;
-                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].title = idUser[0].code+" - Particular";
+                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].title = idUser[0].name+" - Particular";
 
                         $scope.filterData();
                             
@@ -2403,7 +2415,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 appointmentAPIService.getById(id).then(
                     function(response){
                         $scope.viewFeriasData = response.data[0];
-                        $scope.viewFeriasData.userName = response.data[0].userId.code;
+                        $scope.viewFeriasData.userName = response.data[0].userId.name;
                         $scope.viewFeriasData.userId = response.data[0].userId.idUser;
                         $scope.viewFeriasData.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
                         $('#modalViewFerias').modal('open');
@@ -2413,12 +2425,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         }, 0);
                     },
                     function(){
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Erro 38 - contate o administrador', 5500, 'toast-container');
                     }
                 )
             }
 
             $scope.updateFerias = function(){
+                $(".toast").fadeOut("slow");
                 Materialize.toast('Salvando Férias!', 30000, 'toast-container');
                 $('#calendar').fullCalendar('removeEvents');
                 $scope.viewFeriasData.initialDate = moment($scope.viewFeriasData.initialDate, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -2441,7 +2455,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         );
 
                         $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].start = $scope.viewFeriasData.initialDate;
-                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].title = idUser[0].code+" - Férias";
+                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].title = idUser[0].name+" - Férias";
 
                         $scope.filterData();
                             
@@ -2460,6 +2474,8 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.$apply();
                         }
                     });
+                    $(".toast").fadeOut("slow");
+                    Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
                 },
                 complete: function() {
                     $scope.viewFeriadoData = [];
@@ -2478,12 +2494,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         }, 0);
                     },
                     function(){
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Erro 40 - contate o administrador', 5500, 'toast-container');
                     }
                 )
             }
 
             $scope.updateFeriado = function(){
+                $(".toast").fadeOut("slow");
                 Materialize.toast('Salvando Fériado!', 30000, 'toast-container');
                 $('#calendar').fullCalendar('removeEvents');
                 $scope.viewFeriadoData.date = moment($scope.viewFeriadoData.date, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -2531,14 +2549,264 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.viewaniversarioData = response.data[0];
                         $scope.viewaniversarioData.data = moment(response.data[0].birthDay, "YYYY-MM-DD").format("DD/MM");
                         $('#modalViewAniversario').modal('open');
+
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
                     },
                     function(){
+                        $(".toast").fadeOut("slow");
                         Materialize.toast('Erro 42 - contate o administrador', 5500, 'toast-container');
                     }
                 )
             }
+
+            $('#modalViewRequest').modal({
+                ready: function() {
+                    $('ul.tabs').tabs({
+                        onShow: function() {
+                            $scope.$apply();
+                        }
+                    });
+                },
+                complete: function() {
+                    $scope.viewRequestData = [];
+                }
+            });
+
+            $scope.viewRequest = function(id){
+                calendarRequestAPIService.getById(id).then(
+                    function(response){
+                        $scope.viewRequestData = response.data[0];
+                        $scope.viewRequestData.user = response.data[0].userId;
+                        $scope.viewRequestData.userId = response.data[0].userId.idUser;
+                        $scope.viewRequestData.requester = response.data[0].requesterId;
+                        $scope.viewRequestData.requesterId = response.data[0].requesterId.idUser;
+
+                        $scope.viewRequestData.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
+                        $('#modalViewRequest').modal('open');
+                        $timeout(function () {
+                            Materialize.updateTextFields();
+                            $('.select2').select2();
+                        }, 0);
+
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
+                    },
+                    function(){
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Erro 43 - contate o administrador', 5500, 'toast-container');
+                    }
+                )
+            }
+
+            $scope.updateRequest = function(){
+                $(".toast").fadeOut("slow");
+                Materialize.toast('Salvando Solicitação!', 30000, 'toast-container');
+                $('#calendar').fullCalendar('removeEvents');
+                $scope.viewRequestData.initialDate = moment($scope.viewRequestData.initialDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+                calendarRequestAPIService.update($scope.viewRequestData).then(
+                    function(){
+                        $('#modalViewRequest').modal('close');
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Solicitação salva com sucesso!', 5500, 'toast-container');
+
+                        var idItem = $scope.listEvents.filter(
+                            function(val) {
+                                return val.type == "solicitacao" && val.id == $scope.viewRequestData.idCalendarRequest;
+                            }
+                        );
+
+                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].start = $scope.viewRequestData.initialDate;
+                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].end = $scope.viewRequestData.initialDate;
+
+                        $scope.filterData();
+
+                    },
+                    function(err){
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Erro 44 - contate o administrador', 5500, 'toast-container');
+                    }
+                )
+            }
+
+            $('#modalApontar').modal({
+                ready: function(a) {
+                    $('ul.tabs').tabs({
+                        onShow: function() {
+                            $scope.$apply();
+                        }
+                    });
+                    appointmentAPIService.getById($scope.newAppointment.idAppointment).then(function(response) {
+                        $scope.newAppointment = response.data[0];
+                        $scope.newAppointment.user = $scope.newAppointment.userId;
+                        $scope.newAppointment.userId = $scope.newAppointment.userId.idUser;
+                        $scope.newAppointment.customer = $scope.newAppointment.customerId;
+                        $scope.newAppointment.customerId = $scope.newAppointment.customerId.idCustomer;
+                        $scope.getProjects($scope.newAppointment.customerId);
+                        $scope.newAppointment.project = $scope.newAppointment.projectId;
+                        $scope.newAppointment.projectId = $scope.newAppointment.projectId.idProject;
+
+                        if (moment($scope.closingDate, "YYYY-MM-DD") > moment(response.data[0].initialDate, "YYYY-MM-DD") && $scope.global.permission.agenda != 1) {
+                            $scope.Salvar = "Solicitar aprovação";
+                        } else {
+                            $scope.Salvar = "Salvar";
+                        }
+                        var city = $scope.newAppointment.appointmentProject = response.data[0].project.city;
+                        var address = $scope.newAppointment.appointmentProject = response.data[0].project.address;
+                        var district = $scope.newAppointment.appointmentProject = response.data[0].project.district;
+                        var number = $scope.newAppointment.appointmentProject = response.data[0].project.number;
+                        var complement = $scope.newAppointment.appointmentProject = response.data[0].project.complement;
+                        var uf = $scope.newAppointment.appointmentProject = response.data[0].project.state;
+                        var tootlipHTML = ' ';
+                        tootlipHTML += '<div class="">';
+                        tootlipHTML += '     <h5 style="font-size: 17px;">Endereço</h5>';
+                        tootlipHTML += '     <div class="input-field col s12 m12">';
+                        tootlipHTML += '         <p style="">Cidade: ' + city + '-' + uf + '</p>';
+                        tootlipHTML += '     </div>';
+                        tootlipHTML += '     <div class="input-field col s12 m12">';
+                        tootlipHTML += '         <p>Endereço: ' + address + '</p>';
+                        tootlipHTML += '     </div>';
+                        tootlipHTML += '     <div class="input-field col s12 m12">';
+                        tootlipHTML += '         <p>Número: ' + number + '</p>';
+                        tootlipHTML += '     </div>';
+                        tootlipHTML += '     <div class="input-field col s12 m12">';
+                        tootlipHTML += '         <p>Bairro: ' + district + '</p>';
+                        tootlipHTML += '     </div>';
+                        tootlipHTML += '     <div class="input-field col s12 m12">';
+                        tootlipHTML += '         <p>Complemento: ' + complement + '</p>';
+                        tootlipHTML += '     </div>';
+                        tootlipHTML += '</div>';
+                        $('.tooltipped').tooltip({
+                            delay: 300,
+                            html: true,
+                            tooltip: tootlipHTML
+                        });
+                        $scope.newAppointment.expenseType = response.data[0].project.expenseType;
+                        if (response.data[0].appointmentStatusId.idAppointmentStatus == "1") {
+                            $.each(response.data[0].appointmentExpense, function(key, value) {
+                                response.data[0].appointmentExpense[key].cost = formatMoney(value.cost.replaceAll(".", ","));
+                                response.data[0].appointmentExpense[key].expenseOpenTypeId = value.expenseOpenTypeId.idExpenseOpenType;
+                            })
+                            $scope.newAppointment.expense = response.data[0].appointmentExpense;
+                        } else {
+                            $scope.newAppointment.expense = []
+                        }
+                        $scope.newAppointment.workplace = response.data[0].workplace.toString();
+                        $scope.newAppointment.appointmentCustomer = response.data[0].customer.name;
+                        $("#labelCustomer").addClass("active");
+                        $scope.newAppointment.executed = response.data[0].executed;
+                        $scope.newAppointment.appointmentProject = response.data[0].project.name;
+                        $("#labelProject").addClass("active");
+                        $scope.newAppointment.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
+                        $("#labelAppointmentDate").addClass("active");
+
+                        $scope.newAppointment.initialHour = moment(response.data[0].initialHour, "HH:mm:ss").format("HH:mm");
+                        $("#labelInitialHour").addClass("active");
+                        $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").format("HH:mm");
+                        $("#labelHourLunch").addClass("active");
+                        $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").format("HH:mm");
+                        $("#labelLastHour").addClass("active");
+                        $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").format("HH:mm");
+                        $("#labelUnproductiveHours").addClass("active");
+
+                        $scope.newAppointment.expenseType = response.data[0].project.expenseType
+
+                        if ($scope.newAppointment.expenseType == 1) {
+                            $scope.newAppointment.despesa = formatMoney(response.data[0].project.expense);
+                        }
+
+                        $scope.newAppointment.activity = response.data[0].activity;
+                        $("#labelActivity").addClass("active");
+
+                        $timeout(function () {
+                            Materialize.updateTextFields();
+                            $(".select2").select2();
+                            if($rootScope.global.permission.agenda == 1 || $rootScope.global.idUser == $scope.newAppointment.userId){
+                                $('ul.tabs').tabs('select_tab', 'appoint');
+                            }else{
+                                $('ul.tabs').tabs('select_tab', 'agendaAlt');
+                            }
+                        }, 0);
+
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Dados carregados com sucesso.', 2500, 'toast-container');
+
+                    }, function() {
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Erro 08 - contate o administrador', 5500, 'toast-container');
+                    })
+
+                   
+                },
+                complete: function() {
+                    $scope.newAppointment = {};
+                }
+            });
+
+            $scope.removeRequest = function(){
+                var r = confirm("Remover solicitação?");
+                if (r == true) {
+                    calendarRequestAPIService.delete($scope.viewRequestData.idCalendarRequest).then(
+                        function(){
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Solicitação removida com sucesso!', 3500, 'toast-container');
+
+                            $('#modalViewRequest').modal('close');
+
+                            var idItem = $scope.listEvents.filter(
+                                function(val) {
+                                    return val.type == "solicitacao" && val.id == $scope.viewRequestData.idCalendarRequest;
+                                }
+                            );
+
+                            $scope.listEvents.splice($scope.listEvents.indexOf(idItem[0]), 1);
+
+                            $scope.filterData();
+                        },
+                        function(){
+                            $(".toast").fadeOut("slow");
+                            Materialize.toast('Erro 45 - contate o administrador', 5500, 'toast-container');
+                        }
+                    )
+                }
+            }
+
+            $scope.updateAgenda = function(){
+                $(".toast").fadeOut("slow");
+                Materialize.toast('Salvando agenda!', 30000, 'toast-container');
+                $('#calendar').fullCalendar('removeEvents');
+                $scope.newAppointment.initialDate = moment($scope.newAppointment.initialDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+                console.log($scope.newAppointment);
+                appointmentAPIService.update($scope.newAppointment).then(
+                    function(){
+                        $('#modalViewRequest').modal('close');
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Agenda salva com sucesso!', 5500, 'toast-container');
+
+                        var idItem = $scope.listEvents.filter(
+                            function(val) {
+                                return (val.type == "apontamentoNaoEfetuado" || val.type == "apontamentoEfetuado") && val.id == $scope.newAppointment.idAppointment;
+                            }
+                        );
+
+                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].start = $scope.newAppointment.initialDate;
+                        $scope.listEvents[$scope.listEvents.indexOf(idItem[0])].end = $scope.newAppointment.initialDate;
+
+                        $scope.filterData();
+                        $("#modalApontar").modal("close");
+
+                    },
+                    function(err){
+                        $(".toast").fadeOut("slow");
+                        $("#modalApontar").modal("close");
+                        Materialize.toast('Erro 46 - contate o administrador', 5500, 'toast-container');
+                    }
+                )
+            }
+
         },
         function() {
+            $(".toast").fadeOut("slow");
             Materialize.toast('Erro 03 - contate o administrador', 5500, 'toast-container');
         }
     )

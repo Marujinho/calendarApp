@@ -1,5 +1,8 @@
 angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIService, $stateParams, $state, $timeout, $rootScope, usersAPIService ) {
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {

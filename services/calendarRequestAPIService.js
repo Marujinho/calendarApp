@@ -38,11 +38,20 @@ angularApp.service('calendarRequestAPIService', function($http, $rootScope) {
             }
         });
     };
+    let _update = function(request) {
+        request.login = $rootScope.global.idUser;
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/calendarRequest/update',
+            data:  request
+        });
+    };
 
     return {
         getById : _getById,
         delete: _delete,
         getall: _getAll,
-        save: _save
+        save: _save,
+        update: _update
     };
 });

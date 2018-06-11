@@ -1,5 +1,8 @@
 angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compile, $state, $stateParams, $rootScope) {
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -36,7 +39,7 @@ angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compil
                         data: response.data,
                         columns: [
                             {   title:  "Id",   data: "idUser"},
-                            {   title:  "Recurso",    data: "code"},
+                            {   title:  "Recurso",    data: "name"},
                             {   title:  "CPF/CNPJ", data:"cpfcnpj", 
                                 render: function(data) {
                                     return data.substr(0, 3)+"."+data.substr(3, 3)+"."+data.substr(6, 3)+"-"+data.substr(9, 2)
@@ -153,7 +156,7 @@ angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compil
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Usuário"><i class="material-icons grey-text">business</i></div>';
-                        html += '               <div class="conteudoModais">'+ data.code + '</div>';
+                        html += '               <div class="conteudoModais">'+ data.name + '</div>';
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="CPF ou CNPJ"><i class="material-icons grey-text">recent_actors</i></div>';

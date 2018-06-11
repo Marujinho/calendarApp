@@ -1,5 +1,8 @@
 angularApp.controller('listCustomersCtrl', function($scope, customersAPIService, $compile, $stateParams, $state, $rootScope, usersAPIService) {
 
+    //necessario para remover o search customizado
+    $.fn.dataTable.ext.search.splice(0, 2);
+    //---
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -35,8 +38,7 @@ angularApp.controller('listCustomersCtrl', function($scope, customersAPIService,
 
                     var table = $('#dtCustomers').DataTable({
                         dom: 'Bfrtip',
-                        data: response.data,
-                        // idClient, CNPJ, address, city, complement, creationDate, district, lastUpdate, name, `number`, state, status
+                        data: $scope.listClients,
                         columns: [
                             { title: "Id", data: "idCustomer" },
                             { title: "Cliente", data: "name" },

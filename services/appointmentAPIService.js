@@ -128,6 +128,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             }
         });
     };
+
     let _deleteLate =  function(idAppointment){
         return $http({
             method: 'POST',
@@ -137,6 +138,17 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
                 login:$rootScope.global.idUser
             }
 
+        });
+    };
+
+    let _getFromRangeDate = function(initialDate, lastDate){
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/appointment/getfromrangedate',
+            data:{
+                initialDate: initialDate,
+                lastDate: lastDate
+            }
         });
     };
 
@@ -155,6 +167,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         getmonthappointment: _getmonthappointment,
         getByUser: _getByUser,
         getrequestByAppointment: _getrequestByAppointment,
-        sendMail: _sendMail
+        sendMail: _sendMail,
+        getFromRangeDate: _getFromRangeDate
     }
 });
