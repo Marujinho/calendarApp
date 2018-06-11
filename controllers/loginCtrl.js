@@ -1,7 +1,10 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope) {
   
 
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    let scanner = new Instascan.Scanner({ 
+      video: document.getElementById('preview'), 
+      mirror: false
+    });
     scanner.addListener('scan', function (content) {
       console.log(content);
       alert(content);
