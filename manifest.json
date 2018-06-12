@@ -7,15 +7,15 @@
 	"gcm_sender_id": "",
 	"gcm_user_visible_only": true,
 	"icons": [{
-		"src": "images/atom48x48.png",
-		"sizes": "72x-72",
+		"src": "images/48x48.png",
+		"sizes": "72x72",
 		"type": "image/png"
 	  },{
-		"src": "images/atom96x96.png",
+		"src": "images/96x96.png",
 		"sizes": "96x96",
 		"type": "image/png"
 	  },{
-		"src": "images/atom192x192.png",
+		"src": "images/192x192.png",
 		"sizes": "192x192",
 		"type": "image/png"
 	  },{
