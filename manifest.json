@@ -7,7 +7,7 @@
 	"gcm_sender_id": "",
 	"gcm_user_visible_only": true,
 	"icons": [{
-		"src": "img/192x192.png",
+		"src": "img/icon.png",
 		"sizes": "72x72",
 		"type": "image/png"
 	  },{
