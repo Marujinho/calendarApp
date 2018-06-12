@@ -1,7 +1,7 @@
 {
 	"short_name": "Calendar",
 	"name": "Easy Calendar",
-	"background_color": "#00bcd4",
+	"background_color": "#ffffff",
 	"description": "",
 	"display": "standalone",
 	"gcm_sender_id": "",
