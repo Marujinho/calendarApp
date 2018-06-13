@@ -4,6 +4,9 @@ angularApp.service('closingDateAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/closingDate/getall',
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
         });
     };
     let _saveClosingDate = function(idClosingDate) {

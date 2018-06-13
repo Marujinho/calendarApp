@@ -5,6 +5,9 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/getall',
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
         });
     };
 

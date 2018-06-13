@@ -4,6 +4,9 @@ angularApp.service('calendarRequestAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/calendarRequest/getall',
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
         });
     };
     let _save = function(request) {

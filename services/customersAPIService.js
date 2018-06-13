@@ -4,6 +4,9 @@ angularApp.service('customersAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/customer/getall',
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
 
         });
     };

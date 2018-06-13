@@ -4,6 +4,9 @@ angularApp.service('holidayAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/holiday/getall',
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
         });
     };
 

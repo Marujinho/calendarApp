@@ -4,7 +4,9 @@ angularApp.service('usersAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/user/getall',
-            data: {}
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
         });
     };
 
