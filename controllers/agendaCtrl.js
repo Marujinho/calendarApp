@@ -3,7 +3,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //necessario para remover o search customizado
    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    usersAPIService.login('acacio.magno').then(function(responseUser) {
+    if(localStorage.getItem('userCode')){
+        $rootScope.userCode = localStorage.getItem('userCode');
+    }else{
+        alert('usuario nao encontrado');
+        $state.go('login');
+    }
+    
+    usersAPIService.login($rootScope.userCode).then(function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
                 local = local.split("portal");

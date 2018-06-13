@@ -1,7 +1,6 @@
-angularApp.controller('loginCtrl', function($scope, $rootScope) {
+angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
    
     $rootScope.titulo = "QR Code";
-
 
     let scanner = new Instascan.Scanner({ 
       video: document.getElementById('preview'), 
@@ -10,6 +9,12 @@ angularApp.controller('loginCtrl', function($scope, $rootScope) {
     scanner.addListener('scan', function (content) {
       console.log(content);
       alert(content);
+      if(content != ''||content != NULL ){
+        localStorage.setItem('userCode', content);
+        $state.go('agenda');
+      }else{
+        alert('erro na leitura do QR Code');
+      }
     });
     Instascan.Camera.getCameras().then(function (cameras) {
       if (cameras.length > 0) {
