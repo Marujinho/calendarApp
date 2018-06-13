@@ -7,7 +7,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
       mirror: false
     });
     scanner.addListener('scan', function (content) {
-      console.log(content);
+     
      
 
       if(content != ''||content != NULL ){
@@ -22,7 +22,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
 
         
         setTimeout(function(){
-
+          scanner.stop(cameras[1]);
           $state.go('agenda');
         }, 1000);
         
