@@ -9,11 +9,16 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     scanner.addListener('scan', function (content) {
       console.log(content);
       alert(content);
+
       if(content != ''||content != NULL ){
-        alert(content.code);
-        alert(content.token);
-        alert(code);
-        localStorage.setItem('userCode', content);
+        
+        var parsedContent = JSON.parse(content);
+
+        var userCode = parsedContent.code;
+        var userToken = parsedContent.token;
+        
+        localStorage.setItem('userCode', userCode);
+        localStorage.setItem('userToken', userToken);
         
       }else{
         alert('erro na leitura do QR Code');
