@@ -10,8 +10,10 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
       console.log(content);
       alert(content);
       if(content != ''||content != NULL ){
+        alert(content.code);
+        alert(content.token);
         localStorage.setItem('userCode', content);
-        $state.go('agenda');
+        
       }else{
         alert('erro na leitura do QR Code');
       }
