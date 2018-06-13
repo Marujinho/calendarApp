@@ -12,6 +12,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
       if(content != ''||content != NULL ){
         alert(content.code);
         alert(content.token);
+        alert(code);
         localStorage.setItem('userCode', content);
         
       }else{
