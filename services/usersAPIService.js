@@ -34,8 +34,8 @@ angularApp.service('usersAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/user/getbyid',
             data: {
                 idUser: idUser,
+                token: localStorage.getItem('userToken')
             }
-
         });
     };
     
@@ -43,9 +43,9 @@ angularApp.service('usersAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/user/login',
-            token: localStorage.getItem('userToken'),
             data: {
-                code: code
+                code: code,
+                token: localStorage.getItem('userToken')
             }
         });
     };

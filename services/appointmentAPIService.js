@@ -60,7 +60,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/appointment/getbyid',
             data: {
-                "idAppointment": idAppointment
+                "idAppointment": idAppointment,
+                "token"        : token: localStorage.getItem('userToken') 
             }
         });
     };
@@ -71,7 +72,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/appointment/getbyuser',
             token:localStorage.getItem('userToken'),
             data: {
-                "idUser": idUser
+                "idUser": idUser,
+                "token" : token: localStorage.getItem('userToken')
             }
         });
     };
