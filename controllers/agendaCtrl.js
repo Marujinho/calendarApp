@@ -4,7 +4,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
     
-     
+     console.log('userCode');
     
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
