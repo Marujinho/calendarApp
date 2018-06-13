@@ -8,7 +8,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
     });
     scanner.addListener('scan', function (content) {
       console.log(content);
-      alert(content);
+     
 
       if(content != ''||content != NULL ){
         
@@ -20,7 +20,11 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         localStorage.setItem('userCode', userCode);
         localStorage.setItem('userToken', userToken);
 
-        $state.go('agenda');
+        
+        setTimeout(function(){
+
+          $state.go('agenda');
+        }, 1000);
         
       }else{
         alert('erro na leitura do QR Code');
