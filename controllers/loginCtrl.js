@@ -1,6 +1,7 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope) {
    
     $rootScope.titulo = "Escaneie o QRCode";
+    
 
     let scanner = new Instascan.Scanner({ 
       video: document.getElementById('preview'), 
