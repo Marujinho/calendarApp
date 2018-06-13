@@ -69,6 +69,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/getbyuser',
+            token:localStorage.getItem('userToken'),
             data: {
                 "idUser": idUser
             }

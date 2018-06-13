@@ -43,6 +43,7 @@ angularApp.service('usersAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/user/login',
+            token: localStorage.getItem('userToken'),
             data: {
                 code: code
             }
