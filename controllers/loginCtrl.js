@@ -1,6 +1,6 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope) {
    
-    $rootScope.titulo = "QR Code";
+    $rootScope.titulo = "a";
 
 
     let scanner = new Instascan.Scanner({ 
