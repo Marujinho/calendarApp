@@ -114,68 +114,68 @@
 		<div class="navbar-fixed">
             <nav class="cyan accent-4">
                 <a class="brand-logo" id="logo">{{titulo}}</a>
+                
+                <ul id="slide-out" class="sidenav">
+                    <li>
+                        <a href="#!index.html">
+                            <i class="material-icons medium">date_range</i> Agenda
+                        </a>
+                    </li>
+                    <li>
+                        <div class="divider"></div>
+                    </li>
+                    <li>
+                        <a class="waves-effect" ui-sref="listAppointment" >
+                            <i class="material-icons medium">touch_app</i>Apontamentos
+                        </a>
+                    </li>
+                    <li >
+                        <a class="waves-effect" ui-sref="listCustomers">
+                            <i class="material-icons medium">business</i>Clientes
+                        </a>
+                    </li>
+                    <li >
+                        <a class="waves-effect" ui-sref="listProjects">
+                            <i class="material-icons medium">assignment</i>Projetos
+                        </a>
+                    </li>
+                    <li >
+                        <a class="waves-effect" ui-sref="listProfiles">
+                            <i class="material-icons medium">supervisor_account</i>Perfis
+                        </a>
+                    </li>
+                    <li >
+                        <a class="waves-effect" ui-sref="listUsers">
+                            <i class="material-icons medium">person</i>Usuários
+                        </a>
+                    </li>
+                    <li >
+                        <a class="waves-effect" ui-sref="closingDate">
+                            <i class="material-icons medium">code</i>Data de Corte
+                        </a>
+                    </li>
+                    <li>
+                        <div class="divider"></div>
+                    </li>
+                    <li >
+                        <a class="waves-effect" ui-sref="reports">
+                            <i class="material-icons medium">receipt</i>Relatórios
+                        </a>
+                    </li>
+                    <li >
+                        <div class="divider"></div>
+                    </li>
+                </ul>
     
                 <a href="#" data-activates="slide-out"  id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
                     <i class="material-icons slide-out" style="height: 25px; line-height: 25px;">menu</i>
                 </a>
 
             </nav>
-            
         </div>
-        <ul id="slide-out" class="sidenav">
-            <li>
-                <a href="#!index.html">
-                    <i class="material-icons medium">date_range</i> Agenda
-                </a>
-            </li>
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li>
-                <a class="waves-effect" ui-sref="listAppointment" >
-                    <i class="material-icons medium">touch_app</i>Apontamentos
-                </a>
-            </li>
-            <li >
-                <a class="waves-effect" ui-sref="listCustomers">
-                    <i class="material-icons medium">business</i>Clientes
-                </a>
-            </li>
-            <li >
-                <a class="waves-effect" ui-sref="listProjects">
-                    <i class="material-icons medium">assignment</i>Projetos
-                </a>
-            </li>
-            <li >
-                <a class="waves-effect" ui-sref="listProfiles">
-                    <i class="material-icons medium">supervisor_account</i>Perfis
-                </a>
-            </li>
-            <li >
-                <a class="waves-effect" ui-sref="listUsers">
-                    <i class="material-icons medium">person</i>Usuários
-                </a>
-            </li>
-            <li >
-                <a class="waves-effect" ui-sref="closingDate">
-                    <i class="material-icons medium">code</i>Data de Corte
-                </a>
-            </li>
-            <li>
-                <div class="divider"></div>
-            </li>
-            <li >
-                <a class="waves-effect" ui-sref="reports">
-                    <i class="material-icons medium">receipt</i>Relatórios
-                </a>
-            </li>
-            <li >
-                <div class="divider"></div>
-            </li>
-        </ul>
         
         <!-- SIDENAV -->
-        <!--
+        
 		<ul id="slide-out" class="sidenav">
 			<li>
 				<div class="user-view">
@@ -190,7 +190,7 @@
 			
 			<li><a class="waves-effect" href="home">Calendário</a></li>
         </ul>
-        -->
+        
 
         <div ui-view></div>
         
