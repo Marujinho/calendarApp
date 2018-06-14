@@ -6,6 +6,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
       video: document.getElementById('preview'), 
       mirror: false
     });
+    
     scanner.addListener('scan', function (content) {
     
       if(content != ''||content != NULL ){
@@ -18,8 +19,6 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         localStorage.setItem('userCode', userCode);
         localStorage.setItem('userToken', userToken);
 
-        
-          
         
           scanner.stop().then(function () {
             $state.go('agenda')
