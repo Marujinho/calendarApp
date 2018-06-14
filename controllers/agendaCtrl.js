@@ -5,7 +5,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //---
     
      console.log('userCode');
-     scanner.stop();
+    
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;

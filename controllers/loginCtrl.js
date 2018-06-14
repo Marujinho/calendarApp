@@ -22,6 +22,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         setTimeout(function(){
           
           $state.go('agenda');
+          scanner.stop();
         }, 1000);
         
       }else{
