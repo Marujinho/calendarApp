@@ -4,30 +4,18 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
     
-        
-            //versionamento de js
-        $("script").each(function() {
-            var url = $(this).context.src + "&version=v1";
-            $(this).attr("src", url);
-            // console.log($(this).context.src);
-        });
-        //versionamento de css
-        $("link").each(function() {
-            var url = $(this).context.href + "?version=v1";
-            $(this).attr("href", url);
-            // console.log($(this).context.src);
-        });
+       
   
 
-    function toasty(message, time) {
+    // function toasty(message, time) {
 
-        var x = document.getElementById("snackbar");
-        x.innerHTML = message;
-        x.className = "show";
-        setTimeout(function() {
-            x.className = x.className.replace("show", "");
-        }, time);
-    }
+    //     var x = document.getElementById("snackbar");
+    //     x.innerHTML = message;
+    //     x.className = "show";
+    //     setTimeout(function() {
+    //         x.className = x.className.replace("show", "");
+    //     }, time);
+    // }
 
     $('.button-collapse').sideNav({
         menuWidth: 300, // Default is 240
