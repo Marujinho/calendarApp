@@ -694,7 +694,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 });
 
                 $scope.dropDown = function(){
-                    $('.dropdown-trigger').dropdown();
+                    $('.side-nav').sidenav();
                 }
 
                 $(".fc-prev-button, .fc-next-button").click(function() {
