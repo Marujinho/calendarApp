@@ -693,6 +693,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     }
                 });
 
+                $scope.dropDown = function(){
+                    $('.dropdown-trigger').dropdown();
+                }
+
                 $(".fc-prev-button, .fc-next-button").click(function() {
                     var current = $('#calendar').fullCalendar('getDate');
                     var month = moment(current.format()).format("MM");
