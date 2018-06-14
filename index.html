@@ -114,8 +114,14 @@
 		<div class="navbar-fixed">
             <nav class="cyan accent-4">
                 <a class="brand-logo" id="logo">{{titulo}}</a>
+
+                <p data-activates="slide-out" ng-click="dropDown()" id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
+                    <i class="material-icons" style="height: 25px; line-height: 25px;">menu</i>
+                </p>
+
+        </nav>
                 
-                <ul id="slide-out" class="side-nav">
+                <ul id="slide-out" class="sidenav">
                     <li>
                         <a href="#!index.html">
                             <i class="material-icons medium">date_range</i> Agenda
@@ -167,11 +173,7 @@
                     </li>
                 </ul>
     
-                <p data-activates="slide-out" ng-click="dropDown()" id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
-                    <i class="material-icons" style="height: 25px; line-height: 25px;">menu</i>
-                </p>
-
-            </nav>
+                
         </div>
         
         <!-- SIDENAV -->
