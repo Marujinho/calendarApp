@@ -612,3 +612,7 @@ table.dataTable tbody td {
     height: 100%;
     position: absolute;
 }
+
+#sidenav-overlay{
+    z-index: 99;
+}
