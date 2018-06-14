@@ -7,9 +7,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
       mirror: false
     });
     scanner.addListener('scan', function (content) {
-     
-     
-
+    
       if(content != ''||content != NULL ){
         
         var parsedContent = JSON.parse(content);
@@ -30,6 +28,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
         alert('erro na leitura do QR Code');
       }
     });
+
     Instascan.Camera.getCameras().then(function (cameras) {
       if (cameras.length > 0) {
         
