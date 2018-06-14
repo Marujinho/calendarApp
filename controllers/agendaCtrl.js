@@ -693,9 +693,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     }
                 });
 
-                $scope.dropDown = function(){
+                $('.slide-out').on('click', function(){
                     $('.sidenav').sidenav();
-                }
+                });
+                    
 
                 $(".fc-prev-button, .fc-next-button").click(function() {
                     var current = $('#calendar').fullCalendar('getDate');

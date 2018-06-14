@@ -114,12 +114,6 @@
 		<div class="navbar-fixed">
             <nav class="cyan accent-4">
                 <a class="brand-logo" id="logo">{{titulo}}</a>
-
-                <p data-activates="slide-out" ng-click="dropDown()" id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
-                    <i class="material-icons" style="height: 25px; line-height: 25px;">menu</i>
-                </p>
-
-        </nav>
                 
                 <ul id="slide-out" class="sidenav">
                     <li>
@@ -173,7 +167,11 @@
                     </li>
                 </ul>
     
-                
+                <a href="#" data-activates="slide-out"  id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
+                    <i class="material-icons slide-out" style="height: 25px; line-height: 25px;">menu</i>
+                </a>
+
+            </nav>
         </div>
         
         <!-- SIDENAV -->
