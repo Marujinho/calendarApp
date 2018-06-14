@@ -5,7 +5,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //---
     
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
-        $('.sidenav').sidenav();
+        
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
                 local = local.split("portal");
