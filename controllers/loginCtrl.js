@@ -2,19 +2,29 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
    
     alert('oi');
     
+    // var i = {"code": WCMAPI.userCode, "token": "dev3-ks4d-as42-83hk"};
+
+    // var hash1 = window.btoa(i.code);
+    // var hash2 = window.btoa(i.token);
+    // var qrcode = new QRCode(document.getElementById("qrcode"), {
+    // text: 'https://marujinho.github.io/calendarApp#!/login/Y2lqZXZqZWRvYnJh'+hash1+hash2+'cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg'
+    //  });
+      //hash1 = usercode
+      //hash2 = token
+
+
     $scope.param = $stateParams;
     alert($scope.param.id);
 
-    alert('oi2');
-
       var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', '');
       var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+      var obj3 = atob(obj2);
 
-      alert(obj2);
+      alert(obj3);
     
     
 
-    //LEITOR DE QR CODE
+    //LEITOR DE QR CODE PARA ANDROID
 
     // let scanner = new Instascan.Scanner({ 
     //   video: document.getElementById('preview'), 
