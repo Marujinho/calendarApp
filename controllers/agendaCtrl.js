@@ -2836,4 +2836,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
             Materialize.toast('Erro 03 - contate o administrador', 5500, 'toast-container');
         }
     )
+
+    $scope.logOut = function(){
+        localStorage.setItem('userCode', '');
+        localStorage.setItem('userToken', '');
+        $state.go('login');
+      }
 });
