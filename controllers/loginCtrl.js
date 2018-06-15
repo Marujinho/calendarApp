@@ -23,7 +23,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
 
 
       alert(atob(hashCode));
-      alert((hashToken));
+      alert(atob(hashToken));
       //var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', 'YYY999YYY999');
       //var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','XXX999XXX999');
       
