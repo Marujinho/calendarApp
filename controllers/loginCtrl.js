@@ -5,7 +5,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
     $scope.param = $stateParams;
     alert($scope.param.id);
 
-    alert()
+    alert('oi2');
 
       var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', '');
       var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
