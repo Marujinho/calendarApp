@@ -103,4 +103,5 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             controller: 'logOutCtrl'
         })
 
-});
+});   
+

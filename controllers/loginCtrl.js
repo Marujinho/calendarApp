@@ -1,6 +1,12 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
    
     
+    function hashDecode(hash){
+      var obj = hash.replace('Y2lqZXZqZWRvYnJh', '');
+      var obj2 = obj.replace('YmFiYXJydW4','');
+
+      alert(obj2);
+    }
     
 
     //LEITOR DE QR CODE
