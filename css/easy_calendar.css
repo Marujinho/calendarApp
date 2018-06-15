@@ -616,3 +616,9 @@ table.dataTable tbody td {
 #sidenav-overlay{
     z-index: 99;
 }
+
+#loginBackGround{
+    margin-top: -16px;
+    height: 100vh;
+    background: linear-gradient(to right, #18FFFF, #00E5FF, #00BCD4);
+}
