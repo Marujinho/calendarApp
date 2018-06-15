@@ -19,8 +19,11 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
       var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', '');
       var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
       var obj3 = atob(obj2);
+      var obj4 = JSON.stringify(obj3);
 
-      alert(obj3);
+
+
+      alert(obj4);
     
     
 
