@@ -7,7 +7,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
     // var hash1 = window.btoa(i.code);
     // var hash2 = window.btoa(i.token);
     // var qrcode = new QRCode(document.getElementById("qrcode"), {
-    // text: 'https://marujinho.github.io/calendarApp#!/login/Y2lqZXZqZWRvYnJh'+hash1+hash2+'cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg'
+    // text: 'https://marujinho.github.io/calendarApp#!/login/'+hash1+'Y2lqZXZqZWRvYnJh'+hash2+'cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg'
     //  });
       //hash1 = usercode
       //hash2 = token
@@ -16,14 +16,15 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
     $scope.param = $stateParams;
     alert($scope.param.id);
 
-      var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', '');
-      var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+      var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', ' ');
+      var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg',' ');
       var obj3 = atob(obj2);
       var obj4 = JSON.stringify(obj3);
+      var obj5 = obj4.split(" ");
 
 
-
-      alert(obj4);
+      alert(obj5);
+      alert('user code :' + obj5[0] + ' token :' + obj5[1]);
     
     
 
