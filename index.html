@@ -93,6 +93,9 @@
         <script src="services/expenseTypeOpenAPIService.js"></script>
         <!-- listAPI's -->
 
+        <!--LOGOUT-->
+        <script src="controllers/logOutCtrl.js"></script>
+
         <!-- Factory -->
         <!--<script src="factorys/controleDeLogin.js"></script>-->
 
@@ -166,9 +169,9 @@
                         <div class="divider"></div>
                     </li>
                     <li>
-                        <p class="waves-effect" ng-click="logOut()">
+                        <a class="waves-effect" ui-sref="logout">
                             <i class="material-icons medium">exit_to_app</i>Sair
-                        </p>
+                        </a>
                     </li>
                 </ul>
     

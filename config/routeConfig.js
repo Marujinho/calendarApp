@@ -97,5 +97,10 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             templateUrl: 'views/closingDate.html',
             controller: 'closingDateCtrl'
         })
+        .state('logout', {
+            url: '/logout',
+            templateUrl: 'views/logOut.html',
+            controller: 'logOutCtrl'
+        })
 
 });

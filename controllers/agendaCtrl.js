@@ -2837,9 +2837,5 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         }
     )
 
-    $scope.logOut = function(){
-        localStorage.setItem('userCode', '');
-        localStorage.setItem('userToken', '');
-        $state.go('login');
-      }
+   
 });
