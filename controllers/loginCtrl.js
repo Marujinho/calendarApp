@@ -22,15 +22,15 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
       var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
 
 
-      alert(hashCode);
-      alert(hashToken);
+      alert(atob(hashCode));
+      alert((hashToken));
       //var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', 'YYY999YYY999');
       //var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','XXX999XXX999');
       
     
     
-    localStorage.setItem('userCode', hashCode);
-    localStorage.setItem('userToken', hashToken);
+    localStorage.setItem('userCode', atob(hashCode));
+    localStorage.setItem('userToken', atob(hashToken));
 
 
     $state.go('agenda');
