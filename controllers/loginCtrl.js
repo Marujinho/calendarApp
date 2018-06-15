@@ -1,10 +1,10 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state) {
    
-    $rootScope.titulo = "Login";
+    
     
 
     //LEITOR DE QR CODE
-    
+
     // let scanner = new Instascan.Scanner({ 
     //   video: document.getElementById('preview'), 
     //   mirror: false
