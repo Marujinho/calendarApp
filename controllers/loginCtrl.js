@@ -17,17 +17,20 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
     alert($scope.param.id);
 
       var hash = $scope.param.id.split('Y2lqZXZqZWRvYnJh');
-      var hash2 = hash.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+      //hash = hash[0]-userCode     hash[1]=token+cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg  
+      var hashCode = hash[0];
+      var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
 
-      alert(hash2[0]);
-      alert(hash2[1]);
+
+      alert(hashCode);
+      alert(hashToken);
       //var obj = $scope.param.id.replace('Y2lqZXZqZWRvYnJh', 'YYY999YYY999');
       //var obj2 = obj.replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','XXX999XXX999');
       
     
     
-    localStorage.setItem('userCode', hash2[0]);
-    localStorage.setItem('userToken', hash2[1]);
+    localStorage.setItem('userCode', hashCode);
+    localStorage.setItem('userToken', hashToken);
 
 
     $state.go('agenda');
