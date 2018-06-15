@@ -21,15 +21,17 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
       var obj3 = atob(obj2);
       var obj4 = JSON.stringify(obj3);
       var obj5 = obj4.split(" ");
-
-
-      if(obj5){
-
+    
+    
     localStorage.setItem('userCode', obj5[0]);
     localStorage.setItem('userToken', obj5[1]);
+
+    alert(obj5[0]);
+    alert(obj5[1]);
+
     $state.go('agenda');
-  }
-      // alert('user code :' + obj5[0] + ' token :' + obj5[1]);
+  
+      
     
     
 
