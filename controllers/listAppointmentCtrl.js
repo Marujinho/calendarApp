@@ -1,5 +1,6 @@
 angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appointmentAPIService, $compile, $state, usersAPIService) {
 
+    $rootScope.titulo = 'Apontamentos';
     //necessario para remover o search customizado
     $.fn.dataTable.ext.search.splice(0, 2);
     //---

@@ -6,7 +6,7 @@
                     <i class="material-icons prefix">person</i>
                     <select ng-model="user.code" id="usuariosFluig" class="usuariosFluig select2" required="">
                         <option value="" disabled selected></option>
-                        <option data-ng-repeat="code in codes" value="{{code['colleaguePK.colleagueId']}}" data-ng-if="listUser.indexOf(code['colleaguePK.colleagueId']) == -1 || code['colleaguePK.colleagueId'] == user.code">{{code.colleagueName}}</option>
+                        <option data-ng-repeat="code in codes" value="{{ code['colleaguePK.colleagueId'] }}" data-ng-if="listUser.indexOf(code['colleaguePK.colleagueId']) == -1 || code['colleaguePK.colleagueId'] == user.code">{{code.colleagueName}}</option>
                     </select>
                 </div>
             </div>

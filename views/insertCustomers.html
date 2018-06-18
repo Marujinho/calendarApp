@@ -1,5 +1,5 @@
 <div class="container" id="container">
-    <div class="row">
+   
         <form method="post" class="col s12" name="insertCustomer" ng-submit="insertCustomers();">
             <div class="row">
                 <div class="input-field col m12 s12">
@@ -19,29 +19,38 @@
                     <small data-ng-show="!insertCustomer.cnpj.$pristine && insertCustomer.cnpj.$error.mask">O campo deve conter 14 caracteres</small>
                 </div>
             </div>
+            
             <div>
-                <ul class="collapsibleContact row " id="collapsibleContact" data-collapsible="accordion">
-                    <li class="contacts col s11 m11"  ng-repeat="(indexContact, contatos) in customer.contact" id="contacts" >
-                        <div class="collapsible-header col s12 m11 " ng-click="$('.collapsibleContact').collapsible('open', indexContact); ((COLLAPSE_TESTE) = !COLLAPSE_TESTE)">
-                            <i class="material-icons">{{COLLAPSE_TESTE ? 'arrow_upward' : 'arrow_downward'}}</i>                            
-                            <input id="name" name="nameContact{{indexContact}}" class="name validate" ng-model="contatos.name" type="text" placeholder="Contato" style="margin-left: 12px !important;" required="" minlength="3" maxlength="90">
-                            <small data-ng-show="!insertCustomer.nameContact{{indexContact}}.$pristine && insertCustomer.nameContact{{indexContact}}.$error.required">Campo obrigatório</small>
-                            <small data-ng-show="!insertCustomer.nameContact{{indexContact}}.$pristine && insertCustomer.nameContact{{indexContact}}.$error.minlength">O campo deve conter no mínimo 3 caracteres</small>
-                            
-                            <input id="customer" name="positionContact{{indexContact}}" ng-model="contatos.position" type="text"  placeholder="Cargo" class="validate" style="margin-left: 12px !important;" required="" minlength="3" maxlength="90">
-                            <small data-ng-show="!insertCustomer.positionContact{{indexContact}}.$pristine && insertCustomer.positionContact{{indexContact}}.$error.required">Campo obrigatório</small>
-                            <small data-ng-show="!insertCustomer.positionContact{{indexContact}}.$pristine && insertCustomer.positionContact{{indexContact}}.$error.minlength">O campo deve conter no mínimo 3 caracteres</small>
+                <ul class="collapsibleContact" id="collapsibleContact" data-collapsible="accordion">
+                    
+                    <li class="contacts"  ng-repeat="(indexContact, contatos) in customer.contact" id="contacts" >
+                        <div class="collapsible-header" ng-click="$('.collapsibleContact').collapsible('open', indexContact); ((COLLAPSE_TESTE) = !COLLAPSE_TESTE)">
+                            <div class="">
+                                <i class="material-icons">{{COLLAPSE_TESTE ? 'arrow_upward' : 'arrow_downward'}}</i>
+                            </div>
                         </div>
-                        <div class="col s1 m1">
-                            <a class="btn-floating btn-large waves-effect waves-light grey lighten-3" ng-click="removeContact(indexContact);" class="moreContacts" style="margin-left: 12px !important;">
-                                <i class="material-icons grey-text text-darken-4">delete</i>
-                            </a>
+                        <div class="row"> 
+                                <div class="col s5">                            
+                                    <input id="name" name="nameContact{{indexContact}}" class="name validate" ng-model="contatos.name" type="text" placeholder="Contato" style="margin-left: 12px !important;" required="" minlength="3" maxlength="90">
+                                    <small data-ng-show="!insertCustomer.nameContact{{indexContact}}.$pristine && insertCustomer.nameContact{{indexContact}}.$error.required">Campo obrigatório</small>
+                                    <small data-ng-show="!insertCustomer.nameContact{{indexContact}}.$pristine && insertCustomer.nameContact{{indexContact}}.$error.minlength">O campo deve conter no mínimo 3 caracteres</small>
+                                </div>    
+                                <div class="col s4">
+                                    <input id="customer" name="positionContact{{indexContact}}" ng-model="contatos.position" type="text"  placeholder="Cargo" class="validate" style="margin-left: 12px !important;" required="" minlength="3" maxlength="90">
+                                    <small data-ng-show="!insertCustomer.positionContact{{indexContact}}.$pristine && insertCustomer.positionContact{{indexContact}}.$error.required">Campo obrigatório</small>
+                                    <small data-ng-show="!insertCustomer.positionContact{{indexContact}}.$pristine && insertCustomer.positionContact{{indexContact}}.$error.minlength">O campo deve conter no mínimo 3 caracteres</small>
+                                </div>
+                                <div class="col s3">
+                                        <a class="btn-floating btn-large waves-effect waves-light grey lighten-3" ng-click="removeContact(indexContact);" class="moreContacts" style="margin-left: 12px !important;">
+                                            <i class="material-icons grey-text text-darken-4">delete</i>
+                                        </a>
+                                </div>
                         </div>
+                        
                         <div class="collapsible-body">
                             <span>
                                 <div class="dvPhone col s11 m11" ng-repeat="(indexTel, telefones) in contatos.telephone">
                                     <div class="moreTelephone input-field col m5 s12">
-                                        <i class="material-icons prefix">phone</i>
                                         <input id="number" name="telephone{{indexContact}}{{indexTel}}" type="text" ng-model="telefones.number" clean="true" restrict="reject" mask="(99) 9?9999-9999" clean="true" class="number validate" minlength="14" maxlength="15" >
                                         <small data-ng-show="!insertCustomer.telephone{{indexContact}}{{indexTel}}.$pristine && insertCustomer.telephone{{indexContact}}{{indexTel}}.$error.minlength">O campo deve conter no mínimo 10 caracteres</small>
                                         <label for="number">Telefone</label>
@@ -59,7 +68,7 @@
                                 </div>
                                 <div class="input-field col s1" style="text-align: center;">
                                     <a class="btn-floating waves-effect waves-light blue lighten-3"  ng-click="moreTelephones(indexContact);">
-                                        <i class="material-icons pink accent-3">add</i>
+                                        <i class="material-icons pink accent-3 btn-small">add</i>
                                     </a>
                                 </div>
                                 <div class="dvEmail col s11 m11" ng-repeat="(indexEmail, emails) in contatos.email">
@@ -92,7 +101,6 @@
             </div>
             <div class="row">
                 <div class="input-field col m3 s12">
-                    <i class="material-icons prefix">location_on</i>
                     <input id="cep" name="cep" type="text" ng-model="customer.zipCode" clean="true" mask="99999-999" restrict="reject" class="validate" required="" maxlength="9" ng-keyup="buscaCep()">
                     <label for="cep">CEP</label>
                     <small data-ng-show="!insertCustomer.cep.$pristine && insertCustomer.cep.$error.required">Campo obrigatório</small>
@@ -118,7 +126,6 @@
                 </div>
                 
                 <div class="input-field col m4 s12">
-                    <i class="material-icons prefix">location_on</i>
                     <input id="cidade" name="city" type="text" ng-model="customer.city" class="validate" required="" minlength="5" maxlength="40">
                     <label for="cidade">Cidade</label>
                     <small data-ng-show="!insertCustomer.city.$pristine && insertCustomer.city.$error.required">Campo obrigatório</small>
@@ -142,5 +149,5 @@
                 </div>
             </div>
         </form>
-    </div>
+   
 </div>

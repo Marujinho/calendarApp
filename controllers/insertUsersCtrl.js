@@ -1,9 +1,12 @@
 angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIService, customersAPIService, profilesAPIService, $stateParams, $timeout, $state, $rootScope) {
 
+    $rootScope.titulo = 'Inserir usuários';   
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
-    //---
-    usersAPIService.login(WCMAPI.userCode).then(
+    //if($.fn.dataTable.ext.search.lenght > 0){
+     // $.fn.dataTable.ext.search.splice(0, 2);
+    // }
+    
+    usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
@@ -11,7 +14,6 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                 alert("Você não tem acesso ao Easy Calendar");
                 window.location.href = local[0];
             } else {
-                
                 $rootScope.global.idUser = responseUser.data[0].idUser;
                 $rootScope.global.code = responseUser.data[0].code;
                 $rootScope.global.permission = {
@@ -101,7 +103,7 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                     contentType: 'application/json',
                     async: false,
                     data: {
-                        'name': 'colleague', // aqui fica o nome do data set que vc quer conectar
+                        'name': 'colleague', // aqui fica o nome do dataset que vc quer conectar
                         'fields': [], //os campos vir em objeto
                         'constrSaints': [{ // os tipos de restrições
                             '_field': 'colleagueName', // campo que quero mostrar no select

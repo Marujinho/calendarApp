@@ -1,9 +1,10 @@
 angularApp.controller('insertAppointmentCtrl', function($scope, $timeout, appointmentAPIService, $state, $rootScope, $stateParams, usersAPIService, customersAPIService, projectsAPIService, usersAPIService ) {
 
+    $rootScope.titulo = 'Apontamentos';
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
+    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    usersAPIService.login(WCMAPI.userCode).then(
+    usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
