@@ -94,6 +94,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                   
                 $scope.povoaDados = function(response){
                     $scope.appointment = response.data;
+                    console.log(response.data);
                     $scope.diferenca = [];
                     $scope.despesa = [];
                     $scope.traslado = [];
@@ -424,8 +425,6 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         dtAppointment.draw();
                     });
 
-                    console.log($.fn.dataTable.ext.search);
-
                     $.fn.dataTable.ext.search.push(
                         function (conf, data) {
                             var min = $('#minAppointment').val() == "" ? "" : moment($('#minAppointment').val(), 'DD/MM/YYYY');
@@ -439,8 +438,6 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             return false;
                         }
                     );
-
-                    console.log($.fn.dataTable.ext.search);
 
                     $('.modal').modal();
                     $('.dt-button').removeClass('dt-button');
@@ -613,7 +610,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             }
                         });              
                     });
-            };
+                };
 
                 if($rootScope.global.permission.requestConsultant == 1){
                     appointmentAPIService.getallAppointment().then(function(response) {

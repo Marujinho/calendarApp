@@ -92,6 +92,9 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
 
 
                 $scope.insertProjects = function () {
+                    if($scope.project.isCustomerAddress == undefined){
+                        $scope.project.isCustomerAddress = "false";
+                    }
                     if ($scope.project.complement == undefined) {
                         $scope.project.complement = "";
                     }

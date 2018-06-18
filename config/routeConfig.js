@@ -1,6 +1,6 @@
 angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    $urlRouterProvider.otherwise('/login')
+    $urlRouterProvider.otherwise('/welcome')
 
     $stateProvider.state('agenda', {
             url: '/agenda',
@@ -101,6 +101,11 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             url: '/logout',
             templateUrl: 'views/logOut.html',
             controller: 'logOutCtrl'
+        })
+        .state('welcome', {
+            url: '/welcome',
+            templateUrl: 'views/welcome.html',
+            controller: 'welcomeCtrl'
         })
 
 });   

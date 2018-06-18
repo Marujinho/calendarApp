@@ -98,12 +98,15 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
                 };
                 
-                // var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-                // var firstDay = new Date(y, m, 1);
-                // var lastDay = new Date(y, m + 1, 0);
+                var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+                var firstDay = new Date(y, m, 1);
+                $scope.firstDay = moment(firstDay).format("DD/MM/YYYY");
+                var lastDay = new Date(y, m + 1, 0);
+                $scope.lastDay = moment(lastDay).format("DD/MM/YYYY");
 
-                appointmentAPIService.getallAppointment().then(function(response) {
-                //appointmentAPIService.getFromRangeDate(moment(firstDay).format("DD/MM/YYYY"), moment(lastDay).format("DD/MM/YYYY")).then(function(response) {
+                // appointmentAPIService.getallAppointment().then(function(response) {
+                Materialize.toast('Carregando dados!', 30000, 'toast-container');
+                appointmentAPIService.getFromRangeDate(moment(firstDay).format("DD/MM/YYYY"), moment(lastDay).format("DD/MM/YYYY")).then(function(response) {
                     $scope.appointment = response.data;
                     $scope.diferenca = [];
                     $scope.despesa = [];
@@ -286,7 +289,7 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                         initComplete: function() {
                             this.api().columns().every(function() {
                                     var column = this;
-                                     if(column.index() != 0 && column.index() != 9 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 15 && column.index() != 15 && column.index() != 16) {
+                                     if(column.index() != 0 && column.index() != 9 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 14 && column.index() != 15 && column.index() != 16 && column.index() != 19) {
                                         var select = $('<select class="select2" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filters").find("th").eq(column.index()))
                                             .on('change', function () {
                                                 var list = $(this).val();
@@ -308,12 +311,12 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                                         var traslado = [];
                                         column.data().unique().sort().each(function(d, j) {
                                                 // select 
-                                                 if (column.index() == 16) {
+                                                 if (column.index() == 17) {
                                                     if (traslado.indexOf($scope.traslado[j]) == -1) {
                                                         traslado.push($scope.traslado[j]);
                                                         select.append('<option value="' + $scope.traslado[j] + '" style="width:100%;">' + $scope.traslado[j] + '</option>');
                                                     }
-                                                } else if (column.index() == 6) {
+                                                } else if (column.index() == 7) {
                                                     if (diferenca.indexOf($scope.diferenca[j]) == -1) {
                                                         diferenca.push($scope.diferenca[j]);
                                                         select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
@@ -568,6 +571,7 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                             }
                         },
                     });
+                    
                     $('.tooltip').tooltip({
                             transitionMovement:200
                         }
@@ -594,7 +598,6 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                         selectMonths: true,
                         selectYears: 80,
                         format: 'dd/mm/yyyy',
-                        default: 'now',
                         onSet: function () { 
                             appointment.draw(); 
                         }
@@ -614,293 +617,88 @@ angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appo
                     });                    
             
                     $('#min, #max').on('keyup change', function () {
-                        appointment.draw();
-                    });
-
-
-                });
-                // relatori de os
-                appointmentAPIService.getallAppointment().then(function(response) {         
-                    $scope.ordemServico = response.data;                 
-                    $scope.diferencaHoras =[];
-                    var  ordemServico  = $scope.ordemServico;
-                    
-                    var dtOServico = $('#dtOrdemServico').dataTable({
-                        dom: 'Bfrtip',
-                        data: ordemServico,
-                        columns : [
-                            {data:null, 
-                                render: function(data, type, row){
-                                    return '<a class="grey-text" id="chamarPDF" style="z-index:9999; cursor:pointer;"><i style="font-size:25px;" class="material-icons">file_download</i></a>'
-                                },
-                                width:'60px'
-                            },
-                            { data: "initialDate",
-                                render: function(data, type, row) {
-                                    var dateSplit = data.split('-');
-                                    return type === "display" || type === "filter" ? dateSplit[2] + '/' + dateSplit[1] + '/' + dateSplit[0] : data
-                                }, 
-                                width : '50px'},
-                            { data:"customerId.name" },
-                            { data:"projectId.name" },
-                            { data:"userId.name" },
-                            { data:"initialHour" },
-                            { data:"hourLunch" },
-                            { data:"lastHour" },
-                            { data:"unproductiveHours" },
-                            { data: null,
-                                render: function(data, type, row) {
-                                    var diferenca = diffHoras(row.initialHour, row.lastHour, row.hourLunch);
-                                    $scope.diferencaHoras.push(diferenca);
-                                    return diferenca
-                                }
-                            },
-                            { data:"activity", 
-                                render: function ( data, type, row ) {
-                                    $('.tooltip').tooltip();
-
-                                    if(data.length > 35){
-                                        return "<div id='itemTooltip'><div data-toggle='tooltip' class='tooltip' data-position='left' data-tooltip='"+data+"' data-tooltip-width='500' data-tooltip-height='500'>" + data.substr( 0, 35 ) +'…'  + "</div></div>"
-                                    } else{
-                                        return data
-                                    }
-                                }
-                            },
-                            { data:"executed",
-                                render: function ( data, type, row ) {
-                                    $('.tooltip').tooltip();
-
-                                    if(data.length > 35){
-                                        return "<div id='itemTooltip'><div data-toggle='tooltip' class='tooltip' data-position='left' data-tooltip='"+data+"' data-tooltip-width='500' data-tooltip-height='500'>" + data.substr( 0, 35 ) +'…'  + "</div></div>"
-                                    } else{
-                                        return data
-                                    }
-                                }
-                            }
-                        ],
-                        initComplete: function() {
-                            this.api().columns().every(function() {
-                                var column = this;
-                                if(column.index() != 0 && column.index() != 9 && column.index() != 10){
-                                    var select = $('<select class="selectOs" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filtrosDEOS").find("th").eq(column.index()))
-                                        .on('change', function() {
-                                            var list = $(this).val();
-                                            var val = '';
-                                            if (list != null) {
-                                                for (var i = 0; i < list.length; i++) {
-                                                    val += $.fn.dataTable.util.escapeRegex(list[i]);
-                                                    if (i != list.length - 1) {
-                                                        val += "|"
-                                                    }
-                                                }
-                                            }
-                                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                            
-                                        }
-                                    );
-                                        $('.selectOs').select2();
-                                        var diferenca = [];
-                                        column.data().unique().sort().each(function(d, j) {
-                                     
-                                            if (column.index() == 8) {
-                                                if (diferenca.indexOf($scope.diferenca[j]) == -1) {
-                                                    diferenca.push($scope.diferenca[j]);
-                                                    select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
-                                                }
-                                            } else {
-                                                select.append('<option value="' + d + '" style="width:100%;">' + d + '</option>')
-                                            }
-                                        }
-                                    );
-                                } 
-                            });
-                        },
-                      
-                        buttons:[],                        
-                        columnDefs: [{
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11],
-                            className: 'mdl-data-table__cell--non-numeric'
-                        }],
+                        $(".toast").fadeOut("slow");
+                        $("#loading").css("display", "block");
+                        $("#dtAppointmentDiv").css("display", "none");
+                        $scope.traslado = [];
+                        $scope.diferenca = [];
                         
-                        fixedColumns: true,
-                        colReorder: true,
-                        orderCellsTop: true,
-                        scrollX: false,
-                        responsive: true,
-                        "bPaginate": true,
-                        "bLengthChange": false,
-                        "bFilter": true,
-                        "bInfo": false,
-                        "bAutoWidth": false,
-                        "language": {
-                            "sEmptyTable": "Nenhum registro encontrado",
-                            "sInfo": "Mostrando do Início ao Final de todos os registros",
-                            "sInfoEmpty": "Mostrando 0 á 0 de 0 de todos registros",
-                            "sInfoFiltered": "(Filtrados de MAX registros)",
-                            "sInfoPostFix": "",
-                            "sInfoThousands": ".",
-                            "sLengthMenu": "_MENU_ resultados por página",
-                            "sLoadingRecords": "Carregando...",
-                            "sProcessing": "Processando...",
-                            "sZeroRecords": "Nenhum registro encontrado",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
-                            "oAria": {
-                                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                                "sSortDescending": ": Ordenar colunas de forma descendente"
+                        Materialize.toast('Carregando dados!', 30000, 'toast-container');
+
+                        appointmentAPIService.getFromRangeDate(moment(
+                            $('#min').val(), "DD/MM/YYYY").format("DD/MM/YYYY"), 
+                            moment($('#max').val(), "DD/MM/YYYY").format("DD/MM/YYYY")
+                        ).then(
+                            function(response) {
+                                appointment.clear().draw();
+                                appointment.rows.add(response.data).draw();
+
+                                appointment.columns().every(function() {
+                                    var column = this;
+                                    
+                                    if(column.index() != 0 && column.index() != 9 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 14 && column.index() != 15 && column.index() != 16 && column.index() != 19) {
+                                       var select = $('<select class="select2" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filters").find("th").eq(column.index()))
+                                           .on('change', function () {
+                                               var list = $(this).val();
+                                               var val = '';
+                                               if(list != null){
+                                                   for(var i = 0; i < list.length; i++){
+                                                       val += $.fn.dataTable.util.escapeRegex(list[i]);
+                                                       if(i != list.length-1){
+                                                           val += "|"
+                                                       }
+                                                   }
+                                               }
+                                               column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                           }
+                                       );  
+                                       $('.select2').select2();
+                                       var diferenca = [];
+                                       var traslado = [];
+
+                                       column.data().unique().sort().each(function(d, j) {
+                                               // select 
+                                               console.log("teste");
+                                                if (column.index() == 17) {
+                                                    if (traslado.indexOf($scope.traslado[j]) == -1) {
+                                                       traslado.push($scope.traslado[j]);
+                                                       select.append('<option value="' + $scope.traslado[j] + '" style="width:100%;">' + $scope.traslado[j] + '</option>');
+                                                    }
+                                                } else if (column.index() == 7) {
+                                                    if (diferenca.indexOf($scope.diferenca[j]) == -1) {
+                                                       diferenca.push($scope.diferenca[j]);
+                                                       select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
+                                                    }
+                                                } else {
+                                                   select.append('<option value="' + d + '" style="width:100%;">' + d + '</option>')
+                                                }
+                                           }
+                                       );  
+                                    }
+
+                                })
+                                $(".toast").fadeOut("slow");
+                                Materialize.toast('Dados carregados com sucesso!', 3500, 'toast-container');
+
+                                $("#loading").css("display", "none");
+                                $("#dtAppointmentDiv").css("display", "block");
+
+                            }, function(){
+                                $(".toast").fadeOut("slow");
+                                Materialize.toast('ERRO R2 - Contate o Administrador!', 5500, 'toast-container');
                             }
-                        }
-                    });
-                    $("#minimo, #maximo").pickadate({
-                        closeOnSelect: true,
-                        buttonText: 'Data',
-                        buttonImageOnly: true,
-                        buttonImage: '/easy_calendar/resources/images/icon-calendar-black.png',
-                        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
-                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                        today: 'Hoje',
-                        clear: 'Limpar',
-                        close: 'Pronto',
-                        labelMonthNext: 'Próximo mês',
-                        labelMonthPrev: 'Mês anterior',
-                        labelMonthSelect: 'Selecione um mês',
-                        labelYearSelect: 'Selecione um ano',
-                        selectMonths: true,
-                        selectYears: 80,
-                        format: 'dd/mm/yyyy',
-                        default: 'now',
-                        onSet: function () {
-                            dtOServico.api().draw(); 
-                        }
+                        )
+
                     });
 
-                    $.fn.dataTable.ext.search.push(
-                        function (settings, data, dataIndex) {
-                            var minimo = $('#minimo').val() == "" ? "" : moment($('#minimo').val(), 'DD/MM/YYYY');
-                            var maximo = $('#maximo').val() == "" ? "" : moment($('#maximo').val(), 'DD/MM/YYYY');
-                            var startData = moment(data[1], 'DD/MM/YYYY');
-                            if (minimo == "" && maximo == "") { return true; }
-                            if (minimo == "" && startData <= maximo) { return true;}
-                            if(maximo == "" && startData >= minimo) {return true;}
-                            if (startData <= maximo && startData >= minimo) { return true; }
-
-                            return false;
-                    });
-            
-                    $('#minimo, #maximo').on('keyup change', function () {
-                        dtOServico.api().draw();
-                    });
-                    $('#dtOrdemServico tbody').on('click', 'td #chamarPDF', function() {                       
-                            var tr = $(this).closest('tr');                            
-                            var row = dtOServico.api().row(tr);
-                            var relatorio = '<style>\
-                            td {\
-                                border: 1px solid black;\
-                                border-bottom: none\
-                                font-family: Arial, Helvetica, sans-serif;\
-                            }\
-                            table {\
-                                border: 0.5px solid black;\
-                                border-bottom: none\
-                                font-family: Arial, Helvetica, sans-serif;\
-                            }\
-                            table {\
-                                border-collapse: collapse;\
-                                font-family: Arial, Helvetica, sans-serif;\
-                            }\
-                            section{\
-                                page-break-after: always;\
-                                font-family: Arial, Helvetica, sans-serif;\
-                            }\
-                            </style>\
-                            <section>\
-                                <table  width="700">\
-                                    <tr>\
-                                        <td width="100%" valign="middle" align="center" style="font-size:20px"><strong>ORDEM DE SERVIÇO</strong></td>\
-                                        <<!-- <td width="400" height="50" valign="middle">\
-                                            <div><img src="http://iv2.com.br/assets/img/logo.png" width="50px" heigth="50px"></div>\
-                                        </td> -->\
-                                    </tr>\
-                                </table>\
-                                <table width="700" >\
-                                    <tr>\
-                                        <td width="500px" height="50px" valign="top"><span style="font-size:14px">Cliente</span><br><br><b>'+row.data().customerId.name+'</b></td>\
-                                        <td width="80px" height="50px" valign="top"><span style="font-size:14px">Data</span><br><br><p style="font-size: 14px; margin-left: 25px; margin-top: 0px;">'+moment(row.data().initialDate).format('DD/MM/YYYY')+'</p></td>\
-                                    </tr>\
-                                    <tr>\
-                                        <td  height="50" valign="top"><span style="font-size:12px">Projeto</span><br><br>'+row.data().projectId.name+'</td>\
-                                    </tr>\
-                                </table>\
-                                <table width="700">\
-                                    <tr>\
-                                        <td  height="50" valign="top"><span style="font-size:12px">Recurso</span><br><br>'+row.data().userId.name+'</td>\
-                                    </tr>\
-                                </table>\
-                                <table width="700">\
-                                    <tr>\
-                                        <td width="570" height="50" valign="top"><span style="font-size:12px">Atividade</span><br><br>'+row.data().activity+'</td>\
-                                    </tr>\
-                                </table>\
-                                <table width="700">\
-                                    <tr>\
-                                        <td width="140" valign="top"><span style="font-size:12px">Entrada</span><br><br>'+row.data().initialHour+'</td>\
-                                        <td width="140" valign="top"><span style="font-size:12px">Intervalo</span><br><br>'+row.data().hourLunch+'</td>\
-                                        <td width="140" valign="top"><span style="font-size:12px">Saída</span><br><br>'+row.data().lastHour+'</td>\
-                                        <td width="140" valign="top"><span style="font-size:12px">Improdutividade</span><br><br>'+row.data().unproductiveHours+'</td>\
-                                        <td width="138" valign="top"><span style="font-size:12px">Total</span><br><br>'+diffHoras(row.data().initialHour, row.data().lastHour, row.data().hourLunch)+'</td>\
-                                    </tr>\
-                                </table>\
-                                <table width="700">\
-                                    <tr>\
-                                        <td width="100%" height="50" valign="top"><span style="font-size:12px">Executado:</span><br><br><p style="font-size: 12px;"><b>'+row.data().executed+'</b></p>\
-                                        </td>\
-                                    </tr>\
-                                </table>\
-                                <table width="700"  style="border: 1px solid black;">\
-                                    <tr>\
-                                        <td width="160" height="50" valign="top"><span style="font-size:12px"><div style="margin-top: 12px;"></div><div style="margin-left: 10px;"><br><br>Cliente: ______________________________</span></div><div style="margin-left: 430px; margin-top: 50px;"><br><br>Recurso: ______________________________</span></div><div style="margin-top: 5px;"></div></td>\
-                                    </tr>\
-                                    <tr>\
-                                        <td width="160" height="50" valign="top">\
-                                            <span style="font-size:11px">\
-                                                <b>\
-                                                    <p>Este documento tem a finalidade de:</p>\
-                                                    <p>- Acompanhar o desenvolvimento do Cliente;</p>\
-                                                    <p>- Relatar os serviços executados;</p>\
-                                                    <p>- Veículo de comunicação Cliente/IV2;</p>\
-                                                    <p>- Autorização para faturamento dos serviços prestados.</p>\
-                                                    <p>Alertamos que caso o cliente não se pronuncie, concordando ou não com o exposto, no prazo de 48 horas da emissão desta, seja via telefone e-mail ou fax, perderá o direito de reclamação.</p>\
-                                                </b>\
-                                            </span>\
-                                        </td>\
-                                    </tr>\
-                                </table>\
-                            </section>';
-                            var html = Mustache.render(relatorio, null);
-                            // Renderizar o seu template com o Mustache
-
-                            $.fileDownload('https://easyboxx.iv2.com.br/EasyBoxx/WS/gerarPDF.php', {
-                                httpMethod: 'POST',
-                                data: {
-                                    PDF: html,
-                                    fileName: "Ordem_de_Servico.pdf"
-                                },
-                                successCallback: function (url) {
-                                    alert(url)
-                                }
-                            });              
-                        }
-                    );
-                    $('.tooltip').tooltip();
-                    $('.dt-button').removeClass('dt-button');
-                    $('.atividade').css("text-overflow", "ellipsis");                 
-                });             
+                    $(".toast").fadeOut("slow");
+                    Materialize.toast('Dados carregados com sucesso!', 5500, 'toast-container');
+                    $("#loading").css("display", "none");
+                    $("#dtAppointmentDiv").css("display", "block");
+                }, function(){
+                    $(".toast").fadeOut("slow");
+                    Materialize.toast('ERRO R1 - Contate o Administrador!', 5500, 'toast-container');
+                });              
             }
         }
     );

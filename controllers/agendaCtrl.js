@@ -1,22 +1,5 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    //necessario para remover o search customizado
-   // $.fn.dataTable.ext.search.splice(0, 2);
-    //---
-    
-       
-  
-
-    // function toasty(message, time) {
-
-    //     var x = document.getElementById("snackbar");
-    //     x.innerHTML = message;
-    //     x.className = "show";
-    //     setTimeout(function() {
-    //         x.className = x.className.replace("show", "");
-    //     }, time);
-    // }
-
     $('.button-collapse').sideNav({
         menuWidth: 300, // Default is 240
         closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor

@@ -45,7 +45,6 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                             $scope.user = response.data[0];
                             $scope.user.remunerationType = Number(response.data[0].remunerationType).toString();
                             $scope.user.profileId = response.data[0].profileId.idProfile;
-                            console.log(JSON.stringify($scope.user));
 
                             var pickdate = $('#dataaniversario').pickadate({
                                 monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro',
