@@ -1,23 +1,23 @@
-<div class="row">
-    <div  id="divApontamentos" class="container col s12 m12" style="min-width: 100%;">
+<div class="container">
+    <div  id="divApontamentos"  style="min-width: 100%;">
         <div class="table-responsive">
-            <div class="row" id="filtrosData" style="float:right;">
+            <div class="row" id="filtrosData" >
                 <div class="col s12 m6">                                 
-                    <input style="cursor: pointer;" name="min" id="min" type="text" placeholder="Data de ínicio">                         
+                    <input  name="min" id="min" type="text" placeholder="Data de ínicio">                         
                 </div>
                 <div class="col s12 m6">                
-                    <input style="cursor: pointer;" name="max" id="max" type="text" placeholder="Data de fim">
+                    <input  name="max" id="max" type="text" placeholder="Data de fim">
                 </div>
-                <i class="material-icons grey-text" style="float: right; position: absolute; font-size: 30px; margin: 10px 0px 0px -400px;">date_range</i>
+                <!-- <i class="material-icons grey-text" style="float: left; position: absolute; font-size: 30px; ">date_range</i> -->
             </div>
-            <div class="row">
-                <div class="table-wrapper">
-                    <table id="dtAppointment" class="mdl-data-table nowrap" cellspacing="0" style="width:100%;">
+            <div class="row" style="">
+                <div class="table-wrapper responsive-table">
+                    <table id="dtAppointment" class="mdl-data-table " cellspacing="0" style="width:100%;">
                         <thead>
                             <tr>
                                 <th></th>
                                 <th>Dia</th>
-                                <th> Recurso</th>
+                                <th>Recurso</th>
                                 <th>Cliente</th>
                                 <th>Projeto</th>
                                 <th>Entrada</th>
