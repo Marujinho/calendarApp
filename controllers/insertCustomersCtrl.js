@@ -3,6 +3,7 @@ angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIServi
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+    $rootScope.titulo = 'Clientes';
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -115,6 +116,8 @@ angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIServi
 
                 $scope.insertCustomers = function () {
                     $scope.customer.contact;
+                    $scope.token = localStorage.getItem('userToken');
+                    $scope.customer.token = $scope.token;
                     customersAPIService.save($scope.customer).then(function (response) {
                         Materialize.toast('Cliente cadastrado!', 1500, 'toast-container');
                         $state.reload('listCustomers');
@@ -122,10 +125,24 @@ angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIServi
                 };
             }
 
+            function buscaCep2(cep, callback){
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "https://viacep.com.br/ws/"+cep+"/json/",
+                    contentType: "application/json; charset=utf-8",
+                    data: "",
+                    dataType: "json",
+                    success: function(data) { callback(data); },
+                    error: function(data) { callback("Erro"); }
+                });
+            }
+
             $scope.buscaCep = function(){
-                var cep = $scope.customer.zipCode.replaceAll("-", "")
+                // var cep = $scope.customer.zipCode.replaceAll("-", "")
+                var cep = $scope.customer.zipCode;
                 if(cep.length == 8){
-                    var endereco = buscaCep(cep,
+                    var endereco = buscaCep2(cep,
                         function(response){
                             if(response == "Erro"){
                                 Alert("Erro ao consultar CEP!")

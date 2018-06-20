@@ -22,15 +22,16 @@ function formatMoney(val){
 }
 
 
-function buscaCep(cep, callback){
-    $.ajax({
-        type: "GET",
-        async: false,
-        url: "https://viacep.com.br/ws/"+cep+"/json/",
-        contentType: "application/json; charset=utf-8",
-        data: "",
-        dataType: "json",
-        success: function(data) { callback(data); },
-        error: function(data) { callback("Erro"); }
-    });
-}
+
+// function buscaCep2(cep, callback){
+//     $.ajax({
+//         type: "GET",
+//         async: false,
+//         url: "https://viacep.com.br/ws/"+cep+"/json/",
+//         contentType: "application/json; charset=utf-8",
+//         data: "",
+//         dataType: "json",
+//         success: function(data) { callback(data); },
+//         error: function(data) { callback("Erro"); }
+//     });
+// }

@@ -1,9 +1,9 @@
-angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService, customersAPIService, usersAPIService, $timeout, $state, $stateParams, $rootScope){
+angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService, customersAPIService, usersAPIService, $timeout, $state, $stateParams, $rootScope) {
 
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
+    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    usersAPIService.login(WCMAPI.userCode).then(
+    usersAPIService.login(localStorage.getItem('userCode')).then(
         function (responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
@@ -85,14 +85,52 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                 $timeout(function () {
                     Materialize.updateTextFields();
                 }, 0);
-
+                var customers = [{}];
                 customersAPIService.getall().then(function (response) {
                     $scope.customer = response.data;
+                    
+                    for(var i = 0; i < $scope.customer.length; i++){
+                        customers.push($scope.customer[i]);
+                    }
+                    // $scope.project.customerId = $scope.customer.idCustomer; 
                 });
-
-
+                $scope.isCustomerAddress = function () {
+                    if ($scope.project.isCustomerAddress == true) {
+                        $scope.getIdSelected = $scope.project.customerId;
+                        var itenArray = [{}];
+                        for (var i = 0; i < $scope.customer.length; i++) {
+                            var itens = $scope.customer;
+                            console.log(itens[i].idCustomer);
+                            if($scope.getIdSelected == itens[i].idCustomer){
+                                itenArray = itens[i];
+                            }
+                           
+                        }
+                        $scope.project.zipCode = itenArray.zipCode;
+                        $scope.project.district = itenArray.district;
+                        $scope.project.address = itenArray.address;
+                        $scope.project.number = itenArray.number;
+                        $scope.project.city = itenArray.city;
+                        $scope.project.state = itenArray.state;
+                        $scope.project.complement = itenArray.complement;
+                        $timeout(function () {
+                            Materialize.updateTextFields();
+                        }, 0);
+                    }else{
+                        $scope.project.zipCode = "";
+                        $scope.project.district = "";
+                        $scope.project.address = "";
+                        $scope.project.number = "";
+                        $scope.project.city = "";
+                        $scope.project.state = "";
+                        $scope.project.complement = "";
+                        $timeout(function () {
+                            Materialize.updateTextFields();
+                        }, 0);
+                    }
+                };
                 $scope.insertProjects = function () {
-                    if($scope.project.isCustomerAddress == undefined){
+                    if ($scope.project.isCustomerAddress == undefined) {
                         $scope.project.isCustomerAddress = "false";
                     }
                     if ($scope.project.complement == undefined) {
@@ -130,14 +168,28 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     });
                 };
 
-                $scope.buscaCep = function () {
-                    var cep = $scope.project.zipCode.replaceAll("-", "");
-                    if (cep.length == 8) {
-                        var endereco = buscaCep(cep,
-                            function (response) {
-                                if (response == "Erro") {
+                function buscaCep2(cep, callback){
+                    $.ajax({
+                        type: "GET",
+                        async: false,
+                        url: "https://viacep.com.br/ws/"+cep+"/json/",
+                        contentType: "application/json; charset=utf-8",
+                        data: "",
+                        dataType: "json",
+                        success: function(data) { callback(data); },
+                        error: function(data) { callback("Erro"); }
+                    });
+                }
+
+                $scope.buscaCep = function(){
+                    // var cep = $scope.customer.zipCode.replaceAll("-", "")
+                    var cep = $scope.project.zipCode;
+                    if(cep.length == 8){
+                        var endereco = buscaCep2(cep,
+                            function(response){
+                                if(response == "Erro"){
                                     Alert("Erro ao consultar CEP!")
-                                } else {
+                                }else{
                                     $scope.project.district = response.bairro;
                                     $scope.project.address = response.logradouro;
                                     $scope.project.city = response.localidade;
@@ -149,32 +201,7 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                             }
                         );
                     }
-                };
-
-                $scope.getValueResponsible = function () {
-                    $.each($scope.customer, function (position, value) {
-                        $scope.isCustomerAddress = $scope.project.customerId;
-
-                        if ($scope.isCustomerAddress === value.idCustomer) {                          
-                            Materialize.updateTextFields();
-                            $scope.project.city = value.city;
-                            $scope.project.address = value.address;
-                            $scope.project.district = value.district;
-                            $scope.project.zipCode = value.zipCode;
-                            $scope.project.number = value.number;
-                            $scope.project.complement = value.complement;
-                            
-                        } else{
-                            $scope.project.city = "";
-                            $scope.project.address = "";
-                            $scope.project.district = "";
-                            $scope.project.zipCode = "";
-                            $scope.project.number = "";
-                            $scope.project.complement = "";
-                            $scope.isCustomerAddress = "";
-                        }
-                    });
-                };
+                }
             }
         }
     )

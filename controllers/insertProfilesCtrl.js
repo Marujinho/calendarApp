@@ -1,9 +1,9 @@
 angularApp.controller('insertProfilesCtrl', function($scope, profilesAPIService, $stateParams, $rootScope, $state, $timeout, usersAPIService ) {
 
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
+    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    usersAPIService.login(WCMAPI.userCode).then(
+    usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
@@ -64,6 +64,9 @@ angularApp.controller('insertProfilesCtrl', function($scope, profilesAPIService,
 
                 //Cadastra o perfil
                 $scope.insertProfiles = function() {
+                    $scope.profile.name;
+                    $scope.token = localStorage.getItem('userToken');
+                    $scope.profile.token = $scope.token;
                     profilesAPIService.saveProfile($scope.profile).then(function() {
                         Materialize.toast('Perfil cadastrado!', 1500, 'toast-container');
                         $state.reload('listProfiles')

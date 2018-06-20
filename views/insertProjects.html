@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="input-field col m12 s12">
                     <i class="material-icons prefix">assignment</i>
-                    <input id="name" type="text" name="name"ng-model="project.name" class="validate" required="" minlength="5" maxlength="255">
+                    <input id="name" type="text" name="name" ng-model="project.name" class="validate" required="" minlength="5" maxlength="255">
                     <label for="name">Nome do projeto</label>
                     <small data-ng-show="!insertProject.name.$pristine && insertProject.name.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.name.$pristine && insertProject.name.$error.minlength">O campo deve conter no mínimo 5 caracteres</small>
@@ -19,60 +19,73 @@
                 </div>
                 <div class="input-field col m6 s12">
                     <i class="material-icons prefix">person</i>
-                    <input id="responsible" name="responsible" type="text" ng-model="project.responsible" class="validate" required="" minlength="3" maxlength="255">
+                    <input id="responsible" name="responsible" type="text" ng-model="project.responsible" class="validate" required="" minlength="3"
+                        maxlength="255">
                     <label for="responsible">Responsável</label>
                     <small data-ng-show="!insertProject.responsible.$pristine && insertProject.responsible.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.responsible.$pristine && insertProject.responsible.$error.minlength">O campo deve conter no mínimo 3 caracteres</small>
                 </div>
+                <p style="margin-left: 15px;">
+                    <input type="checkbox" class="filled-in" id="isCustomerAddress" ng-model="project.isCustomerAddress" ng-change="isCustomerAddress();"/>
+                    <label for="isCustomerAddress" style="font-size: 12px;">Usar o mesmo endereço</label>
+                </p>
             </div>
             <div class="row">
                 <div class="input-field col m3 s12">
                     <i class="material-icons prefix">room</i>
-                    <input type="text" name="zipCode" id="zipCode" ng-model="project.zipCode" restrict="reject" mask="99999-999" clean="true" class="validate" required="" maxlength="9" ng-keyup="buscaCep()">
+                    <input type="text" name="zipCode" id="zipCode" ng-model="project.zipCode" ng-disabled="project.isCustomerAddress" restrict="reject"
+                        mask="99999-999" clean="true" class="validate" required="" maxlength="9" ng-keyup="buscaCep()" ng-checked="project.isCustomerAddress">
                     <label for="zipCode">CEP</label>
                     <small data-ng-show="!insertProject.zipCode.$pristine && insertProject.zipCode.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.zipCode.$pristine && insertProject.zipCode.$error.minlength">O campo deve conter 9 caracteres</small>
                 </div>
                 <div class="input-field col m3 s12">
-                    <input type="text" name="district" id="district" ng-model="project.district" class="validate" required="" minlength="5" maxlength="255">
+                    <input type="text" name="district" id="district" ng-model="project.district" ng-disabled="project.isCustomerAddress" class="validate"
+                        required="" minlength="1" maxlength="255">
                     <label for="district">Bairro</label>
                     <small data-ng-show="!insertProject.district.$pristine && insertProject.district.$error.required">Campo obrigatório</small>
-                    <small data-ng-show="!insertProject.district.$pristine && insertProject.district.$error.minlength">O campo deve conter no mínimo 5 caracteres</small>
+                    <small data-ng-show="!insertProject.district.$pristine && insertProject.district.$error.minlength">O campo deve conter no mínimo 1 caracteres</small>
                 </div>
                 <div class="input-field col m3 s12">
-                    <input type="text" name="address" id="address" ng-model="project.address" class="validate" required="" minlength="5" maxlength="255">
+                    <input type="text" name="address" id="address" ng-model="project.address" ng-disabled="project.isCustomerAddress" class="validate"
+                        required="" minlength="5" maxlength="255">
                     <label for="address">Endereço</label>
                     <small data-ng-show="!insertProject.address.$pristine && insertProject.address.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.address.$pristine && insertProject.address.$error.minlength">O campo deve conter no mínimo 5 caracteres</small>
                 </div>
                 <div class="input-field col m3 s12">
-                    <input type="text" name="number" id="number" ng-model="project.number" class="validate" mask="9?9?9?9?9?9?9?9?9?9" restrict="reject" required="" minlength="1" maxlength="10">
+                    <input type="text" name="number" id="number" ng-model="project.number" ng-disabled="project.isCustomerAddress" class="validate"
+                        mask="9?9?9?9?9?9?9?9?9?9" restrict="reject" required="" minlength="1" maxlength="10">
                     <label for="number">Número</label>
                     <small data-ng-show="!insertProject.number.$pristine && insertProject.number.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.number.$pristine && insertProject.number.$error.minlength">O campo deve conter no mínimo 1 caracter</small>
                 </div>
                 <div class="input-field col m4 s12">
                     <i class="material-icons prefix">room</i>
-                    <input type="text" name="city" id="city" ng-model="project.city" class="validate" required="" minlength="3" maxlength="255">
+                    <input type="text" name="city" id="city" ng-model="project.city" ng-disabled="project.isCustomerAddress" class="validate"
+                        required="" minlength="3" maxlength="255">
                     <label for="city">Cidade</label>
                     <small data-ng-show="!insertProject.city.$pristine && insertProject.city.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.city.$pristine && insertProject.city.$error.minlength">O campo deve conter no mínimo 3 caracteres</small>
                 </div>
                 <div class="input-field col m4 s12">
-                    <input type="text" name="state" id="state" ng-model="project.state" class="validate" required="" minlength="2" maxlength="2">
+                    <input type="text" name="state" id="state" ng-model="project.state" ng-disabled="project.isCustomerAddress" class="validate"
+                        required="" minlength="2" maxlength="2">
                     <label for="state">Estado</label>
                     <small data-ng-show="!insertProject.state.$pristine && insertProject.state.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.state.$pristine && insertProject.state.$error.minlength">O campo deve conter 2 caracteres</small>
                 </div>
                 <div class="input-field col m4 s12">
-                    <input type="text" name="complement" maxlength="255" id="complement" ng-model="project.complement" class="validate">
+                    <input type="text" name="complement" maxlength="255" id="complement" ng-model="project.complement" ng-disabled="project.isCustomerAddress"
+                        class="validate">
                     <label for="complement">Complemento</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col m6 s12">
                     <i class="material-icons prefix">attach_money</i>
-                    <input type="text" id="projectCost" name="projectCost" ng-model="project.projectCost" restrict="reject" ng-change="changeMask('project', 'projectCost')"  required="" minlength="3" maxlength="16" class="validate">
+                    <input type="text" id="projectCost" name="projectCost" ng-model="project.projectCost" restrict="reject" ng-change="changeMask('project', 'projectCost')"
+                        required="" minlength="3" maxlength="16" class="validate">
                     <label for="projectCost">Valor do projeto</label>
                     <small data-ng-show="!insertProject.projectCost.$pristine && insertProject.projectCost.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.projectCost.$pristine && insertProject.projectCost.$error.minlength">O campo deve conter no minímo 3 caracteres</small>
@@ -84,16 +97,17 @@
             </div>
             <div class="row" id="despesablock">
                 <div class="col s12 m3">
-                    <input name="expenseType" type="radio" value="0"  id="despOpen" ng-model="project.expenseType" class="with-gap"/>
+                    <input name="expenseType" type="radio" value="0" id="despOpen" ng-model="project.expenseType" class="with-gap" />
                     <label for="despOpen">Despesa aberta</label>
                 </div>
                 <div class="col s12 m3">
-                    <input name="expenseType" type="radio" value="1" id="despClose" ng-model="project.expenseType" class="with-gap"/>
+                    <input name="expenseType" type="radio" value="1" id="despClose" ng-model="project.expenseType" class="with-gap" />
                     <label for="despClose">Despesa fechada</label>
                 </div>
                 <div class="input-field col m6 s12" id="divExpense" data-ng-if="project.expenseType == 1">
                     <i class="material-icons prefix">monetization_on</i>
-                    <input id="expense" type="text" value="0" restrict="reject" name="expense" required="" ng-change="changeMask('project', 'expense')" minlength="3" maxlength="16" ng-model="project.expense" class="validate">
+                    <input id="expense" type="text" value="0" restrict="reject" name="expense" required="" ng-change="changeMask('project', 'expense')"
+                        minlength="3" maxlength="16" ng-model="project.expense" class="validate">
                     <label for="expense">Valor da despesa</label>
                     <small data-ng-show="!insertProject.expense.$pristine && insertProject.expense.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.expense.$pristine && insertProject.expense.$error.minlength">O campo deve conter no minímo 3 caracteres</small>
@@ -102,38 +116,47 @@
             <div class="row">
                 <div class="col s12 m3">
                     <i class="material-icons prefix" style="margin-top: -5px; height: 30px;">storage</i>
-                    <input name="projectType" type="radio" value="0" id="projOpen" ng-model="project.projectType"  class="with-gap" />
+                    <input name="projectType" type="radio" value="0" id="projOpen" ng-model="project.projectType" class="with-gap" />
                     <label for="projOpen">Projeto aberto</label>
                 </div>
                 <div class="col s12 m3">
-                    <input name="projectType" type="radio"  value="1" id="projClose" ng-model="project.projectType"  class="with-gap" />
+                    <input name="projectType" type="radio" value="1" id="projClose" ng-model="project.projectType" class="with-gap" />
                     <label for="projClose">Projeto fechado</label>
                 </div>
                 <div class="col s12 m3">
-                    <input name="projectType" type="radio"  value="2" id="bankHour" ng-model="project.projectType"  class="with-gap" />
+                    <input name="projectType" type="radio" value="2" id="bankHour" ng-model="project.projectType" class="with-gap" />
                     <label for="bankHour">Banco de horas</label>
                 </div>
                 <div class="col s12 m3">
-                    <input name="projectType" type="radio" value="3" id="support" ng-model="project.projectType"  class="with-gap" />
+                    <input name="projectType" type="radio" value="3" id="support" ng-model="project.projectType" class="with-gap" />
                     <label for="support">Suporte</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col m4 s12">
+                <div class="input-field col m3 s12">
                     <i class="material-icons prefix">timer</i>
-                    <input type="text" name="hours" ng-model="project.hours" class="validate" id="hours" required="" restrict="reject" mask="9?9?9?9?9?9" minlength="1" maxlength="6"/>
+                    <input type="text" name="hours" ng-model="project.hours" class="validate" id="hours" required="" restrict="reject" mask="9?9?9?9?9?9"
+                        minlength="1" maxlength="6" />
                     <label for="hours">Horas</label>
                     <small data-ng-show="!insertProject.hours.$pristine && insertProject.hours.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.hours.$pristine && insertProject.hours.$error.minlength">O campo deve conter no minímo 1 hora</small>
                 </div>
-                <div class="input-field col m4 s12">
-                    <input type="text" name="hourGPCost" ng-model="project.hourGPCost" restrict="reject" required="" ng-change="changeMask('project', 'hourGPCost')" minlength="3" class="validate" id="hourGPCost" />
+                <div class="input-field col m3 s12">
+                    <input type="text" name="percentGP" ng-model="project.percentGP" mask="9?9?9" restrict="reject" required="" minlength="1" class="validate" id="percentGP" />
+                    <label for="percentGP">Porcentagem GP</label>
+                    <small data-ng-show="!insertProject.percentGP.$pristine && insertProject.percentGP.$error.required">Campo obrigatório</small>
+                    <small data-ng-show="!insertProject.percentGP.$pristine && insertProject.percentGP.$error.minlength">O campo deve conter no minímo 1 caracteres</small>
+                </div>
+                <div class="input-field col m3 s12">
+                    <input type="text" name="hourGPCost" ng-model="project.hourGPCost" restrict="reject" required="" ng-change="changeMask('project', 'hourGPCost')"
+                        minlength="3" class="validate" id="hourGPCost" />
                     <label for="hourGPCost">Valor horas GP</label>
                     <small data-ng-show="!insertProject.hourGPCost.$pristine && insertProject.hourGPCost.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.hourGPCost.$pristine && insertProject.hourGPCost.$error.minlength">O campo deve conter no minímo 3 caracteres</small>
                 </div>
-                <div class="input-field col m4 s12">
-                    <input type="text" name="hourConsultantCost" ng-model="project.hourConsultantCost"  restrict="reject" required="" ng-change="changeMask('project', 'hourConsultantCost')" minlength="3" class="validate" id="hourConsultantCost" />
+                <div class="input-field col m3 s12">
+                    <input type="text" name="hourConsultantCost" ng-model="project.hourConsultantCost" restrict="reject" required="" ng-change="changeMask('project', 'hourConsultantCost')"
+                        minlength="3" class="validate" id="hourConsultantCost" />
                     <label for="hourConsultantCost">Valor horas consultor</label>
                     <small data-ng-show="!insertProject.hourConsultantCost.$pristine && insertProject.hourConsultantCost.$error.required">Campo obrigatório</small>
                     <small data-ng-show="!insertProject.hourConsultantCost.$pristine && insertProject.hourConsultantCost.$error.minlength">O campo deve conter no minímo 3 caracteres</small>
@@ -141,7 +164,8 @@
             </div>
             <div class="col m12 s12 right-align">
                 <button class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listProjects">Cancelar</button>
-                <button data-ng-disabled="insertProject.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="listProjects" type="submit" ng-click="insertProjects();">Salvar</button>
+                <button data-ng-disabled="insertProject.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="listProjects"
+                    type="submit" ng-click="insertProjects();">Salvar</button>
             </div>
         </form>
     </div>
