@@ -14,7 +14,10 @@ angularApp.service('closingDateAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/closingDate/save',
-            data: idClosingDate
+            data: {
+                idClosingDate:idClosingDate,
+                token:localStorage.getItem('userToken')
+            }
         });
     };
     return {

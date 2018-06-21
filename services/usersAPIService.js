@@ -15,7 +15,10 @@ angularApp.service('usersAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/user/save',
-            data: user
+            data: {
+                user:user,
+                token:localStorage.getItem('userToken')
+            }
         });
     };
 
@@ -25,7 +28,8 @@ angularApp.service('usersAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/user/delete',
             data: {
                 idUser: idUser,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token:localStorage.getItem('userToken')
             }
         });
     };

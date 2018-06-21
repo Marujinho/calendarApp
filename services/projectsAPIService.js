@@ -4,6 +4,9 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/project/getall',
+            data:{
+                token:localStorage.getItem('userToken')
+            }
 
         });
     };
@@ -12,7 +15,10 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/project/save',
-            data: projects
+            data: {
+                projects:projects,
+                token:localStorage.getItem('userToken')
+            }
         });
     };
 
@@ -21,7 +27,8 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/project/getbyid',
             data: {
-                idProject: idProject
+                idProject: idProject,
+                token:localStorage.getItem('userToken')
             }
         });
     };
@@ -32,7 +39,8 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/project/delete',
             data: {
                 idProject: idProject,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token:localStorage.getItem('userToken')
             }
         });      
     };
@@ -41,7 +49,8 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/project/getbycustomer',
             data: {
-                "idCustomer":idCustomer
+                "idCustomer":idCustomer,
+                "token": localStorage.getItem('userToken')
             }
         });
     };

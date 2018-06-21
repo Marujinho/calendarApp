@@ -3,7 +3,7 @@ angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIServi
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    $rootScope.titulo = 'Clientes';
+    
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -45,7 +45,7 @@ angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIServi
                         });
                         
                 } else {
-                    $rootScope.titulo = 'Cadastrar Cliente';
+                    $rootScope.titulo = 'Cadastro';
 
                     $scope.customer = {
                         complement: "",

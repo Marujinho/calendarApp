@@ -56,10 +56,10 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     projectsAPIService.getByIdProject($scope.sp.id) //pegar id
                         .then(function (response) {
                             $scope.project = response.data[0];
-                            $scope.project.expense = $scope.project.expense.replaceAll(".", ",");
-                            $scope.project.hourConsultantCost = $scope.project.hourConsultantCost.replaceAll(".", ",");
-                            $scope.project.hourGPCost = $scope.project.hourGPCost.replaceAll(".", ",");
-                            $scope.project.projectCost = $scope.project.projectCost.replaceAll(".", ",");
+                            $scope.project.expense = $scope.project.expense.replace(".", ",");
+                            $scope.project.hourConsultantCost = $scope.project.hourConsultantCost.replace(".", ",");
+                            $scope.project.hourGPCost = $scope.project.hourGPCost.replace(".", ",");
+                            $scope.project.projectCost = $scope.project.projectCost.replace(".", ",");
                             $scope.project.expenseType = $scope.project.expenseType.toString();
                             $scope.project.projectType = $scope.project.projectType.toString();
                             $scope.project.customerId = response.data[0].customerId.idCustomer;
@@ -139,27 +139,27 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     if ($scope.project.expense == undefined || $scope.project.expense == '') {
                         $scope.project.expense = "0.00";
                     } else {
-                        $scope.project.expense = $scope.project.expense.replaceAll(".", "").replaceAll(",", ".")
+                        $scope.project.expense = $scope.project.expense.replace(".", "").replace(",", ".")
                     }
                     if ($scope.project.transfer == undefined || $scope.project.transfer == '') {
                         $scope.project.transfer = "0.00";
                     } else {
-                        $scope.project.transfer = $scope.project.transfer.replaceAll(".", "").replaceAll(",", ".")
+                        $scope.project.transfer = $scope.project.transfer.replace(".", "").replace(",", ".")
                     }
                     if ($scope.project.projectCost == undefined || $scope.project.projectCost == '') {
                         $scope.project.projectCost = "0.00";
                     } else {
-                        $scope.project.projectCost = $scope.project.projectCost.replaceAll(".", "").replaceAll(",", ".")
+                        $scope.project.projectCost = $scope.project.projectCost.replace(".", "").replace(",", ".")
                     }
                     if ($scope.project.hourGPCost == undefined || $scope.project.hourGPCost == '') {
                         $scope.project.hourGPCost = "0.00";
                     } else {
-                        $scope.project.hourGPCost = $scope.project.hourGPCost.replaceAll(".", "").replaceAll(",", ".")
+                        $scope.project.hourGPCost = $scope.project.hourGPCost.replace(".", "").replace(",", ".")
                     }
                     if ($scope.project.hourConsultantCost == undefined || $scope.project.hourConsultantCost == '') {
                         $scope.project.hourConsultantCost = "0.00";
                     } else {
-                        $scope.project.hourConsultantCost = $scope.project.hourConsultantCost.replaceAll(".", "").replaceAll(",", ".")
+                        $scope.project.hourConsultantCost = $scope.project.hourConsultantCost.replace(".", "").replace(",", ".")
                     }
 
                     projectsAPIService.save($scope.project).then(function () {
@@ -182,7 +182,7 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                 }
 
                 $scope.buscaCep = function(){
-                    // var cep = $scope.customer.zipCode.replaceAll("-", "")
+                    // var cep = $scope.customer.zipCode.replace("-", "")
                     var cep = $scope.project.zipCode;
                     if(cep.length == 8){
                         var endereco = buscaCep2(cep,

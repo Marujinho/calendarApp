@@ -30,7 +30,7 @@ angularApp.controller('listCustomersCtrl', function($scope, customersAPIService,
                 }
 
                 $rootScope.local = "";
-                $rootScope.titulo = 'Lista de Clientes';
+                $rootScope.titulo = 'Clientes';
                 //getall clientes
                 $scope.contact = [];
                 customersAPIService.getall().then(function(response) {
@@ -52,8 +52,7 @@ angularApp.controller('listCustomersCtrl', function($scope, customersAPIService,
                         buttons: [
                             { extend: 'copy',  text: 'Copiar', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'     },
                             { extend: 'excel', text: 'Excel', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'},
-                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'      },
-                            { extend: 'print', text:'Imprimir', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'    }
+                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'}
                         ],
                         columnDefs: [
                             { targets: [0, 1, 2, 3], className: 'mdl-data-table__cell--non-numeric' }
@@ -132,7 +131,6 @@ angularApp.controller('listCustomersCtrl', function($scope, customersAPIService,
                         $('#modal1').modal('open');
                         html += '<div class="modal-content">';
                         html += '       <div class="row" style="border-bottom: 1px solid #9e9e9e;">';
-                        html += '           <h5 style="margin-top:5px; position:absolute;"><b>Visualização de cliente</b></h5>';
                         html += '           <div class="col s12 m2 right-align" style="float:right;">';
                         if(data.idCustomer != 1){
                             html += '               <a class="modal-action modal-close" ng-click="deleteCustomer();"><i class="material-icons red-text">delete</i></a>';

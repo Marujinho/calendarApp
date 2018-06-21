@@ -33,8 +33,7 @@ angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $
                 $rootScope.local = "";
                 $rootScope.titulo = 'Lista de Perfis';
                 profilesAPIService.getallProfiles().then(function(response) {
-                    
-                    $scope.listClients = response.data;
+                    $scope.listProfiles = response.data;
                     var table = $('#dtProfile').DataTable({
                         dom: 'Bfrtip',
                         data: response.data,
@@ -61,8 +60,8 @@ angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $
                         buttons: [
                             { extend: 'copy',  text: 'Copiar', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'     },
                             { extend: 'excel', text: 'Excel', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'},
-                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'      },
-                            { extend: 'print', text:'Imprimir', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'    }
+                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'      }
+                           
                         ],
                         columnDefs: [{
                             targets: [0, 1, 2],
@@ -142,7 +141,6 @@ angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $
 
                         html += '<div class="modal-content">';
                         html += '       <div class="row" style="border-bottom: 1px solid #9e9e9e;">';
-                        html += '           <h5 style="margin-top:5px; position:absolute;"><b>Visualização de perfil</b></h5>';
                         html += '           <div class="col s12 m2 right-align" style="float:right;">';
                         html += '               <a class="modal-action modal-close" ng-click="deleteProfile();"><i class="material-icons red-text">delete</i></a>';
                         html += '               <a id="editarModal" ng-click="editProfile();" class="modal-action modal-close"><i class="material-icons grey-text">mode_edit</i></a>';

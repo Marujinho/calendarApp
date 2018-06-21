@@ -1,9 +1,9 @@
 angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $compile, $stateParams, $state, $rootScope, usersAPIService) {
 
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
+    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    usersAPIService.login(WCMAPI.userCode).then(
+    usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
@@ -73,8 +73,7 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         buttons: [
                             { extend: 'copy', text: 'Copiar', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
                             { extend: 'excel', text: 'Excel', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'print', text: 'Imprimir', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
+                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
                         ],
                         columnDefs: [{
                             targets: [0, 1],
@@ -144,11 +143,11 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
 
                             });
                         },
-                        destroy: true,
-                        retrieve: true,
+                        fixedColumns: true,
                         colReorder: true,
                         orderCellsTop: true,
-                        responsive: true,
+                        scrollX: true,
+                        responsive: false,
                         "bPaginate": true,
                         "bLengthChange": false,
                         "bFilter": true,
@@ -189,7 +188,6 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         $('#modal1').modal('open');
                         html += '<div class="modal-content">';
                         html += '       <div class="row" style="border-bottom: 1px solid #9e9e9e;">';
-                        html += '           <h5 style="margin-top:5px; position:absolute;"><b>Visualização de projeto</b></h5>';
                         html += '           <div class="col s12 m2 right-align" style="float:right;">';
                         html += '               <a class="modal-action modal-close" ng-click="deleteProject();"><i class="material-icons red-text">delete</i></a>';
                         html += '               <a id="editarModal" ng-click="editProject();" class="modal-action modal-close"><i class="material-icons grey-text">mode_edit</i></a>';
@@ -246,15 +244,15 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Valor do projeto"><i class="material-icons grey-text">attach_money</i></div>';
-                        html += '               <div class="conteudoModais">R$:' + data.projectCost.replaceAll(".", ",") + '</div>';
+                        html += '               <div class="conteudoModais">R$:' + data.projectCost.replace(".", ",") + '</div>';
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Valor horas GP"><i class="material-icons grey-text">attach_money</i></div>';
-                        html += '               <div class="conteudoModais"> R$:' + data.hourGPCost.replaceAll(".", ",") + '</div>';
+                        html += '               <div class="conteudoModais"> R$:' + data.hourGPCost.replace(".", ",") + '</div>';
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Valor horas Recurso"><i class="material-icons grey-text">attach_money</i></div>';
-                        html += '               <div class="conteudoModais"> R$:' + data.hourConsultantCost.replaceAll(".", ",") + '</div>';
+                        html += '               <div class="conteudoModais"> R$:' + data.hourConsultantCost.replace(".", ",") + '</div>';
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Horas de traslado"><i class="material-icons grey-text">airplanemode_active</i></div>';
@@ -271,7 +269,7 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                                 txtDespesa = 'Despesa Fechada';
                                 break;
                         }
-                        html += '               <div class="conteudoModais">' + txtDespesa + ' -   R$: ' + data.expense.replaceAll(".", ",") + '</div>';
+                        html += '               <div class="conteudoModais">' + txtDespesa + ' -   R$: ' + data.expense.replace(".", ",") + '</div>';
                         html += '           </div>';
                         html += '       </div>';
                         html += ' </div>';

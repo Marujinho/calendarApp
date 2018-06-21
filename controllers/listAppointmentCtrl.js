@@ -328,14 +328,14 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         },
                         buttons: [
                             { extend: 'copy', title:'Relatório de Apontamentos', text: 'Copiar', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'excel', title:'Relatório de Apontamentos', text: 'Excel', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' },
-                            { extend: 'print', customize: function (doc) {
-                                doc.defaultStyle.fontSize = 9.5;
-                                doc.styles.tableHeader.fontSize = 9.5;
-                                doc.styles.title.fontSize = 11;
-                                doc.styles.tableFooter.fontSize = 9.5;
-                            },
-                            title:'Relatório de Apontamentos', text: 'Imprimir',  footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
+                            { extend: 'excel', title:'Relatório de Apontamentos', text: 'Excel', footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
+                            // { extend: 'print', customize: function (doc) {
+                            //     doc.defaultStyle.fontSize = 9.5;
+                            //     doc.styles.tableHeader.fontSize = 9.5;
+                            //     doc.styles.title.fontSize = 11;
+                            //     doc.styles.tableFooter.fontSize = 9.5;
+                            // },
+                            // title:'Relatório de Apontamentos', text: 'Imprimir',  footer: true, className: 'waves-effect white btn z-depth-0 grey-text text-darken-2' }
                         ],
                         columnDefs: [{
                             targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],

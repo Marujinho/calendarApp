@@ -18,7 +18,8 @@ angularApp.service('calendarRequestAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/calendarRequest/save',
             data: {
                 list: request,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token:localStorage.getItem('userToken')
             }
         });
     };
@@ -28,7 +29,8 @@ angularApp.service('calendarRequestAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/calendarRequest/delete',
             data: {
                 idCalendarRequest: idCalendarRequest,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token:localStorage.getItem('userToken')
             }
         });
     };
@@ -37,7 +39,8 @@ angularApp.service('calendarRequestAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/calendarRequest/getbyid',
             data: {
-                idCalendarRequest: idCalendarRequest
+                idCalendarRequest: idCalendarRequest,
+                token:localStorage.getItem('userToken')
             }
         });
     };
@@ -46,7 +49,10 @@ angularApp.service('calendarRequestAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/calendarRequest/update',
-            data:  request
+            data:  {
+                request:request,
+                token:localStorage.getItem('userToken')
+            }
         });
     };
 

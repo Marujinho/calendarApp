@@ -17,7 +17,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/appointment/save',
             data: {
                 list: appointment,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token: localStorage.getItem('userToken')
             }
         });
     };
@@ -27,7 +28,10 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/update',
-            data: appointment
+            data: {
+                appointment: appointment,
+                token: localStorage.getItem('userToken')
+            } 
         });
     };
 
@@ -36,7 +40,10 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/updateParticular',
-            data: appointment
+            data: {
+                appointment: appointment,
+                token: localStorage.getItem('userToken')
+            }
         });
     };
 
@@ -45,7 +52,10 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/updateFerias',
-            data: appointment
+            data: {
+                appointment: appointment,
+                token: localStorage.getItem('userToken')
+            }
         });
     };
 
@@ -54,7 +64,10 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/insertAppointment',
-            data: appointment
+            data: {
+                appointment: appointment,
+                token: localStorage.getItem('userToken')
+            }
         });
     };
 
@@ -86,7 +99,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/requestappointment/getbyidappointment',
             data: {
-                "idAppointment": id
+                "idAppointment": id,
+                "token": localStorage.getItem('userToken')
             }
         });
     };
@@ -97,7 +111,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/appointment/delete',
             data: {
                 idAppointment: idAppointment,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token: localStorage.getItem('userToken')
             }
         });
     };
@@ -130,7 +145,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             url: $rootScope.global.link+'/appointment/acceptlate',
             data:{
                 idAppointment: idAppointment,
-                login:$rootScope.global.idUser
+                login:$rootScope.global.idUser,
+                token:localStorage.getItem('userToken')
             }
         });
     };
@@ -141,7 +157,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/appointment/refuselate',
             data:{
                 idAppointment: idAppointment,
-                login:$rootScope.global.idUser
+                login:$rootScope.global.idUser,
+                token:localStorage.getItem('userToken')
             }
 
         });

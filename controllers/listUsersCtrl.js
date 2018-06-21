@@ -1,9 +1,9 @@
 angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compile, $state, $stateParams, $rootScope) {
 
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
+    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
-    usersAPIService.login(WCMAPI.userCode).then(
+    usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
                 var local = window.location.href;
@@ -30,7 +30,7 @@ angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compil
                 }
 
                 $rootScope.local = "";
-                $rootScope.titulo = 'Lista de Usuários'
+                $rootScope.titulo = 'Usuários'
 
                 usersAPIService.getall().then(function(response) {
                     $scope.listClients = response.data;
@@ -62,8 +62,7 @@ angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compil
                         buttons: [
                             { extend: 'copy',  text: 'Copiar', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'     },
                             { extend: 'excel', text: 'Excel', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'},
-                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'      },
-                            { extend: 'print', text:'Imprimir', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'    }
+                            { extend: 'pdf', text: 'PDF', className: 'waves-effect white btn z-depth-0 grey-text text-darken-2'}
                         ],
                         columnDefs: [{
                             targets: [0, 1],
@@ -99,11 +98,11 @@ angularApp.controller('listUsersCtrl', function($scope, usersAPIService, $compil
                                                         
                             });
                         },
-                        destroy: true,
-                        retrieve: true,
+                        fixedColumns: true,
                         colReorder: true,
                         orderCellsTop: true,
-                        responsive: true,
+                        scrollX: true,
+                        responsive: false,
                         "bPaginate": true,
                         "bLengthChange": false,
                         "bFilter": true,

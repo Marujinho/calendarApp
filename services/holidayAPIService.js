@@ -15,7 +15,8 @@ angularApp.service('holidayAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/holiday/getbyid',
             data:{
-                idHoliday: id
+                idHoliday: id,
+                token: localStorage.getItem('userToken')
             }
         });
     };
@@ -28,7 +29,10 @@ angularApp.service('holidayAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/holiday/save',
-            data: holiday
+            data: {
+                holiday:holiday,
+                token:localStorage.getItem('userToken')
+            }
         });
     };
     let _delete = function(idHoliday) {
@@ -37,7 +41,8 @@ angularApp.service('holidayAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/holiday/delete',
             data: {
                 idHoliday: idHoliday,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token: localStorage.getItem('userToken')
             }
         });
     };

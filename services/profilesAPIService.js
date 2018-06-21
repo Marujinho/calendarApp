@@ -3,7 +3,9 @@ angularApp.service('profilesAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/profile/getall',
-
+            data: {
+                "token" : localStorage.getItem('userToken')
+            }
         });
     };
 
@@ -12,7 +14,8 @@ angularApp.service('profilesAPIService', function($http, $rootScope) {
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/profile/save',
-            data: profile
+            data: profile,
+            token: localStorage.getItem('userToken')
         });
     };
 
@@ -21,7 +24,8 @@ angularApp.service('profilesAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/profile/getbyid',
             data: {
-                "idProfile": idProfile
+                "idProfile": idProfile,
+                "token"    : localStorage.getItem('userToken') 
             }
         });
     };
@@ -31,7 +35,8 @@ angularApp.service('profilesAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/profile/count',
             data: {
-                "idProfile": idProfile
+                "idProfile": idProfile,
+                "token"    : localStorage.getItem('userToken')
             }
         });
     };
@@ -42,7 +47,8 @@ angularApp.service('profilesAPIService', function($http, $rootScope) {
             url: $rootScope.global.link + '/profile/delete',
             data: {
                 idProfile: idProfile,
-                login: $rootScope.global.idUser
+                login: $rootScope.global.idUser,
+                token: localStorage.getItem('userToken')
             }
         });
     };
