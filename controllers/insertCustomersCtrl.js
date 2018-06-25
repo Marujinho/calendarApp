@@ -115,10 +115,12 @@ angularApp.controller('insertCustomersCtrl', function ($scope, customersAPIServi
                 }
 
                 $scope.insertCustomers = function () {
+                    console.log('entrou na merda do save Customer');
                     $scope.customer.contact;
                     $scope.token = localStorage.getItem('userToken');
                     $scope.customer.token = $scope.token;
                     customersAPIService.save($scope.customer).then(function (response) {
+                        console.log('entrou mais ainda, agr eh pra salvar essa porra. Entrou na API ');
                         Materialize.toast('Cliente cadastrado!', 1500, 'toast-container');
                         $state.reload('listCustomers');
                     });

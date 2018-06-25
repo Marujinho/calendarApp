@@ -12,5 +12,4 @@ angularApp.controller('mobileCtrl', function ($scope, $rootScope) {
     
     qrcode.makeCode();
     
-
 });

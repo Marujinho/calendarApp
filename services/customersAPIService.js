@@ -24,13 +24,11 @@ angularApp.service('customersAPIService', function($http, $rootScope) {
 
     let _saveCustomers = function(customer) {
         customer.login = $rootScope.global.idUser;
+        customer.token = localStorage.getItem('userToken');
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/customer/save',
-            data: {
-                customer:customer,
-                token:localStorage.getItem('userToken')
-            }
+            data: customer
         });
     };
 

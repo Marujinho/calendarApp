@@ -91,7 +91,7 @@
                     <small data-ng-show="!insertProject.projectCost.$pristine && insertProject.projectCost.$error.minlength">O campo deve conter no minímo 3 caracteres</small>
                 </div>
                 <div class="input-field col m6 s12">
-                    <input type="text" id="transfer" ng-model="project.transfer" class="validate timepicker">
+                    <input type="text" id="transfer" ng-model="project.transfer" class="validate" mask="99:99">
                     <label for="transfer">Translado</label>
                 </div>
             </div>

@@ -29,6 +29,30 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     $state.go('agenda');
                 }
 
+                function formatMoney(val){
+                    var value = val.toString().replace(/\D/g,'').replace(/^[0]+/, '');
+                    switch(value.length) {
+                        case 0:
+                            value = '0.00';
+                            break;
+                
+                        case 1:
+                            value = '0.0' + value;
+                            break;
+                
+                        case 2:
+                            value = '0.' + value;
+                            break;
+                
+                        default:
+                            value = value.slice(0, -2) + '.' + value.slice(-2);
+                            break;
+                    }
+                
+                    return value.replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                }
+                
+
                 $scope.changeMask = function (myData, myData2) {
                     $scope[myData][myData2] = formatMoney($scope[myData][myData2]);
                 }
@@ -69,7 +93,7 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                             }, 0);
                         });
                 } else {
-                    $rootScope.titulo = 'Cadastrar Projetos';
+                    $rootScope.titulo = 'Projetos';
 
                     $scope.project = {
 
@@ -100,11 +124,9 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                         var itenArray = [{}];
                         for (var i = 0; i < $scope.customer.length; i++) {
                             var itens = $scope.customer;
-                            console.log(itens[i].idCustomer);
                             if($scope.getIdSelected == itens[i].idCustomer){
                                 itenArray = itens[i];
                             }
-                           
                         }
                         $scope.project.zipCode = itenArray.zipCode;
                         $scope.project.district = itenArray.district;
@@ -144,7 +166,7 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     if ($scope.project.transfer == undefined || $scope.project.transfer == '') {
                         $scope.project.transfer = "0.00";
                     } else {
-                        $scope.project.transfer = $scope.project.transfer.replace(".", "").replace(",", ".")
+                        $scope.project.transfer = $scope.project.transfer.replace(":", "")
                     }
                     if ($scope.project.projectCost == undefined || $scope.project.projectCost == '') {
                         $scope.project.projectCost = "0.00";
@@ -161,10 +183,14 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     } else {
                         $scope.project.hourConsultantCost = $scope.project.hourConsultantCost.replace(".", "").replace(",", ".")
                     }
-
+                    
+                    console.log(JSON.stringify($scope.project));
                     projectsAPIService.save($scope.project).then(function () {
+
                         Materialize.toast('Projeto cadastrado!', 1500, 'toast-container');
                         $state.reload('listProjects');
+                        // console.log(JSON.stringify($scope.project));
+                        
                     });
                 };
 

@@ -458,7 +458,6 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         var html = '';
                         html += '<div class="modal-content">';
                         html += '       <div class="row" style=" border-bottom: 1px solid #9e9e9e;">';
-                        html += '           <h5 style="margin-top:5px; position:absolute;"><b>Visualização de apontamento</b></h5>';
                         html += '           <div class="col s12 m2 right-align" style="float:right;">';
                         //html += '               <a class="modal-action modal-close" ng-click="deleteAppointment();" data-ng-show="global.permission.agenda == 1"><i class="material-icons red-text">delete</i></a>';
                         // html += '               <a id="editarModal" ng-click="editAppointment();" class="modal-action modal-close" data-ng-show="global.permission.agenda == 1"><i class="material-icons grey-text">mode_edit</i></a>';

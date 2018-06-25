@@ -12,13 +12,11 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
     };
     let _saveProjects = function(projects) {
         projects.login = $rootScope.global.idUser;
+        projects.token = localStorage.getItem('userToken');
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/project/save',
-            data: {
-                projects:projects,
-                token:localStorage.getItem('userToken')
-            }
+            data: projects
         });
     };
 
