@@ -12,6 +12,12 @@ angularApp.controller('insertAppointmentCtrl', function($scope, $timeout, appoin
                 alert("Você não tem acesso ao Easy Calendar");
                 window.location.href = local[0];
             } else {
+
+                $('.button-collapse').sideNav({
+                    menuWidth: 300, // Default is 240
+                    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                });
+                
                 $rootScope.global.idUser = responseUser.data[0].idUser;
                 $rootScope.global.code = responseUser.data[0].code;
                 $rootScope.global.permission = {
