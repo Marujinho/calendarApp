@@ -1,9 +1,6 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    $('.button-collapse').sideNav({
-        menuWidth: 300, // Default is 240
-        closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    });
+   
     
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
@@ -13,6 +10,12 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 alert("Você não tem acesso ao Easy Calendar");
                 window.location.href = local[0];
             } else {
+
+                $('.button-collapse').sideNav({
+                    menuWidth: 300, // Default is 240
+                    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                });
+                
                 Materialize.updateTextFields();
                 $rootScope.global.idUser = responseUser.data[0].idUser;
                 $rootScope.global.code = responseUser.data[0].code;
