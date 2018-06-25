@@ -11,10 +11,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 window.location.href = local[0];
             } else {
 
-                $('.button-collapse').sideNav({
-                    menuWidth: 300, // Default is 240
-                    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                });
+               
                 
                 Materialize.updateTextFields();
                 $rootScope.global.idUser = responseUser.data[0].idUser;
@@ -31,6 +28,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     report: responseUser.data[0].profileId.report,
                     closure: responseUser.data[0].profileId.closure
                 }
+
+                $('.button-collapse').sideNav({
+                    menuWidth: 300, // Default is 240
+                    closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                });
 
                 $scope.filter = {
                     filterConsultores: [$rootScope.global.idUser],
