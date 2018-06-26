@@ -1,6 +1,6 @@
 angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    $urlRouterProvider.otherwise('/agenda')
+    //$urlRouterProvider.otherwise('/agenda')
 
     $stateProvider.state('agenda', {
             url: '/agenda',
@@ -8,7 +8,8 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             controller: 'agendaCtrl'
         })
         .state('login/:id', {
-            url: '/login/:id',
+            // url: '/login/:id',
+            url: '/login',
             templateUrl: 'views/login.html',
             controller: 'loginCtrl'
         })

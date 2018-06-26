@@ -8,9 +8,8 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
     
     localStorage.setItem('userCode', atob(hashCode));
     localStorage.setItem('userToken', atob(hashToken));
-
-    $state.go('agenda');
-  
+    setTimeout(function(){ $state.go('agenda');  }, 1500);
+    
       
 
     //LEITOR DE QR CODE PARA ANDROID
