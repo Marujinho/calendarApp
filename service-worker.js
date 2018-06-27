@@ -1,7 +1,7 @@
 var cacheName = 'calendarAppVersion-1.0.hjh2w';
 var filesToCache = [
 	// HTML
-	'index.html'
+	'/index.html'
 	
 
 ];
