@@ -5,7 +5,9 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="description" content="Easy Calendar">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="theme-color" content="#00bcd4">
+        <meta name="theme-color" content="#00bcd4">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="manifest" href="manifest.json">
 		
 		<title>Easy Calendar</title>
         
@@ -55,7 +57,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" href="css/style.css">
 		
-		<link rel="manifest" href="manifest.json">
+	
 
         
 	
@@ -219,11 +221,14 @@
 		<script>
 			if('serviceWorker' in navigator) {
 				navigator
-					.serviceWorker
-					.register('./service-worker.js')
-					.then(function(registration) {
-						console.log('Service Worker Registered');
-					});
+                    .serviceWorker.register('./service-worker.js')
+                    .then(function(registration) {
+						console.log('Service Worker Registered: ', registration);
+					}).catch(function(error){
+                        console.log('falha no registro:', error);
+                    })
+            }else{
+                console.log('service-worker nao suportado');
             }
        
 		</script>
