@@ -1,25 +1,35 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $stateParams, usersAPIService) {
-   
+  
+  if(localStorage.getItem('userCode') != ""||localStorage.getItem('userCode') != null){
+    // usersAPIService.login(localStorage.getItem('userCode')).then(function(data, status){
+    //   if(data != "" && data != null){
+
+    //   }  
+    // }
+    $state.go('agenda');
+
+  }else{  
+
     $scope.param = $stateParams;
   
       var hash = $scope.param.id.split('Y2lqZXZqZWRvYnJh'); 
       var hashCode = hash[0];
       var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
     
+
+
+
+
+
     localStorage.setItem('userCode', atob(hashCode));
     localStorage.setItem('userToken', atob(hashToken));
-
-    usersAPIService.login( atob(hashCode) ).then(
-      function(responseUser) {
-          if (responseUser.data[0] == "" || responseUser.data[0] == null) {
-              var local = window.location.href;
-              local = local.split("portal");
-              alert("Você não tem acesso ao Easy Calendar");
-              window.location.href = local[0];
     
-    }else{
+    setTimeout(() => {
       $state.go('agenda');
-    }
+    }, 1500);
+
+  }
+    
   });
 
     

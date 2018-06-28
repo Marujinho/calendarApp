@@ -108,6 +108,8 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             templateUrl: 'views/welcome.html',
             controller: 'welcomeCtrl'
         })
+       
+
 
 });   
 
