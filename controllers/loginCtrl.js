@@ -8,7 +8,21 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
     
     localStorage.setItem('userCode', atob(hashCode));
     localStorage.setItem('userToken', atob(hashToken));
-    $state.go('agenda');
+
+    usersAPIService.login( atob(hashCode) ).then(
+      function(responseUser) {
+          if (responseUser.data[0] == "" || responseUser.data[0] == null) {
+              var local = window.location.href;
+              local = local.split("portal");
+              alert("Você não tem acesso ao Easy Calendar");
+              window.location.href = local[0];
+    
+    }else{
+      $state.go('agenda');
+    }
+  });
+
+    
     
       
 
