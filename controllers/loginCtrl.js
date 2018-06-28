@@ -1,16 +1,16 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $stateParams, usersAPIService) {
   
-  if(localStorage.getItem('userCode') != ""||localStorage.getItem('userCode') != null){
-    // usersAPIService.login(localStorage.getItem('userCode')).then(function(data, status){
-    //   if(data != "" && data != null){
+  // if(localStorage.getItem('userCode') != ""||localStorage.getItem('userCode') != null){
+  //   // usersAPIService.login(localStorage.getItem('userCode')).then(function(data, status){
+  //   //   if(data != "" && data != null){
 
-    //   }  
-    // }
-    $state.go('agenda');
+  //   //   }  
+  //   // }
+  //   $state.go('agenda');
 
-  }else{  
+  // }else{  
 
-    $scope.param = $stateParams;
+      $scope.param = $stateParams;
   
       var hash = $scope.param.id.split('Y2lqZXZqZWRvYnJh'); 
       var hashCode = hash[0];
@@ -28,7 +28,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
       $state.go('agenda');
     }, 1500);
 
-  }
+  // }
     
   });
 
