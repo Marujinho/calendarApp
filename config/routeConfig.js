@@ -1,15 +1,15 @@
 angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    $urlRouterProvider.otherwise('/login/:id');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider.state('agenda', {
             url: '/agenda',
             templateUrl: 'views/agenda.html',
             controller: 'agendaCtrl'
         })
-        .state('login/:id', {
+        .state('login', {
             // url: '/login/:id',
-            url: '/login',
+            url: '/login/:id',
             templateUrl: 'views/login.html',
             controller: 'loginCtrl'
         })
