@@ -7,7 +7,7 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             templateUrl: 'views/agenda.html',
             controller: 'agendaCtrl'
         })
-        .state('login', {
+        .state('login/:id', {
             url: '/login/:id',
             templateUrl: 'views/login.html',
             controller: 'loginCtrl'
