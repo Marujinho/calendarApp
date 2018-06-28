@@ -600,7 +600,7 @@ table.dataTable tbody td {
 }
 
 .birthBack{
-    background: url(/easy_calendar/resources/images/birthday2.jpg);
+    background: url(/img/birthday2.jpg);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
