@@ -1,6 +1,6 @@
 angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/login/:id');
 
     $stateProvider.state('agenda', {
             url: '/agenda',
