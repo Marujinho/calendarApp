@@ -1,4 +1,4 @@
-angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $stateParams) {
+angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $stateParams, usersAPIService) {
    
     $scope.param = $stateParams;
   

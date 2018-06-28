@@ -6,7 +6,6 @@ var filesToCache = [
 	'/css/icon.css',
 	'/css/select2-materialize.css',
 	'/css/style.css'
-
 ];
 
 self.addEventListener('install', function(e) {
