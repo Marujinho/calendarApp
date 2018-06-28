@@ -11,8 +11,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 window.location.href = local[0];
             } else {
 
-               
-                
                 Materialize.updateTextFields();
                 $rootScope.global.idUser = responseUser.data[0].idUser;
                 $rootScope.global.code = responseUser.data[0].code;
@@ -2820,6 +2818,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
         },
         function() {
+            //03 Login
             $(".toast").fadeOut("slow");
             Materialize.toast('Erro 03 - contate o administrador', 5500, 'toast-container');
         }
