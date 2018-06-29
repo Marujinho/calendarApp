@@ -701,7 +701,13 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 // $('.slide-out').on('click', function(){
                 //     $('.sidenav').sidenav();
                 // });
-                    
+                $scope.prev = function(){    
+                   $('#calendar').fullCalendar('prev');
+                }
+
+                $scope.next = function(){    
+                    $('#calendar').fullCalendar('next');
+                 }
 
                 $(".fc-prev-button, .fc-next-button").click(function() {
                     var current = $('#calendar').fullCalendar('getDate');
