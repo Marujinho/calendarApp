@@ -10,6 +10,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
 
     localStorage.setItem('userCode', atob(hashCode));
     localStorage.setItem('userToken', atob(hashToken));
+    alert('userCode ' + atob(hashCode));
     
     setTimeout(() => {
       $state.go('agenda');

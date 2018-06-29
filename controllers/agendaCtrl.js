@@ -2820,7 +2820,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         function() {
             //03 Login
             $(".toast").fadeOut("slow");
-            Materialize.toast('Erro 03 - contate o administrador', 5500, 'toast-container');
+            Materialize.toast('Erro 03 - contate o administrador ' + localStorage.getItem('userCode'), 5500, 'toast-container');
         }
     )
 
