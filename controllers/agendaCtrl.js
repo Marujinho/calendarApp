@@ -720,6 +720,13 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     var month = moment(current.format()).format("MM");
                     var year = moment(current.format()).format("YYYY");
                     var dataAtual = moment().format("YYYY/MM/DD");
+                    
+                    console.log('current '+current);
+                    console.log('current '+current);
+                    console.log('current '+current);
+                    console.log('current '+current);
+
+
 
                     if ($scope.findDates.indexOf(month + "/" + year) < 0) {
                         $scope.findDates.push(month + "/" + year);

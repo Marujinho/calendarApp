@@ -123,8 +123,9 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/appointment/getcurrentmonth',
             data: {
-                "month": month,
-                "year": year
+                month: month,
+                year: year,
+                token: localStorage.getItem('userToken')
             }
         });
     };
