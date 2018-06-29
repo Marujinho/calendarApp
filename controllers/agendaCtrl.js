@@ -709,6 +709,12 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     $('#calendar').fullCalendar('next');
                  }
 
+                 $scope.today = function(){    
+                    $('#calendar').fullCalendar('today');
+                 }
+
+                 
+
                 $(".fc-prev-button, .fc-next-button").click(function() {
                     var current = $('#calendar').fullCalendar('getDate');
                     var month = moment(current.format()).format("MM");
