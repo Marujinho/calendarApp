@@ -715,7 +715,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                  
 
-                $(".fc-prev-button, .fc-next-button").click(function() {
+                $("#my-prev-button, #my-next-button").click(function() {
                     var current = $('#calendar').fullCalendar('getDate');
                     var month = moment(current.format()).format("MM");
                     var year = moment(current.format()).format("YYYY");
