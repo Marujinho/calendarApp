@@ -431,7 +431,7 @@ textarea.materialize-textarea:focus:not([readonly])+label,
 }
 
 #diaSelecionado {
-    width: 700px;
+    width: 100%;
     height: auto;
 }
 
