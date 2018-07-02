@@ -505,7 +505,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     eventLimit: true, // allow "more" link when too many events
                     events: [{}],
                     displayEventTime: false,
-                    longPressDelay: 0.5,//Tempo segurando o botao para aparecer o modal
+                    longPressDelay: 500,//Tempo segurando o botao para aparecer o modal
                     select: function(start, end, resource) {
 
                         $scope.localTab = "new";
