@@ -506,6 +506,8 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     events: [{}],
                     displayEventTime: false,
                     select: function(start, end, resource) {
+                        console.log($rootScope.global.permission.requestConsultant);
+                        console.log($rootScope.global.permission.agenda);
 
                         $scope.localTab = "new";
                         if ($rootScope.global.permission.requestConsultant == 1 || $rootScope.global.permission.agenda == 1) {
