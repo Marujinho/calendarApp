@@ -93,7 +93,7 @@
     </div>
 </div>
 <div class="row">
-    <div id="diaSelecionado" class="modal" style="padding-bottom: 20px; height: 100%">
+    <div id="diaSelecionado" class="modal" style="padding-bottom: 20px; width: 100%; height: 100%">
         <div class="modal-content">
             <div class="col s12 m12">
                 <ul class="tabs" id="tabs tabs-fixed-width" style="background-color:#fafafa;">
@@ -115,7 +115,7 @@
                 </ul>
             </div>
 
-            <div id="agenda" class="col s12 m12" data-ng-show="global.permission.agenda == 1">
+            <div id="agenda" class="col s12 m12"  data-ng-show="global.permission.agenda == 1">
                 <!-- agenda -->
                 <br>
                 <form method="post" class="col s12 m12" name="formInsertAgenda" ng-submit="insertAgenda();">
