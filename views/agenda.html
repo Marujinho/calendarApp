@@ -115,10 +115,10 @@
                 </ul>
             </div>
 
-            <div id="agenda" class="col s12 m12"  data-ng-show="global.permission.agenda == 1">
+            <div id="agenda" class=""  data-ng-show="global.permission.agenda == 1">
                 <!-- agenda -->
                 <br>
-                <form method="post" class="col s12 m12" name="formInsertAgenda" ng-submit="insertAgenda();">
+                <form method="post" class="" name="formInsertAgenda" ng-submit="insertAgenda();">
                     <div class="col s12 m12">
                         <div id="diasSemana" class="diasSemana" style="display: flex; width: 100%">
                             <div style="width: 14.285%; text-align: center">Dom
@@ -159,7 +159,7 @@
                         </div>
                     </div>
                     
-                    <div class="col s12 m12 input-field">
+                    <div class=" input-field">
                         <select type="text" data-ng-model="appointment.userId" data-ng-options="u.idUser as u.code for u in user" id="userId" class="select2">
                             <option value="" selected>Selecione o Usuário</option>
                         </select>
@@ -169,7 +169,7 @@
                         <small data-ng-show="formInsertAgenda.userId.$error.required" style="margin-left: 10px">Campo obrigatório</small>
                         <input type="hidden" name="userId" required="required" data-ng-model="appointment.userId">
                     </div>
-                    <div class="col s12 m12 input-field" style="margin-top: 20px;">
+                    <div class="input-field" style="margin-top: 20px;">
                         <select type="text" ng-model="appointment.customerId" ng-options="u.idCustomer as u.name for u in customer" id="agendaCustomerId" class="select2 validate" data-ng-change="getProjects(appointment.customerId)">
                             <option value="" selected>Selecione Cliente</option>
                         </select>
@@ -180,7 +180,7 @@
                         <input type="hidden" name="customerId" required="required" data-ng-model="appointment.customerId">
                     </div>
                     
-                    <div class="col s12 m12 input-field" style="margin-top: 20px;" >
+                    <div class=" input-field" style="margin-top: 20px;" >
                         <select type="text" ng-model="appointment.projectId" ng-options="a.idProject as a.name for a in project" id="agendaProjectId" class="select2 validate">
                             <option value="" selected>Selecione o Projeto</option>
                         </select>
@@ -190,28 +190,28 @@
                         <small data-ng-show="formInsertAgenda.projectId.$error.required" style="margin-left: 10px">Campo obrigatório</small>
                         <input type="hidden" name="projectId" required="required" data-ng-model="appointment.projectId">
                     </div>
-                    <div class="input-field col s12 m6" style="margin-top: 30px;">
+                    <div class="input-field " style="margin-top: 30px;">
                         <input type="text" id="inicioAgenda" ng-model="appointment.initialDate" class="datepicker">
                         <label for="inicioAgenda" class="active" >Data Início</label>
                     </div>
 
-                    <div class="input-field col s12 m6" style="margin-top: 30px;">
+                    <div class="input-field " style="margin-top: 30px;">
                         <input type="text" id="fimAgenda" ng-model="appointment.finalDate"  class="datepicker">
                         <label for="fimAgenda" class="active">Data Final</label>
                     </div>
-                    <div class="input-field col s12 m3">
+                    <div class="input-field">
                         <input type="text" id="initialHour" ng-model="appointment.initialHour" class="timepicker">
                         <label for="initialHour" id="solinitialHour">Hora de Entrada</label>
                     </div>
-                    <div class="input-field col s12 m3">
+                    <div class="input-field">
                         <input type="text" id="hourLunch" ng-model="appointment.hourLunch" class="timepicker">
                         <label for="hourLunch" id="solhourLunch">Tempo de almoço</label>
                     </div>
-                    <div class="input-field col s12 m3">
+                    <div class="input-field">
                         <input type="text" id="lastHour" ng-model="appointment.lastHour" class="timepicker">
                         <label for="lastHour" id="sollastHour">Hora de Saída</label>
                     </div>
-                    <div class="input-field col s12 m3">
+                    <div class="input-field ">
                         <input type="text" id="unproductiveHours" ng-model="appointment.unproductiveHours" class="timepicker">
                         <label for="unproductiveHours" id="solunproductiveHours">Horas Improdutivas</label>
                     </div>
@@ -230,13 +230,13 @@
                             <label for="transfer">Traslado</label>
                         </p>
                     </div>
-                    <div class="input-field col s12 m12">
+                    <div class="input-field ">
                         <input type="text" id="activity" name="activity" ng-model="appointment.activity" required="" class="validate" minlength="5">
                         <label for="activity">Atividade</label>
                         <small data-ng-show="!formInsertAgenda.activity.$pristine && formInsertAgenda.activity.$error.required">Campo obrigatório</small>
                         <small data-ng-show="!formInsertAgenda.activity.$pristine && formInsertAgenda.activity.$error.minlength">O campo deve conter no minimo 5 caracteres</small>
                     </div>
-                    <div class="col s12 m12 right-align" style="margin-bottom: 15px;">
+                    <div class=" right-align" style="margin-bottom: 15px;">
                         <button data-ng-disabled="formInsertAgenda.$invalid" class="waves-effect waves-light btn cyan accent-4" type="submit">Salvar</button>
                     </div>
                 </form>
