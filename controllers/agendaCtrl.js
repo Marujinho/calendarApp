@@ -484,8 +484,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 $('.tooltipped').tooltip({
                     delay: 50
                 });
-                console.log($rootScope.global.permission.requestConsultant);
-                console.log($rootScope.global.permission.agenda);
+               
                 $('#calendar').fullCalendar({
                     // header: {
                     //     left: '',
@@ -506,6 +505,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     eventLimit: true, // allow "more" link when too many events
                     events: [{}],
                     displayEventTime: false,
+                    longPressDelay: 1,
                     select: function(start, end, resource) {
                         console.log($rootScope.global.permission.requestConsultant);
                         console.log($rootScope.global.permission.agenda);
