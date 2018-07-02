@@ -1,4 +1,4 @@
-var cacheName = 'calendarAppVersion-1.1.6';
+var cacheName = 'calendarAppVersion-1.1.7';
 var filesToCache = [
 	// HTML
 	'./index.html',
