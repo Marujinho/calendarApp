@@ -1,7 +1,7 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
    
-    
+    alert(localStorage.getItem('userCode'));
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
