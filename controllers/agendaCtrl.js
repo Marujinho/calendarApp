@@ -487,9 +487,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                
                 $('#calendar').fullCalendar({
                    
-                    header: {
-                        left: 'month'
-                    },
+                    header: true,
                     height: $(window).height() - 65,
                     windowResizeDelay: true,
                     handleWindowResize: true,
