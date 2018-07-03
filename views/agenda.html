@@ -46,7 +46,7 @@
     </div>
 </div>
 <div id="modalFilter" style="display:none; width: 100%; height: 100%; position: fixed; top: 16px; left: 0; bottom: 0; right: 0;  z-index: 9999;">
-    <div class="filter z-depth-5 row" id="filter" style="width:100%; left: 0px; overflow-y: scroll;">
+    <div class="filter z-depth-5 row" id="filter" style="width:100%; left: 0px; overflow-y: scroll; height: 700px;">
         <p class="col s12" style="margin-top: 10px" > 
             <input type="checkbox" class="filled-in" id="livres" data-ng-model="filter.livres" data-ng-click="filterData()" />
             <label for="livres">Consultores Livres</label>
@@ -69,27 +69,28 @@
                 <option data-ng-repeat="projeto in project" ng-value="projeto.idProject">{{projeto.name}}</option>
             </select>
         </div>
-        
-        <p class="col s12" style="margin-top: 15px;" data-ng-hide="filter.livres">
-            <input type="checkbox" class="filled-in" id="naoApontado" data-ng-model="filter.naoApontado" data-ng-click="filterData()" />
-            <label for="naoApontado">Não apontado</label>
-        </p>
-        <p class="col s12" data-ng-hide="filter.livres">
-            <input type="checkbox" class="filled-in" id="apontado" data-ng-model="filter.apontado" data-ng-click="filterData()" />
-            <label for="apontado">Apontado</label>
-        </p>
-        <p class="col s12" data-ng-hide="filter.livres">
-            <input type="checkbox" class="filled-in" id="feriasFilter" data-ng-model="filter.feriasFilter" data-ng-click="filterData()" />
-            <label for="feriasFilter">Férias</label>
-        </p>
-        <p class="col s12" data-ng-hide="filter.livres">
-            <input type="checkbox" class="filled-in" id="particularFilter" data-ng-model="filter.particularFilter" data-ng-click="filterData()" />
-            <label for="particularFilter">Particular</label>
-        </p>
-        <p class="col s12" data-ng-hide="filter.livres">
-            <input type="checkbox" class="filled-in" id="solicitacaoFilter" data-ng-model="filter.solicitacaoFilter" data-ng-click="filterData()" />
-            <label for="solicitacaoFilter">Solicitação de agenda</label>
-        </p>
+        <div id="checkboxDivs">
+            <p class="col s12" style="margin-top: 15px;" data-ng-hide="filter.livres">
+                <input type="checkbox" class="filled-in" id="naoApontado" data-ng-model="filter.naoApontado" data-ng-click="filterData()" />
+                <label for="naoApontado">Não apontado</label>
+            </p>
+            <p class="col s12" data-ng-hide="filter.livres">
+                <input type="checkbox" class="filled-in" id="apontado" data-ng-model="filter.apontado" data-ng-click="filterData()" />
+                <label for="apontado">Apontado</label>
+            </p>
+            <p class="col s12" data-ng-hide="filter.livres">
+                <input type="checkbox" class="filled-in" id="feriasFilter" data-ng-model="filter.feriasFilter" data-ng-click="filterData()" />
+                <label for="feriasFilter">Férias</label>
+            </p>
+            <p class="col s12" data-ng-hide="filter.livres">
+                <input type="checkbox" class="filled-in" id="particularFilter" data-ng-model="filter.particularFilter" data-ng-click="filterData()" />
+                <label for="particularFilter">Particular</label>
+            </p>
+            <p class="col s12" data-ng-hide="filter.livres">
+                <input type="checkbox" class="filled-in" id="solicitacaoFilter" data-ng-model="filter.solicitacaoFilter" data-ng-click="filterData()" />
+                <label for="solicitacaoFilter">Solicitação de agenda</label>
+            </p>
+        </div>
     </div>
 </div>
 <div class="row">
