@@ -85,7 +85,7 @@
     position: absolute;
     left: -100000px;
     width: 100%;
-    z-index: 9999
+    z-index: 9999 !important;
 }
 
 .select2-results {
