@@ -85,7 +85,7 @@
     position: absolute;
     left: -100000px;
     width: 100%;
-    z-index: 1051
+    z-index: 9999
 }
 
 .select2-results {
@@ -621,6 +621,7 @@
 
 .select2-container--classic .select2-dropdown--below {
     border-top: none
+    
 }
 
 .select2-container--classic .select2-results>.select2-results__options {
