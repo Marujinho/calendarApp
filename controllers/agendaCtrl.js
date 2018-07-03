@@ -2258,14 +2258,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 });
                 // DATEPICKER MATERIALZE
 
-                $("#settings").click(
-                    function() {
-                        $('#modalFilter').prop({
-                            display: block
-                          });
-                        // $("#modalConfiguracoes").css("display", "block");
-                    }
-                );
+                // $("#settings").click(
+                //     function() {5
+                //         $('#modalFilter').prop({
+                //             display: block
+                //           });
+                //         // $("#modalConfiguracoes").css("display", "block");
+                //     }
+                // );
 
                 $("#trash").mouseout(function() {
                     $(this).removeClass("alterColorButton");
