@@ -500,7 +500,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     eventLimit: true, // allow "more" link when too many events
                     events: [{}],
                     displayEventTime: false,
-                    longPressDelay: 500,//Tempo segurando o botao para aparecer o modal
+                    longPressDelay: 500, //Tempo segurando o botao para aparecer o modal
                     defaultView: 'month',
                     monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
                     select: function(start, end, resource) {
@@ -2260,7 +2260,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                 $("#settings").click(
                     function() {
-                        $("#modalConfiguracoes").css("display", "block");
+                        $('#modalFilter').prop({
+                            display: block
+                          });
+                        // $("#modalConfiguracoes").css("display", "block");
                     }
                 );
 
