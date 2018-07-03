@@ -486,13 +486,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 });
                
                 $('#calendar').fullCalendar({
-                    // header: {
-                    //     left: '',
-                    //     center: 'today, prev, next, title',
-                    //     right: ''
-                    // },
-                    header: true,
-
+                   
+                    header: {
+                        left: 'month'
+                    },
                     height: $(window).height() - 65,
                     windowResizeDelay: true,
                     handleWindowResize: true,
