@@ -79,9 +79,10 @@ nav a.button-collapse {
 }
 
 .fc-center {
-    margin: 30px 0px 0px -185px;
+    margin: 10px 0px 0px -35px;
     position: absolute;
     float: right;
+    z-index: 999;
 }
 
 .fc .fc-toolbar>*>:first-child {
