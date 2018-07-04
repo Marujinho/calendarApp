@@ -571,8 +571,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         title.attr("title", title.text());
                     },
                     eventClick: function(calEvent, jsEvent, view) {
+                        console.log(calEvent);
+                        
                         if (calEvent.type == "apontamentoNaoEfetuado" || calEvent.type == "apontamentoEfetuado") {
+                            
                             $scope.newAppointment.idAppointment = calEvent.id;
+                            $scope.newAppointment.appointmentDate = moment(calEvent.start._i).format('dd/mm/YYYY');
+                            
+                           
                             $(".toast").fadeOut("slow");
                             Materialize.toast('Carregando...', 30000, 'toast-container');
                             $('#modalApontar').modal('open');
