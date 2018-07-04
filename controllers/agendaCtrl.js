@@ -958,6 +958,21 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                     });
 
+                // //getProject
+                // $scope.getProjects = function(id) {
+                //     if (id != undefined) {
+                //         projectsAPIService.getbyCustomer(id).then(function(response) {
+                //             $scope.project = response.data;
+                //         }, function() {
+                //             $(".toast").fadeOut("slow");
+                //             Materialize.toast('Erro 19 - contate o administrador', 5500, 'toast-container')
+
+                //         });
+                //     } else {
+                //         $scope.project = [];
+                //     }
+                // }
+
                 //getProject
                 $scope.getProjects = function(id) {
                     if (id != undefined) {
@@ -972,6 +987,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.project = [];
                     }
                 }
+
+                projectsAPIService.getall().then(function(response) {
+                    $scope.allProjects = response.data;
+                }, function() {
+                    $(".toast").fadeOut("slow");
+                    Materialize.toast('Erro 1900 - contate o administrador', 5500, 'toast-container')
+                });
+
 
                 //getCustomer
                 customersAPIService.getall().then(function(response) {

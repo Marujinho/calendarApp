@@ -67,7 +67,7 @@
         <div class="input-field col s12" data-ng-hide="filter.livres">
             <label for="filterProjetos" class="active">Projetos</label>
             <select id="filterProjetos" class="select2 filterCalendar" multiple="multiple" data-ng-model="filter.filterProjetos" data-ng-change="filterData()">
-                <option data-ng-repeat="projeto in project" ng-value="projeto.idProject">{{projeto.name}}</option>
+                <option data-ng-repeat="projeto in allProjects" ng-value="projeto.idProject">{{projeto.name}}</option>
             </select>
         </div>
         <div id="checkboxDivs">
