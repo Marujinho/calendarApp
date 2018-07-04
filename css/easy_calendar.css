@@ -85,6 +85,16 @@ nav a.button-collapse {
     z-index: 999;
 }
 
+.fc-center h2{
+    
+    position: fixed;
+
+}
+
+.fixed-force{
+    position: fixed;
+}    
+
 .fc .fc-toolbar>*>:first-child {
     margin-left: 0;
     background: none;

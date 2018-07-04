@@ -2356,6 +2356,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                 });
 
+                $("#settingsClose").on("click", function(e) {
+                    $("#modalFilter").css("display", "none");
+                });
+
                 $("body").on("click", function(e) {
                     var div = $("#modalFilter"); // seleciona a div específica
                     if (e.target == div[0]) {
