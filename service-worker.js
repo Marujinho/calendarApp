@@ -40,7 +40,7 @@ self.addEventListener('fetch', event => {
 		// new Response('lalala')	
 		fetch(event.request).then(function(response){
 			if(response.status == 404){
-				fetch('/img/icon.jpg')
+				return new Response('Essa pagina nao existe cara');
 			}
 			return response;
 		}).catch(function(){
