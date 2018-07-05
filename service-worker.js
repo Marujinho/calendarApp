@@ -41,12 +41,12 @@ self.addEventListener('fetch', event => {
 		// new Response('lalala')	
 		fetch(event.request).then(function(response){
 			if(response.status == 404){
-				return new Response('Ops, Essa pagina nao existe cara');
+				fetch('img/icon.jpg')
 			}
 			return response;
 		}).catch(function(){
-			// return new Response('Brother, c ta sem internet');
-			fetch('img/icon.jpg')
+			return new Response('Brother, c ta sem internet');
+			
 		})
 	);
 });
