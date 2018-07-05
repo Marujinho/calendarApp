@@ -35,7 +35,15 @@ self.addEventListener('activate',  event => {
 
 self.addEventListener('fetch', event => {
 	event.respondWith(
-		new Response('Pipe TOP'),
-		new Response('lalala')	
+		// new Response('Pipe TOP'),
+		// new Response('lalala')	
+		fetch(event.request).then(function(response){
+			if(response.status == 404){
+				return new Response('Ops, Essa pagina nao existe cara');
+			}
+			return response;
+		}).catch(function(){
+			return new Response('Brother, c ta sem internet');
+		})
 	);
 });
