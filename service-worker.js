@@ -45,7 +45,7 @@ self.addEventListener('fetch', event => {
 			return response;
 		}).catch(function(){
 			// return new Response('Brother, c ta sem internet');
-			fetch('/img/icon.jpg')
+			fetch('./img/icon.jpg')
 		})
 	);
 });
