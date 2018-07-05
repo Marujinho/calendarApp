@@ -267,7 +267,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             filtrado = true;
                             filtroCheckBox = filtroCheckBox.filter(
                                 function(val) {
-                                    return $scope.filter.filterConsultores.indexOf(val.user) != -1;
+                                    return $scope.filter.filterConsultores.indexOf(parseInt(val.user)) != -1;
                                 }
                             )
                         }
@@ -276,7 +276,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             filtrado = true;
                             filtroCheckBox = filtroCheckBox.filter(
                                 function(val) {
-                                    return ($scope.filter.filterClientes.indexOf(val.customer) != -1 || val.type == "ferias");
+                                    return ($scope.filter.filterClientes.indexOf(parseInt(val.customer)) != -1 || val.type == "ferias");
                                 }
                             )
                         }
@@ -285,7 +285,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             filtrado = true;
                             filtroCheckBox = filtroCheckBox.filter(
                                 function(val) {
-                                    return ($scope.filter.filterProjetos.indexOf(val.project) != -1 || val.type == "ferias");
+                                    return ($scope.filter.filterProjetos.indexOf(parseInt(val.project)) != -1 || val.type == "ferias");
                                 }
                             )
                         }
