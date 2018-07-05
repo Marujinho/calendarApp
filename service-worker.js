@@ -5,7 +5,8 @@ var filesToCache = [
 	'./css/easy_calendar.css',
 	'./css/icon.css',
 	'./css/select2-materialize.css',
-	'./css/style.css'
+	'./css/style.css',
+	'./img/icon.jpg'
 ];
 
 self.addEventListener('install', function(e) {
@@ -43,7 +44,8 @@ self.addEventListener('fetch', event => {
 			}
 			return response;
 		}).catch(function(){
-			return new Response('Brother, c ta sem internet');
+			// return new Response('Brother, c ta sem internet');
+			fetch('/img/icon.jpg')
 		})
 	);
 });
