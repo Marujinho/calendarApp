@@ -35,6 +35,7 @@ self.addEventListener('activate',  event => {
 
 self.addEventListener('fetch', event => {
 	event.respondWith(
-		new Response('Pipe TOP')	
+		// new Response('Pipe TOP')
+		fetch('/img/bell.png')	
 	);
 });
