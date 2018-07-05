@@ -1,13 +1,12 @@
 var cacheName = 'calendarAppVersion-1.3.1';
 var filesToCache = [
 	// HTML
-	'/',
-	'index.html',
-	'css/easy_calendar.css',
-	'css/icon.css',
-	'css/select2-materialize.css',
-	'css/style.css',
-	'img/icon.jpg'
+	'/index.html',
+	'/css/easy_calendar.css',
+	'/css/icon.css',
+	'/css/select2-materialize.css',
+	'/css/style.css',
+	'/img/icon.jpg'
 ];
 
 self.addEventListener('install', function(e) {
@@ -41,7 +40,7 @@ self.addEventListener('fetch', event => {
 		// new Response('lalala')	
 		fetch(event.request).then(function(response){
 			if(response.status == 404){
-				fetch('img/icon.jpg')
+				fetch('/img/icon.jpg')
 			}
 			return response;
 		}).catch(function(){
