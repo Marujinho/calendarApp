@@ -20,7 +20,7 @@ self.addEventListener('install', function(e) {
 
 self.addEventListener('activate',  event => {
 	event.waitUntil(self.clients.claim());
-	console.log('[ServiceWorker] activated');
+	console.log('[ServiceWorker] Yay activated');
 
 });
 
