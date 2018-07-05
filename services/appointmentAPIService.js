@@ -59,6 +59,16 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         });
     };
 
+    let _getallAgenda = function() {
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/appointment/getallagenda',
+            data: {
+                token: $rootScope.global.token
+            }
+        });
+    };
+
     let _insertAppointment = function(appointment) {
         appointment.login = $rootScope.global.idUser;
         return $http({
@@ -192,6 +202,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         getByUser: _getByUser,
         getrequestByAppointment: _getrequestByAppointment,
         sendMail: _sendMail,
-        getFromRangeDate: _getFromRangeDate
+        getFromRangeDate: _getFromRangeDate,
+        getallAgenda: _getallAgenda
     }
 });

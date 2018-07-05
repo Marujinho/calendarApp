@@ -1458,26 +1458,114 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                 });
 
+                // // getAllNew Agendas
+                // appointmentAPIService.getallAppointment().then(
+                //     function(response) {
+                //         var color = "";
+                //         var textColor = "";
+                //         var type = "";
+                //         var dataAtual = moment().format("YYYY/MM/DD");
+                //         var list = [];
+
+                //         $.each(response.data, function(key, obj) {
+                //             switch (parseInt(obj.appointmentStatusId.idAppointmentStatus)) {
+                //                 case 1:
+                //                     title = obj.customerId.name + " - " + obj.userId.name,
+                //                         color = "#00b8d4";
+                //                     textColor = "#FFFFFF";
+                //                     borderColor = '#00b8d4'
+                //                     type = 'apontamentoEfetuado';
+                //                     break;
+                //                 case 2:
+                //                     title = obj.customerId.name + " - " + obj.userId.name,
+                //                         color = "#FFFFFF";
+                //                     textColor = "#000000";
+                //                     if (dataAtual > moment(obj.initialDate).format("YYYY/MM/DD")) {
+                //                         borderColor = "#FF0000";
+                //                     } else {
+                //                         borderColor = "#757575";
+                //                     }
+                //                     type = 'apontamentoNaoEfetuado';
+                //                     break;
+                //                 case 3:
+                //                     title = obj.userId.name + " - " + obj.projectId.name;
+                //                     color = "#00FF5B";
+                //                     textColor = "#000000";
+                //                     borderColor = "#00FF5B";
+                //                     type = 'ferias';
+                //                     break;
+                //                 case 4:
+                //                     title = obj.userId.name + " - " + obj.projectId.name;
+                //                     color = "#eda65e";
+                //                     textColor = "#FFFFFF";
+                //                     borderColor = "#eda65e";
+                //                     type = 'particular';
+                //                     break;
+                //                 case 5:
+                //                     title = obj.customerId.name + " - " + obj.userId.name;
+                //                     color = "#cddc39";
+                //                     textColor = "#FFFFFF";
+                //                     borderColor = "#cddc39";
+                //                     type = 'SolicitacaoAtraso';
+                //                     break;
+                //             }
+
+                //             if ($rootScope.global.permission.agenda == 1) {
+                //                 var editavel = true;
+                //             } else {
+                //                 var editavel = false;
+                //             }
+
+                //             var eventData = {
+                //                 id: obj.idAppointment,
+                //                 title: title,
+                //                 start: obj.initialDate,
+                //                 end: obj.lastDate,
+                //                 color: color,
+                //                 textColor: textColor,
+                //                 borderColor: borderColor,
+                //                 type: type,
+                //                 user: obj.userId.idUser,
+                //                 customer: obj.customerId.idCustomer,
+                //                 project: obj.projectId.idProject,
+                //                 startEditable: editavel
+                //                 //className : "cursorPointer"
+                //             };
+                //             $scope.listEvents.push(eventData);
+                //             list.push(eventData);
+
+                //         });
+                //         $scope.filterData();
+                //         $(".toast").fadeOut("slow");
+                //         Materialize.toast('Dados carregados com sucesso. :)', 3000, 'toast-container')
+                //     },
+                //     function() {
+                //         $(".toast").fadeOut("slow");
+                //         Materialize.toast('Erro 27 - contate o administrador', 5500, 'toast-container')
+
+                //     }
+                // );
+
                 // getAllNew Agendas
-                appointmentAPIService.getallAppointment().then(
-                    function(response) {
+                appointmentAPIService.getallAgenda().then(
+                    function (response) {
                         var color = "";
                         var textColor = "";
                         var type = "";
                         var dataAtual = moment().format("YYYY/MM/DD");
                         var list = [];
 
-                        $.each(response.data, function(key, obj) {
-                            switch (parseInt(obj.appointmentStatusId.idAppointmentStatus)) {
+                        $.each(response.data, function (key, obj) {
+                            switch (parseInt(obj.idAppointmentStatus)) {
                                 case 1:
-                                    title = obj.customerId.name + " - " + obj.userId.name,
+                                    title = obj.customerName + " - " + obj.userName,
                                         color = "#00b8d4";
                                     textColor = "#FFFFFF";
                                     borderColor = '#00b8d4'
                                     type = 'apontamentoEfetuado';
                                     break;
                                 case 2:
-                                    title = obj.customerId.name + " - " + obj.userId.name,
+                                    title = obj.customerName + " - " + obj.userName,
                                         color = "#FFFFFF";
                                     textColor = "#000000";
                                     if (dataAtual > moment(obj.initialDate).format("YYYY/MM/DD")) {
@@ -1488,21 +1576,21 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                     type = 'apontamentoNaoEfetuado';
                                     break;
                                 case 3:
-                                    title = obj.userId.name + " - " + obj.projectId.name;
+                                    title = obj.userName + " - " + obj.projectName;
                                     color = "#00FF5B";
                                     textColor = "#000000";
                                     borderColor = "#00FF5B";
                                     type = 'ferias';
                                     break;
                                 case 4:
-                                    title = obj.userId.name + " - " + obj.projectId.name;
+                                    title = obj.userName + " - " + obj.projectName;
                                     color = "#eda65e";
                                     textColor = "#FFFFFF";
                                     borderColor = "#eda65e";
                                     type = 'particular';
                                     break;
                                 case 5:
-                                    title = obj.customerId.name + " - " + obj.userId.name;
+                                    title = obj.customerName + " - " + obj.userName;
                                     color = "#cddc39";
                                     textColor = "#FFFFFF";
                                     borderColor = "#cddc39";
@@ -1520,14 +1608,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 id: obj.idAppointment,
                                 title: title,
                                 start: obj.initialDate,
-                                end: obj.lastDate,
+                                end: obj.initialDate,
                                 color: color,
                                 textColor: textColor,
                                 borderColor: borderColor,
                                 type: type,
-                                user: obj.userId.idUser,
-                                customer: obj.customerId.idCustomer,
-                                project: obj.projectId.idProject,
+                                user: obj.idUser,
+                                customer: obj.idCustomer,
+                                project: obj.idProject,
                                 startEditable: editavel
                                 //className : "cursorPointer"
                             };
@@ -1539,7 +1627,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $(".toast").fadeOut("slow");
                         Materialize.toast('Dados carregados com sucesso. :)', 3000, 'toast-container')
                     },
-                    function() {
+                    function () {
                         $(".toast").fadeOut("slow");
                         Materialize.toast('Erro 27 - contate o administrador', 5500, 'toast-container')
 

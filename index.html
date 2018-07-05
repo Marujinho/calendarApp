@@ -138,66 +138,68 @@
 	<body ng-app="easyCalendar">
 		<!-- NAVBAR -->
 		<div class="navbar-fixed">
+
+                <ul id="slide-out" class="side-nav"  style="z-index: 9999999;">
+                        <li>
+                            <a href="#!index.html">
+                                <i class="material-icons medium">date_range</i> Agenda
+                            </a>
+                        </li>
+                        <li>
+                            <div class="divider"></div>
+                        </li>
+                        <li>
+                            <a class="waves-effect" ui-sref="listAppointment" data-ng-if="global.permission.appointment == 1">
+                                <i class="material-icons medium">touch_app</i>Apontamentos
+                            </a>
+                        </li>
+                        <li data-ng-if="global.permission.customer == 1">
+                            <a class="waves-effect" ui-sref="listCustomers">
+                                <i class="material-icons medium">business</i>Clientes
+                            </a>
+                        </li>
+                        <li data-ng-if="global.permission.project == 1">
+                            <a class="waves-effect" ui-sref="listProjects">
+                                <i class="material-icons medium">assignment</i>Projetos
+                            </a>
+                        </li>
+                        <li data-ng-if="global.permission.profile == 1">
+                            <a class="waves-effect" ui-sref="listProfiles">
+                                <i class="material-icons medium">supervisor_account</i>Perfis
+                            </a>
+                        </li>
+                        <!-- <li data-ng-if="global.permission.user == 1">
+                            <a class="waves-effect" ui-sref="listUsers">
+                                <i class="material-icons medium">person</i>Usuários
+                            </a>
+                        </li> -->
+                        <li data-ng-if="global.permission.closure == 1" >
+                            <a class="waves-effect" ui-sref="closingDate">
+                                <i class="material-icons medium">code</i>Data de Corte
+                            </a>
+                        </li>
+                        <li>
+                            <div class="divider"></div>
+                        </li>
+                        <!-- <li data-ng-if="global.permission.report  == 1">
+                            <a class="waves-effect" ui-sref="reports">
+                                <i class="material-icons medium">receipt</i>Relatórios
+                            </a>
+                        </li> -->
+                        <li>
+                            <div class="divider"></div>
+                        </li>
+                        <li>
+                            <a class="waves-effect" ui-sref="logout">
+                                <i class="material-icons medium">exit_to_app</i>Sair
+                            </a>
+                        </li>
+                    </ul>
+
+
             <nav class="cyan accent-4">
                 <a class="brand-logo" id="logo">{{titulo}}</a>
                 
-                <ul id="slide-out" class="side-nav"  style="z-index: 9999999;">
-                    <li>
-                        <a href="#!index.html">
-                            <i class="material-icons medium">date_range</i> Agenda
-                        </a>
-                    </li>
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-                    <li>
-                        <a class="waves-effect" ui-sref="listAppointment" data-ng-if="global.permission.appointment == 1">
-                            <i class="material-icons medium">touch_app</i>Apontamentos
-                        </a>
-                    </li>
-                    <li data-ng-if="global.permission.customer == 1">
-                        <a class="waves-effect" ui-sref="listCustomers">
-                            <i class="material-icons medium">business</i>Clientes
-                        </a>
-                    </li>
-                    <li data-ng-if="global.permission.project == 1">
-                        <a class="waves-effect" ui-sref="listProjects">
-                            <i class="material-icons medium">assignment</i>Projetos
-                        </a>
-                    </li>
-                    <li data-ng-if="global.permission.profile == 1">
-                        <a class="waves-effect" ui-sref="listProfiles">
-                            <i class="material-icons medium">supervisor_account</i>Perfis
-                        </a>
-                    </li>
-                    <!-- <li data-ng-if="global.permission.user == 1">
-                        <a class="waves-effect" ui-sref="listUsers">
-                            <i class="material-icons medium">person</i>Usuários
-                        </a>
-                    </li> -->
-                    <li data-ng-if="global.permission.closure == 1" >
-                        <a class="waves-effect" ui-sref="closingDate">
-                            <i class="material-icons medium">code</i>Data de Corte
-                        </a>
-                    </li>
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-                    <!-- <li data-ng-if="global.permission.report  == 1">
-                        <a class="waves-effect" ui-sref="reports">
-                            <i class="material-icons medium">receipt</i>Relatórios
-                        </a>
-                    </li> -->
-                    <li>
-                        <div class="divider"></div>
-                    </li>
-                    <li>
-                        <a class="waves-effect" ui-sref="logout">
-                            <i class="material-icons medium">exit_to_app</i>Sair
-                        </a>
-                    </li>
-                </ul>
-    
                 <p data-activates="slide-out" id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
                     <i class="material-icons" style="height: 25px; line-height: 25px;">menu</i>
                 </p>
