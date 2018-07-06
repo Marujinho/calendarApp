@@ -20,9 +20,9 @@ self.addEventListener('install', function(e) {
 	);
 });
 
-self.addEventListener('activate',  event => {
-	// event.waitUntil(self.clients.claim());
-	// console.log('[ServiceWorker] Yay yay activated');
+// self.addEventListener('activate',  event => {
+// 	// event.waitUntil(self.clients.claim());
+// 	// console.log('[ServiceWorker] Yay yay activated');
 	
 	addEventListener('activate', activateEvent => {
 		activateEvent.waitUntil(
@@ -33,7 +33,7 @@ self.addEventListener('activate',  event => {
 		  	})))
 		);
 	});
-});
+// });
 
 // self.addEventListener('fetch', event => {
 // 	event.respondWith(
