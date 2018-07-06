@@ -1,4 +1,4 @@
-var cacheName = 'calendarAppVersion-1.3.2';
+var theCacheName = 'calendarAppVersion-1.3.2';
 var filesToCache = [
 	// HTML
 	'./index.html',
@@ -6,7 +6,8 @@ var filesToCache = [
 	'./css/icon.css',
 	'./css/select2-materialize.css',
 	'./css/style.css',
-	'./img/icon.jpg'
+	'./img/icon.jpg',
+	'./img/bell.png'
 ];
 
 self.addEventListener('install', function(e) {
@@ -20,8 +21,18 @@ self.addEventListener('install', function(e) {
 });
 
 self.addEventListener('activate',  event => {
-	event.waitUntil(self.clients.claim());
-	console.log('[ServiceWorker] Yay yay activated');
+	// event.waitUntil(self.clients.claim());
+	// console.log('[ServiceWorker] Yay yay activated');
+	caches.keys().then(function(cacheNames) {
+		return Promise.all(
+		  cacheNames.map(function(cacheName) {
+			if(cacheName != theCacheName) {
+			  return caches.delete(theCacheName);
+			}
+		  })
+		);
+	  });
+
 
 });
 
