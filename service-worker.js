@@ -1,4 +1,4 @@
-var theCacheName = 'calendarAppVersion-1.3.2';
+var theCacheName = 'calendarAppVersion-1.3.3';
 var filesToCache = [
 	// HTML
 	'./index.html',
@@ -7,7 +7,7 @@ var filesToCache = [
 	'./css/select2-materialize.css',
 	'./css/style.css',
 	'./img/icon.jpg',
-	'./img/bell.png'
+	'./img/bell.png2'
 ];
 
 self.addEventListener('install', function(e) {
