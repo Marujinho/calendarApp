@@ -6,9 +6,10 @@ var filesToCache = [
 	'./css/icon.css',
 	'./css/select2-materialize.css',
 	'./css/style.css',
-	'./img/icon.jpg',
-	'./img/bell.png2'
+	'./img/icon.jpg'
+
 ];
+
 
 self.addEventListener('install', function(e) {
 	console.log('[ServiceWorker] Install');
