@@ -23,17 +23,16 @@ self.addEventListener('install', function(e) {
 self.addEventListener('activate',  event => {
 	// event.waitUntil(self.clients.claim());
 	// console.log('[ServiceWorker] Yay yay activated');
-	caches.keys().then(function(cacheNames) {
-		return Promise.all(
-		  cacheNames.map(function(cacheName) {
-			if(cacheName != theCacheName) {
-			  return caches.delete(theCacheName);
-			}
-		  })
+	
+	addEventListener('activate', activateEvent => {
+		activateEvent.waitUntil(
+		  caches.keys().then(keyList => Promise.all(keyList.map(key => {
+			if (key !== theCacheName) {
+			  return caches.delete(key);
+		}
+		  	})))
 		);
-	  });
-
-
+	});
 });
 
 // self.addEventListener('fetch', event => {
@@ -44,6 +43,9 @@ self.addEventListener('activate',  event => {
 // 		})
 // 	);
 // });
+
+
+
 
 self.addEventListener('fetch', event => {
 	event.respondWith(
