@@ -1,12 +1,12 @@
-var theCacheName = 'calendarAppVersion-1.3.4';
+var theCacheName = 'calendarAppVersion-1.3.5';
 var filesToCache = [
 	// HTML
-	'/index.html',
-	'/css/easy_calendar.css',
-	'/css/icon.css',
-	'/css/select2-materialize.css',
-	'/css/style.css',
-	'/img/icon.jpg'
+	'./index.html',
+	'./css/easy_calendar.css',
+	'./css/icon.css',
+	'./css/select2-materialize.css',
+	'./css/style.css',
+	'./img/icon.jpg'
 
 ];
 
