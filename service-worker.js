@@ -1,4 +1,4 @@
-var theCacheName = 'calendarAppVersion-1.3.8';
+var theCacheName = 'calendarAppVersion-1.4.0';
 var filesToCache = [
 	// HTML
 	'./index.html',
@@ -9,7 +9,7 @@ var filesToCache = [
 	'./img/icon.jpg'
 
 ];
-
+//luhddlkjifsdfd
 
 self.addEventListener('install', function(e) {
 	console.log('[ServiceWorker] Install');
@@ -21,31 +21,15 @@ self.addEventListener('install', function(e) {
 	);
 });
 
-// self.addEventListener('activate',  event => {
-// 	// event.waitUntil(self.clients.claim());
-// 	// console.log('[ServiceWorker] Yay yay activated');
-	
 	addEventListener('activate', activateEvent => {
 		activateEvent.waitUntil(
 		  caches.keys().then(keyList => Promise.all(keyList.map(key => {
 			if (key !== theCacheName) {
 			  return caches.delete(key);
 		}
-		  	})))
+			  })))
 		);
 	});
-// });
-
-// self.addEventListener('fetch', event => {
-// 	event.respondWith(
-// 		caches.match(event.request, {ignoreSearch:true}).then(response => {
-// 			return response || fetch(event.request);
-// 			console.log('[ServiceWorker] fetching');
-// 		})
-// 	);
-// });
-
-
 
 
 self.addEventListener('fetch', event => {
@@ -63,3 +47,4 @@ self.addEventListener('fetch', event => {
 		})
 	);
 });
+
