@@ -1,4 +1,4 @@
-var theCacheName = 'calendarAppVersion-1.4.0';
+var theCacheName = 'calendarAppVersion-1.4.1';
 var filesToCache = [
 	// HTML
 	'./index.html',
@@ -9,7 +9,7 @@ var filesToCache = [
 	'./img/icon.jpg'
 
 ];
-//luhddlkjifsdfd
+
 
 self.addEventListener('install', function(e) {
 	console.log('[ServiceWorker] Install');
@@ -17,6 +17,8 @@ self.addEventListener('install', function(e) {
 		caches.open(theCacheName).then(function(cache) {
 			console.log('[ServiceWorker] Caching app shell');
 			return cache.addAll(filesToCache);
+		}).then(function(){
+			return self.skipWaiting();
 		})
 	);
 });
@@ -26,8 +28,11 @@ self.addEventListener('install', function(e) {
 		  caches.keys().then(keyList => Promise.all(keyList.map(key => {
 			if (key !== theCacheName) {
 			  return caches.delete(key);
+			  
 		}
-			  })))
+			  }))).then(function(){
+				return self.clients.claim();
+			  })
 		);
 	});
 
