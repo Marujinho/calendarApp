@@ -37,6 +37,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     filterProjetos: []
                 }
 
+                
+
+
+
                 $(".toast").fadeOut("slow");
                 Materialize.toast('Carregando informações!', 30000, 'toast-container');
                 $rootScope.local = "agenda";
@@ -483,14 +487,15 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 $('.tooltipped').tooltip({
                     delay: 50
                 });
-               
-                $('#calendar').fullCalendar({
-                   
-                    header: {
-                        left: '',
-                        center: 'title',
-                        right: ''
-                    },
+
+                var $calendar = $('#calendar').fullCalendar({
+                    
+                    header: false,
+                    // header: {
+                    //     left: '',
+                    //     center: 'title',
+                    //     right: ''
+                    // },
                     height: $(window).height() - 65,
                     windowResizeDelay: true,
                     handleWindowResize: true,
@@ -703,6 +708,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             $scope.listEvents.splice($scope.listEvents.indexOf(removeThisItem[0]), 1);
                         }
                     }
+                });
+
+                var $title 	= $('.brand-logo');
+                $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
+
+                $('nav ul li a.navigation').click(function() {
+                    $calendar.fullCalendar($(this).attr('href').substring(1));
+                    $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
                 });
 
                 // $('.slide-out').on('click', function(){
