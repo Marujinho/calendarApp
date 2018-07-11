@@ -7,7 +7,6 @@ var filesToCache = [
 	'./css/select2-materialize.css',
 	'./css/style.css',
 	'./img/icon.jpg'
-
 ];
 
 

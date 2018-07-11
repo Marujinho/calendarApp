@@ -9,10 +9,8 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
-                var local = window.location.href;
-                local = local.split("portal");
                 alert("Você não tem acesso ao Easy Calendar");
-                window.location.href = local[0];
+                $state.go('welcome');
             } else {
 
                 $('.button-collapse').sideNav({
