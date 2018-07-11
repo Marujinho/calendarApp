@@ -17,7 +17,7 @@ self.addEventListener('install', function(e) {
 		caches.open(theCacheName).then(function(cache) {
 			console.log('[ServiceWorker] Caching app shell');
 			return cache.addAll(filesToCache);
-		}).then(function(){
+		}).then(function(){	
 			return self.skipWaiting();
 		})
 	);
@@ -43,11 +43,11 @@ self.addEventListener('fetch', event => {
 		// new Response('lalala')	
 		fetch(event.request).then(function(response){
 			if(response.status == 404){
-				return new Response('Essa pagina nao existe cara');
+				return new Response('Essa pagina nao existe');
 			}
 			return response;
 		}).catch(function(){
-			return new Response('Brother, c ta sem internet');
+			return new Response('Sem conexão');
 			
 		})
 	);
