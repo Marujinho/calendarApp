@@ -575,7 +575,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         title.attr("title", title.text());
                     },
                     eventClick: function(calEvent, jsEvent, view) {
-                        console.log(calEvent);
                         
                         if (calEvent.type == "apontamentoNaoEfetuado" || calEvent.type == "apontamentoEfetuado") {
                             
@@ -713,24 +712,19 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                 var $title 	= $('.brand-logo');
                 $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
 
-                $('nav ul li a.navigation').click(function() {
-                    $calendar.fullCalendar($(this).attr('href').substring(1));
-                    $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
-                });
-
-                // $('.slide-out').on('click', function(){
-                //     $('.sidenav').sidenav();
-                // });
                 $scope.prev = function(){    
                    $('#calendar').fullCalendar('prev');
+                   $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
                 }
 
                 $scope.next = function(){    
                     $('#calendar').fullCalendar('next');
+                    $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
                  }
 
                  $scope.today = function(){    
                     $('#calendar').fullCalendar('today');
+                    $title.text($calendar.fullCalendar('getDate').format(($calendar.fullCalendar('getDate').format('YYYY') == new Date().getFullYear()) ? 'MMMM' : 'MMM YYYY'));
                  }
 
                  
@@ -740,12 +734,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     var month = moment(current.format()).format("MM");
                     var year = moment(current.format()).format("YYYY");
                     var dataAtual = moment().format("YYYY/MM/DD");
-                    
-                    console.log('current '+current);
-                    console.log('current '+current);
-                    console.log('current '+current);
-                    console.log('current '+current);
-
 
 
                     if ($scope.findDates.indexOf(month + "/" + year) < 0) {
