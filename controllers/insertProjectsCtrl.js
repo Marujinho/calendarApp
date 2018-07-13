@@ -192,9 +192,9 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                     projectsAPIService.save($scope.project).then(function () {
 
                         Materialize.toast('Projeto cadastrado!', 1500, 'toast-container');
-                        $state.reload('listProjects');
+                        // $state.reload('listProjects');
                         // console.log(JSON.stringify($scope.project));
-                        
+                        $state.go('listProjects');
                     });
                 };
 

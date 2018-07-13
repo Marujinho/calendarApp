@@ -303,7 +303,7 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                             }
                         };
                     });
-                })
+                });
 
 
                 $rootScope.titulo = 'Projetos';
