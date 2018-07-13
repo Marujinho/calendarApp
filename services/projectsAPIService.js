@@ -42,6 +42,17 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
             }
         });      
     };
+
+    var _getallList = function() {
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/project/getalllist',
+            data: {
+                token: $rootScope.global.token
+            }
+        });
+    }
+
     let _getbyCustomer =  function(idCustomer){
         return $http({
             method: 'POST',
@@ -58,6 +69,7 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
         getbyCustomer: _getbyCustomer,
         getall: _getallProjects,
         save: _saveProjects,
-        getByIdProject: _getByIdProject
+        getByIdProject: _getByIdProject,
+        getallList: _getallList
     }
 });

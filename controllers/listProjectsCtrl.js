@@ -34,7 +34,7 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                 }
 
                 $rootScope.local = "";
-                projectsAPIService.getall().then(function(response) {
+                projectsAPIService.getallList().then(function(response) {
                     $scope.tipoProjeto = [];
                     $scope.tipoDespesa = [];
                     var table = $('#dtProjects').DataTable({
@@ -42,20 +42,20 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         data: response.data,
                         columns: [
                             { title: "Id", data: "idProject" },
-                            { title: "Projeto", data: "name" },
-                            { title: "Cliente", data: "customerId.name" },
+                            { title: "Projeto", data: "projectName" },
+                            { title: "Cliente", data: "customerName" },
                             {
                                 title: "Tipo de Projeto",
                                 data: "projectType",
                                 render: function(data) {
                                     switch (data) {
-                                        case 0:
+                                        case "0":
                                             return "Projeto Aberto";
-                                        case 1:
+                                        case "1":
                                             return "Projeto Fechado";
-                                        case 2:
+                                        case "2":
                                             return "Banco de Horas";
-                                        case 3:
+                                        case "3":
                                             return "Suporte";
                                     }
                                 }
@@ -65,9 +65,9 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                                 data: "expenseType",
                                 render: function(data) {
                                     switch (data) {
-                                        case 0:
+                                        case "0":
                                             return "Despesa Aberta";
-                                        case 1:
+                                        case "1":
                                             return "Despesa Fechada";
                                     }
                                 }
@@ -207,7 +207,7 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Projeto"><i class="material-icons grey-text">assignment</i></div>';
-                        html += '               <div class="conteudoModais">' + data.name + '</div>';
+                        html += '               <div class="conteudoModais">' + data.projectName + '</div>';
                         html += '           </div>';
                         html += '           <div class="input-field col s12 m12">';
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Responsável pelo projeto"><i class="material-icons grey-text">person</i></div>';
@@ -233,16 +233,16 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Tipo de projeto"><i class="material-icons grey-text">storage</i></div>';
                         var projectType = "";
                         switch (data.projectType) {
-                            case 0:
+                            case "0":
                                 projectType = "Projeto Aberto";
                                 break;
-                            case 1:
+                            case "1":
                                 projectType = "Projeto Fechado";
                                 break;
-                            case 2:
+                            case "2":
                                 projectType = "Banco de horas";
                                 break;
-                            case 3:
+                            case "3":
                                 projectType = "Suporte";
                                 break;
                         }
@@ -268,10 +268,10 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         html += '               <div class="iconesModais tooltipped" data-position="left" data-tooltip="Valor e tipo de despesa"><i class="material-icons grey-text">monetization_on</i></div>';
                         var txtDespesa = '';
                         switch (data.expenseType) {
-                            case 0:
+                            case "0":
                                 txtDespesa = 'Despesa Aberta';
                                 break;
-                            case 1:
+                            case "1":
                                 txtDespesa = 'Despesa Fechada';
                                 break;
                         }
