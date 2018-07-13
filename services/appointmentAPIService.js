@@ -11,6 +11,32 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         });
     };
 
+    var _getListAppointment = function(firstDay, lastDay) {
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/appointment/getlistAppointment',
+            data: {
+                token: localStorage.getItem('userToken'),
+                initialDate: firstDay,
+	            lastDate: lastDay
+            }
+        });
+    };
+
+    var _getListByUser = function(firstDay, lastDay, idUser) {
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/appointment/getlistappointmentuser',
+            data: {
+                idUser: idUser,
+                token: localStorage.getItem('userToken'),
+                initialDate: firstDay,
+	            lastDate: lastDay
+            }
+        });
+    };
+
+
     let _saveAgenda = function(appointment) {
         return $http({
             method: 'POST',
@@ -64,7 +90,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/appointment/getallagenda',
             data: {
-                token: $rootScope.global.token
+                token: localStorage.getItem('userToken')
             }
         });
     };
@@ -203,6 +229,8 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         getrequestByAppointment: _getrequestByAppointment,
         sendMail: _sendMail,
         getFromRangeDate: _getFromRangeDate,
-        getallAgenda: _getallAgenda
+        getallAgenda: _getallAgenda,
+        getListAppointment: _getListAppointment,
+        getListByUser: _getListByUser
     }
 });

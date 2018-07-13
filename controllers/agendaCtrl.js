@@ -1,6 +1,6 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-   
+    console.log('lolipop');
 
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
@@ -36,9 +36,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     filterClientes: [],
                     filterProjetos: []
                 }
-
-                
-
 
 
                 $(".toast").fadeOut("slow");

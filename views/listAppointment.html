@@ -3,14 +3,99 @@
         <div class="table-responsive">
             <div class="row" id="filtrosData" >
                 <div class="col s12 m6">                                 
-                    <input  name="min" id="minAppointment" type="text" placeholder="Data de ínicio">                         
+                    <input  name="min" id="minAppointment" type="text" placeholder="Data de ínicio" data-value="{{firstDay}}">                         
                 </div>
                 <div class="col s12 m6">                
-                    <input  name="max" id="maxAppointment" type="text" placeholder="Data de fim">
+                    <input  name="max" id="maxAppointment" type="text" placeholder="Data de fim" data-value="{{lastDay}}">
                 </div>
                 <!-- <i class="material-icons grey-text" style="float: left; position: absolute; font-size: 30px; ">date_range</i> -->
             </div>
-            <div class="row" style="">
+
+            <div id="loading" style="padding-top: 20px;">
+                <div>
+                    <div style="width: 100px; height: 30px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 0px 0 12px;"></div>
+                </div>
+        
+                <div class="row" style="padding: 0 15px;">
+                    
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 100%; height: 60px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin-left: 10px;"></div>
+                    </div>
+                </div>
+        
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 15px;">
+                    <div style="width: calc(100% - 24px); display: inline-flex;">
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 10px 0 10px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                        <div style="width: 20%; height: 20px; background-color: #EEEEEE; border-radius: 4px; display: inline-block; margin: 0 5px;"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" id="dtAppointmentDiv" style="display: none">
                 <div class="table-wrapper responsive-table">
                     <table id="dtAppointment" class="mdl-data-table " cellspacing="0" style="width:100%;">
                         <thead>

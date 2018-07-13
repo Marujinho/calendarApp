@@ -30,15 +30,6 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                     closure: responseUser.data[0].profileId.closure
                 }
 
-                if($rootScope.global.permission.requestConsultant == 1){
-                    appointmentAPIService.getallAppointment().then(function(response) {
-                        $scope.povoaDados(response.data);
-                    })
-                }else{
-                    appointmentAPIService.getByUser($rootScope.global.idUser).then(function(response) {
-                        $scope.povoaDados(response.data);
-                    })
-                }
 
                 if($rootScope.global.permission.appointment != 1){
                     $state.go('agenda');
@@ -46,6 +37,12 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
 
                 $rootScope.local = "";
                 $rootScope.titulo = 'Apontamentos';
+                var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+                var firstDay = new Date(y, m, 1);
+                $scope.firstDay = moment(firstDay).format("DD/MM/YYYY");
+                var lastDay = new Date(y, m + 1, 0);
+                $scope.lastDay = moment(lastDay).format("DD/MM/YYYY");
+
 
                 function diffHoras(hora1, hora2, intervalo){
                     var data1Quebrada = hora1.split(":");
@@ -108,10 +105,12 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
 
                   var dtAppointment;
                 $scope.povoaDados = function(response){
-                    $scope.appointment = response;
+                    $scope.appointment = response.data;
                     $scope.diferenca = [];
                     $scope.despesa = [];
                     $scope.traslado = [];
+
+                    console.log(response);
 
                         dtAppointment = $('#dtAppointment').DataTable({
                         dom: 'Bfrtip',
@@ -129,9 +128,9 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                                     return type === "display" || type === "filter" ? dateSplit[2] + '/' + dateSplit[1] + '/' + dateSplit[0] : data
                                 }, width : '50px'
                             },
-                            { data: "userId.name"},
-                            { data: "customerId.name"},
-                            { data: "projectId.name"},
+                            { data: "userName"},
+                            { data: "customerName"},
+                            { data: "projectName"},
                             { data: "initialHour"},
                             { data: "hourLunch"},
                             { data: "lastHour" },
@@ -242,8 +241,8 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             render: function(data, type, row) {
                             var despesa = 0.00;
                                 if(row.workplace.toString() == "2"){
-                                    if(row.projectId.expenseType.toString() == "1"){
-                                        var despesa = 'R$ ' + row.projectId.expense.replace(".", ",");
+                                    if(row.expenseType.toString() == "1"){
+                                        var despesa = 'R$ ' + row.expense.replace(".", ",");
                                 }else{
                                         $.each(row.appointmentExpense, function(key, obj){
                                             despesa += parseFloat(obj.cost);
@@ -261,10 +260,10 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             {
                                 data: null,
                                 render: function(data, type, row) {
-                                    var traslado = row.projectId.transfer;
+                                    var traslado = row.projectTransfer;
                                     if (row.transfer == true) {
                                         $scope.traslado.push(traslado);
-                                        return row.projectId.transfer
+                                        return row.projectTransfer
                                     } else {
                                         $scope.traslado.push('00:00:00');
                                         return "00:00:00"
@@ -273,7 +272,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                                 
                                 className: "total"
                             },
-                            { data: "appointmentStatusId.description"},
+                            { data: "description"},
                             { data: "activity",
                                 render: function ( data, type, row ) {
                                     $('.tooltip').tooltip({
@@ -406,10 +405,14 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             }
                         }
                     });
+
+                    $("#loading").css("display", "none");
+                    $("#dtAppointmentDiv").css("display", "block");
                     
                     $('.tooltip').tooltip({
                         transitionMovement:200
                     });
+
                     $('.atividade').css("text-overflow", "ellipsis");
                     $("#minAppointment, #maxAppointment").pickadate({
                         closeOnSelect: true,
@@ -437,8 +440,42 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                     });
             
                     $('#minAppointment, #maxAppointment').on('keyup change', function () {
-                        dtAppointment.draw();
+                        //dtAppointment.draw();
+
+                        $(".toast").fadeOut("slow");
+                        $("#loading").css("display", "block");
+                        $("#dtAppointmentDiv").css("display", "none");
+                        $scope.traslado = [];
+                        $scope.diferenca = [];
+                        
+                        Materialize.toast('Carregando dados!', 30000, 'toast-container');
+                        if($rootScope.global.permission.requestConsultant == 1){
+                            appointmentAPIService.getListAppointment(moment(
+                                $('#minAppointment').val(), "DD/MM/YYYY").format("DD/MM/YYYY"), 
+                                moment($('#maxAppointment').val(), "DD/MM/YYYY").format("DD/MM/YYYY").then(
+                                    function(response) {
+                                        replaceTable(response);
+                                    }, function(){
+                                        $(".toast").fadeOut("slow");
+                                        Materialize.toast('ERRO R2 - Contate o Administrador!', 5500, 'toast-container');
+                                    }
+                                )
+                            )
+                        }else{
+                            appointmentAPIService.getListByUser(moment(firstDay).format("DD/MM/YYYY"), moment(lastDay).format("DD/MM/YYYY"), $rootScope.global.idUser).then(
+                                function(response) {
+                                    replaceTable(response);
+                                }, function(){
+                                    $(".toast").fadeOut("slow");
+                                    Materialize.toast('ERRO R2 - Contate o Administrador!', 5500, 'toast-container');
+                                }
+                            )
+                        }
                     });
+
+
+
+
 
                     $.fn.dataTable.ext.search.push(
                         function (conf, data) {
@@ -453,6 +490,60 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             return false;
                         }
                     );
+
+
+                    function replaceTable(response){
+                        dtAppointment.clear().draw();
+                        dtAppointment.rows.add(response.data).draw();
+
+                        dtAppointment.columns().every(function() {
+                            var column = this;
+                            if( column.index() != 0 && column.index() != 1 && column.index() != 10 && column.index() != 11 && column.index() != 12 && column.index() != 13 && column.index() != 14 && column.index() != 15 && column.index() != 16 && column.index() != 17) {
+                            var select = $('<select class="select2" multiple style="width:100%;"><option value="" style="width:100%;"></option></select>').appendTo($("#filters").find("th").eq(column.index()))
+                                .on('change', function () {
+                                    var list = $(this).val();
+                                    var val = '';
+                                    if(list != null){
+                                        for(var i = 0; i < list.length; i++){
+                                            val += $.fn.dataTable.util.escapeRegex(list[i]);
+                                            if(i != list.length-1){
+                                                val += "|"
+                                            }
+                                        }
+                                    }
+                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                }
+                            );  
+                            $('.select2').select2();
+                            var diferenca = [];
+                            var despesa = [];
+                            var traslado = [];
+                            column.data().unique().sort().each(function(d, j) {
+                                // select 
+                                if (column.index() == 18) {
+                                    if (traslado.indexOf($scope.traslado[j]) == -1) {
+                                        traslado.push($scope.traslado[j]);
+                                        select.append('<option value="' + $scope.traslado[j] + '" style="width:100%;">' + $scope.traslado[j] + '</option>');
+                                    }
+                                } else if (column.index() == 8) {
+                                    if (diferenca.indexOf($scope.diferenca[j]) == -1) {
+                                        diferenca.push($scope.diferenca[j]);
+                                        select.append('<option value="' + $scope.diferenca[j] + '" style="width:100%;">' + $scope.diferenca[j] + '</option>');
+                                    }
+                                } else {
+                                    select.append('<option value="' + d + '" style="width:100%;">' + d + '</option>')
+                                }
+                            });  
+                        }
+
+                        })
+                        $(".toast").fadeOut("slow");
+                        Materialize.toast('Dados carregados com sucesso!', 3500, 'toast-container');
+
+                        $("#loading").css("display", "none");
+                        $("#dtAppointmentDiv").css("display", "block");
+                    }
+
 
                     $('.modal').modal();
                     $('.dt-button').removeClass('dt-button');
@@ -624,7 +715,17 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             }
                         });              
                     });
-                };     
+                }; 
+                
+                if($rootScope.global.permission.requestConsultant == 1){
+                    appointmentAPIService.getListAppointment(moment(firstDay).format("DD/MM/YYYY"), moment(lastDay).format("DD/MM/YYYY")).then(function(response) {
+                        $scope.povoaDados(response);
+                    });
+                }else{
+                    appointmentAPIService.getListByUser(moment(firstDay).format("DD/MM/YYYY"), moment(lastDay).format("DD/MM/YYYY"), $rootScope.global.idUser).then(function(response) {
+                        $scope.povoaDados(response);
+                    });
+                }    
             }
         }
     )
