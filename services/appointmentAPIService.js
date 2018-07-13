@@ -96,14 +96,13 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
     };
 
     let _insertAppointment = function(appointment) {
+        appointment.token = localStorage.getItem('userToken');
         appointment.login = $rootScope.global.idUser;
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/insertAppointment',
-            data: {
-                appointment: appointment,
-                token: localStorage.getItem('userToken')
-            }
+            data: appointment
+            
         });
     };
 
