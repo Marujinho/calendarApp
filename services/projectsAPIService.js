@@ -48,7 +48,7 @@ angularApp.service('projectsAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/project/getalllist',
             data: {
-                token: $rootScope.global.token
+                token: localStorage.getItem('userToken')
             }
         });
     }
