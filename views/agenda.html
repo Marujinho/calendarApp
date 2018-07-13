@@ -207,19 +207,19 @@
                         <label for="fimAgenda" class="active">Data Final</label>
                     </div>
                     <div class="input-field">
-                        <input type="time" id="initialHour" ng-model="appointment.initialHour" >
+                        <input type="text" id="initialHour" ng-model="appointment.initialHour" class="timepicker">
                         <label for="initialHour" id="solinitialHour">Hora de Entrada</label>
                     </div>
                     <div class="input-field">
-                        <input type="time" id="hourLunch" ng-model="appointment.hourLunch" >
+                        <input type="text" id="hourLunch" ng-model="appointment.hourLunch" class="timepicker">
                         <label for="hourLunch" id="solhourLunch">Tempo de almoço</label>
                     </div>
                     <div class="input-field">
-                        <input type="time" id="lastHour" ng-model="appointment.lastHour" >
+                        <input type="text" id="lastHour" ng-model="appointment.lastHour" class="timepicker">
                         <label for="lastHour" id="sollastHour">Hora de Saída</label>
                     </div>
                     <div class="input-field ">
-                        <input type="time" id="unproductiveHours" ng-model="appointment.unproductiveHours" >
+                        <input type="text" id="unproductiveHours" ng-model="appointment.unproductiveHours" class="timepicker">
                         <label for="unproductiveHours" id="solunproductiveHours">Horas Improdutivas</label>
                     </div>
                     <div class="row" style="margin-left:10px;">
@@ -710,7 +710,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m3">
-                        <input class="timepicker" id="initialHour" ng-model="newAppointment.initialHour" type="text">
+                        <input  id="initialHour" ng-model="newAppointment.initialHour" type="time">
                         <label for="initialHour" id="labelInitialHour" class="active">Hora entrada</label>
                     </div>
                     <div class="input-field col s12 m3">
