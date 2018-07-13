@@ -389,26 +389,6 @@
                         <label for="initialHourParticular" id="solinitialHourParticular">Hora de Entrada</label>
                     </div>
                     <div class="input-field col s3 m3">
-                        <input type="time" id="lastHourParticular" ng-model="appointment.lastHour">
-                        <label for="lastHourParticular" id="sollastHourParticular">Hora de Saída</label>
-                    </div>
-
-                    <div class="input-field col s12 m12">
-                        <input type="text" id="activity" name="activity" ng-model="appointment.activity" required="" class="validate" minlength="5">
-                        <label for="activity">Atividade</label>
-                        <small data-ng-show="!formInsertAgenda.activity.$pristine && formInsertAgenda.activity.$error.required">Campo obrigatório</small>
-                        <small data-ng-show="!formInsertAgenda.activity.$pristine && formInsertAgenda.activity.$error.minlength">O campo deve conter no minimo 5 caracteres</small>
-                    </div>
-
-                    <div class="col s12 m12 right-align" style="margin-bottom: 15px;">
-                        <button data-ng-disabled="formInsertParticular.$invalid" class="waves-effect waves-light btn cyan accent-4" type="submit">Salvar</button>
-                    </div>
-                </form>
-            </div>
-
-            <div id="feriado" class="col s12 m12" data-ng-show="global.permission.agenda == 1">
-                <!-- feriado -->
-                <br>
                 <form method="post" name="formHoliday" ng-submit="insertHoliday();">
                     <div class="nomeFeriado col s12 m12">
                         <label for="nomeFeriado">Nome</label>

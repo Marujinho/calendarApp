@@ -2055,6 +2055,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             function(response) {
                                 $scope.accept.transfer = 0;
                                 $scope.accept.workplace = "1";
+                                new Date().toISOString().split('T')[0]
                                 $scope.accept.initialHour = moment("08:30", "HH:mm").format("HH:mm");
                                 $scope.accept.hourLunch = moment("01:00", "HH:mm").format("HH:mm");
                                 $scope.accept.lastHour = moment("17:30", "HH:mm").format("HH:mm");
@@ -2854,7 +2855,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.newAppointment.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
                         $("#labelAppointmentDate").addClass("active");
 
-                        $scope.newAppointment.initialHour = moment(response.data[0].initialHour, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.initialHour = "12:12";//moment(response.data[0].initialHour, "HH:mm:ss").format("HH:mm");
                         $("#labelInitialHour").addClass("active");
                         $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").format("HH:mm");
                         $("#labelHourLunch").addClass("active");
