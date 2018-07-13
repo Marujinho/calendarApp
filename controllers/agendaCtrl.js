@@ -2857,11 +2857,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         $scope.newAppointment.initialHour =moment(response.data[0].initialHour, "HH:mm:ss").toDate(); //format("HH:mm");
                         $("#labelInitialHour").addClass("active");
-                        $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").toDate();//format("HH:mm");
                         $("#labelHourLunch").addClass("active");
-                        $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").toDate(); //format("HH:mm");
                         $("#labelLastHour").addClass("active");
-                        $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").toDate(); //format("HH:mm");
                         $("#labelUnproductiveHours").addClass("active");
 
                         $scope.newAppointment.expenseType = response.data[0].project.expenseType
