@@ -101,7 +101,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
             method: 'POST',
             url: $rootScope.global.link + '/appointment/insertAppointment',
             data: {
-                // appointment: appointment,
+                appointment: appointment,
                 token: localStorage.getItem('userToken')
             }
         });
