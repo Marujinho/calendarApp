@@ -180,6 +180,8 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                             }
                         }
                     });
+                   
+                   
                     $('.dt-button').removeClass('dt-button');
                     $('.modal').modal();
                     $('.modal').css('margin-top', '50px');

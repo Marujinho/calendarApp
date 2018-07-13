@@ -1816,7 +1816,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         },
                         function() {
                             $(".toast").fadeOut("slow");
-                            Materialize.toast('Erro 01 - Contate o ADM', 5500, 'toast-container');
+                            Materialize.toast('Erro 01a - Contate o ADM', 5500, 'toast-container');
                             $("#modalApontar").modal("close");
                         }
                     );
@@ -1999,7 +1999,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             },
                             function() {
                                 $(".toast").fadeOut("slow");
-                                Materialize.toast('Erro 01 - Contate o ADM', 5500, 'toast-container');
+                                Materialize.toast('Erro 01b - Contate o ADM', 5500, 'toast-container');
                                 $scope.blockAccept = false;
                             }
                         );
