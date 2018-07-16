@@ -55,7 +55,7 @@
         <div class="input-field col s12">
             <label for="filterConsultores" class="active">Consultores</label>
             <select id="filterConsultores" class="select2 filterCalendar" multiple="multiple" data-ng-model="filter.filterConsultores" data-ng-change="filterData()">
-                <option data-ng-repeat="consultor in user" ng-value="consultor.idUser">{{consultor.code}}</option>
+                <option data-ng-repeat="consultor in user" ng-value="consultor.idUser">{{consultor.name}}</option>
             </select>
         </div>
         <div class="input-field col s12" data-ng-hide="filter.livres">
@@ -207,19 +207,19 @@
                         <label for="fimAgenda" class="active">Data Final</label>
                     </div>
                     <div class="input-field">
-                        <input type="time" id="initialHour" ng-model="appointment.initialHour" >
+                        <input type="text" id="initialHour" ng-model="appointment.initialHour" class="timepicker">
                         <label for="initialHour" id="solinitialHour">Hora de Entrada</label>
                     </div>
                     <div class="input-field">
-                        <input type="time" id="hourLunch" ng-model="appointment.hourLunch">
+                        <input type="text" id="hourLunch" ng-model="appointment.hourLunch" class="timepicker">
                         <label for="hourLunch" id="solhourLunch">Tempo de almoço</label>
                     </div>
                     <div class="input-field">
-                        <input type="time" id="lastHour" ng-model="appointment.lastHour" >
+                        <input type="text" id="lastHour" ng-model="appointment.lastHour" class="timepicker">
                         <label for="lastHour" id="sollastHour">Hora de Saída</label>
                     </div>
                     <div class="input-field ">
-                        <input type="time" id="unproductiveHours" ng-model="appointment.unproductiveHours" >
+                        <input type="text" id="unproductiveHours" ng-model="appointment.unproductiveHours" class="timepicker">
                         <label for="unproductiveHours" id="solunproductiveHours">Horas Improdutivas</label>
                     </div>
                     <div class="row" style="margin-left:10px;">
@@ -385,10 +385,30 @@
                     </div>
 
                     <div class="input-field col s3 m3">
-                        <input type="time" id="initialHourParticular" ng-model="appointment.initialHour" >
+                        <input type="text" id="initialHourParticular" ng-model="appointment.initialHour" class="timepicker">
                         <label for="initialHourParticular" id="solinitialHourParticular">Hora de Entrada</label>
                     </div>
                     <div class="input-field col s3 m3">
+                        <input type="text" id="lastHourParticular" ng-model="appointment.lastHour" class="timepicker">
+                        <label for="lastHourParticular" id="sollastHourParticular">Hora de Saída</label>
+                    </div>
+
+                    <div class="input-field col s12 m12">
+                        <input type="text" id="activity" name="activity" ng-model="appointment.activity" required="" class="validate" minlength="5">
+                        <label for="activity">Atividade</label>
+                        <small data-ng-show="!formInsertAgenda.activity.$pristine && formInsertAgenda.activity.$error.required">Campo obrigatório</small>
+                        <small data-ng-show="!formInsertAgenda.activity.$pristine && formInsertAgenda.activity.$error.minlength">O campo deve conter no minimo 5 caracteres</small>
+                    </div>
+
+                    <div class="col s12 m12 right-align" style="margin-bottom: 15px;">
+                        <button data-ng-disabled="formInsertParticular.$invalid" class="waves-effect waves-light btn cyan accent-4" type="submit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="feriado" class="col s12 m12" data-ng-show="global.permission.agenda == 1">
+                <!-- feriado -->
+                <br>
                 <form method="post" name="formHoliday" ng-submit="insertHoliday();">
                     <div class="nomeFeriado col s12 m12">
                         <label for="nomeFeriado">Nome</label>
@@ -690,19 +710,19 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m3">
-                        <input class="timepicker" id="initialHour" ng-model="newAppointment.initialHour" type="text">
+                        <input id="initialHour" ng-model="newAppointment.initialHour" type="text" mask="99:99">
                         <label for="initialHour" id="labelInitialHour" class="active">Hora entrada</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input class="timepicker"  id="hourLunch" ng-model="newAppointment.hourLunch" type="text">
+                        <input id="hourLunch" ng-model="newAppointment.hourLunch" type="text" mask="99:99">
                         <label for="hourLunch" id="labelHourLunch" class="active">Horas de almoço</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input class="timepicker" id="lastHour" ng-model="newAppointment.lastHour" type="text">
+                        <input id="lastHour" ng-model="newAppointment.lastHour" type="text" mask="99:99">
                         <label for="lastHour" id="labelLastHour" class="active">Hora saida</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input class="timepicker" type="text" id="unproductiveHours" ng-model="newAppointment.unproductiveHours" >
+                        <input type="text" id="unproductiveHours" ng-model="newAppointment.unproductiveHours"  mask="99:99">
                         <label for="unproductiveHours" id="labelUnproductiveHours" class="active">Horas improdutivas</label>
                     </div>
                 </div>
@@ -812,15 +832,15 @@
                     </div>
 
                     <div class="input-field col s12 m4">
-                        <input id="initialHour" type="time" ng-model="accept.initialHour" >
+                        <input id="initialHour" ng-model="accept.initialHour" class="timepicker">
                         <label for="initialHour" class="active">Hora de Entrada</label>
                     </div>
                     <div class="input-field col s12 m4">
-                        <input id="hourLunch" type="time" ng-model="accept.hourLunch">
+                        <input id="hourLunch" ng-model="accept.hourLunch" class="timepicker">
                         <label for="hourLunch" class="active">Tempo de almoço</label>
                     </div>
                     <div class="input-field col s12 m4">
-                        <input id="lastHour" ng-model="accept.lastHour" type="time">
+                        <input id="lastHour" ng-model="accept.lastHour" class="timepicker">
                         <label for="lastHour" class="active">Hora de Saída</label>
                     </div>
                     <div class="row" style="margin-left:10px;">
@@ -885,11 +905,11 @@
                     </div>
 
                     <div class="input-field col s4 m4" style="margin-top: 20px;">
-                        <input type="time" id="initialHourParticular" ng-model="viewParticularData.initialHour" >
+                        <input type="text" id="initialHourParticular" ng-model="viewParticularData.initialHour" class="timepicker">
                         <label for="initialHourParticular" id="solinitialHourParticular">Hora de Entrada</label>
                     </div>
                     <div class="input-field col s4 m4" style="margin-top: 20px;">
-                        <input type="time" id="lastHourParticular" ng-model="viewParticularData.lastHour" >
+                        <input type="text" id="lastHourParticular" ng-model="viewParticularData.lastHour" class="timepicker">
                         <label for="lastHourParticular" id="sollastHourParticular">Hora de Saída</label>
                     </div>
 
@@ -1047,7 +1067,7 @@
                 <H5 class="birthDayH5">{{viewaniversarioData.data}}</H5>
                 <H3 class="birthDayH2">
                     <div style="max-width: 300px;">
-                        Parabéns, {{viewaniversarioData.code}} :)
+                        <span style="font-size: 14pt">Parabéns,<br> {{viewaniversarioData.name}} :) </span>
                     </div>
                 </H3>
             </div>
