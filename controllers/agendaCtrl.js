@@ -518,10 +518,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 getCustomerid = $('#agendaCustomerId').val();
                             });
                             $scope.appointment.workplace = "1";
-                            $scope.appointment.initialHour = moment("08:30", "HH:mm").format("HH:mm");
-                            $scope.appointment.hourLunch = moment("01:00", "HH:mm").format("HH:mm");
-                            $scope.appointment.lastHour = moment("17:30", "HH:mm").format("HH:mm");
-                            $scope.appointment.unproductiveHours = moment("00:00", "HH:mm").format("HH:mm");
+                            $scope.appointment.initialHour = new Date('01/01/1990 08:30');
+                            $scope.appointment.hourLunch = new Date('01/01/1990 01:00');
+                            $scope.appointment.lastHour = new Date('01/01/1990 17:30');
+                            $scope.appointment.unproductiveHours = new Date('01/01/1990 00:00');
                             $("#solinitialHour, #solinitialHourParticular, #solhourLunch, #sollastHour, #sollastHourParticular, #solunproductiveHours").addClass("active");
                             $('#tabs').tabs();
 

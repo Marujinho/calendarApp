@@ -99,6 +99,7 @@
 </div>
 <!-- // TERMINA O MODAL-->
 
+<!--TODAS ABAS-->
 <div>
     <div id="diaSelecionado" class="modal" style="padding-bottom: 20px; max-width: 100% !important">
         <div class="modal-content">
@@ -710,19 +711,19 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m3">
-                        <input id="initialHour" ng-model="newAppointment.initialHour" type="text" mask="99:99">
+                        <input id="initialHour" ng-model="newAppointment.initialHour" type="time" min="12:00" max="18:00" required>
                         <label for="initialHour" id="labelInitialHour" class="active">Hora entrada</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input id="hourLunch" ng-model="newAppointment.hourLunch" type="text" mask="99:99">
+                        <input id="hourLunch" ng-model="newAppointment.hourLunch" type="time" min="12:00" max="18:00" required>
                         <label for="hourLunch" id="labelHourLunch" class="active">Horas de almoço</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input id="lastHour" ng-model="newAppointment.lastHour" type="text" mask="99:99">
+                        <input id="lastHour" ng-model="newAppointment.lastHour" type="time" min="12:00" max="18:00" required>
                         <label for="lastHour" id="labelLastHour" class="active">Hora saida</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input type="text" id="unproductiveHours" ng-model="newAppointment.unproductiveHours"  mask="99:99">
+                        <input type="time" id="unproductiveHours" ng-model="newAppointment.unproductiveHours"  min="12:00" max="18:00" required>
                         <label for="unproductiveHours" id="labelUnproductiveHours" class="active">Horas improdutivas</label>
                     </div>
                 </div>
