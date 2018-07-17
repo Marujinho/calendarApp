@@ -711,19 +711,19 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m3">
-                        <input id="initialHour" ng-model="newAppointment.initialHour" type="time" min="12:00" max="18:00" required>
+                        <input id="initialHour" ng-model="newAppointment.initialHour" type="time" ng-required="required" required>
                         <label for="initialHour" id="labelInitialHour" class="active">Hora entrada</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input id="hourLunch" ng-model="newAppointment.hourLunch" type="time" min="12:00" max="18:00" required>
+                        <input id="hourLunch" ng-model="newAppointment.hourLunch" type="time" ng-required="required" required>
                         <label for="hourLunch" id="labelHourLunch" class="active">Horas de almoço</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input id="lastHour" ng-model="newAppointment.lastHour" type="time" min="12:00" max="18:00" required>
+                        <input id="lastHour" ng-model="newAppointment.lastHour" type="time" ng-required="required" required>
                         <label for="lastHour" id="labelLastHour" class="active">Hora saida</label>
                     </div>
                     <div class="input-field col s12 m3">
-                        <input type="time" id="unproductiveHours" ng-model="newAppointment.unproductiveHours"  min="12:00" max="18:00" required>
+                        <input type="time" id="unproductiveHours" ng-model="newAppointment.unproductiveHours" ng-required="required" required>
                         <label for="unproductiveHours" id="labelUnproductiveHours" class="active">Horas improdutivas</label>
                     </div>
                 </div>
