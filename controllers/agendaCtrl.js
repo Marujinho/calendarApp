@@ -931,6 +931,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         var year = moment().format("YYYY");
                         $scope.listBirth.push(year);
                         $scope.user = response.data;
+                        
                         $.each($scope.user, function(key, obj) {
                             var eventData = {
                                 title: "Aniversário - " + obj.name,
@@ -1642,16 +1643,22 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             obj.cost = obj.cost.replaceAll(".", "").replaceAll(",", ".");
                         })
                     }
-
+                    console.log(JSON.stringify($scope.newAppointment.initialHour));
+                    console.log($scope.newAppointment.hourLunch).toLocaleTimeString('pt-BR').sub_str(0, 5);
+                    console.log(moment($scope.newAppointment.lastHour).format('HH:mm:ss'));
+                    
                     appointmentAPIService.insertAppointment($scope.newAppointment).then(
                         function() {
 
                             // var initialHR = $scope.newAppointment.initialHour + ':00';
                             // var lunchHR = $scope.newAppointment.hourLunch + ':00';
                             // var finalHR = $scope.newAppointment.lastHour + ':00';
-                            var initialHR = $scope.newAppointment.initialHour.toLocaleTimeString('pt-BR').sub_str(0, 5);
-                            var lunchHR = $scope.newAppointment.hourLunch.toLocaleTimeString('pt-BR').sub_str(0, 5);
-                            var finalHR = $scope.newAppointment.lastHour.toLocaleTimeString('pt-BR').sub_str(0, 5);
+
+                            var initialHR = moment($scope.newAppointment.initialHour).format('HH:mm:ss'); //.toLocaleTimeString('pt-BR').sub_str(0, 5);
+                            var lunchHR = moment($scope.newAppointment.hourLunch).format('HH:mm:ss'); //toLocaleTimeString('pt-BR').sub_str(0, 5) + ':00';
+                            var finalHR = moment($scope.newAppointment.lastHour).format('HH:mm:ss'); //.toLocaleTimeString('pt-BR').sub_str(0, 5) + ':00';
+
+                            
 
                             var totalHoras = diffHoras(initialHR, finalHR, lunchHR);
                             var itensApontamento = $scope.newAppointment;
@@ -1706,7 +1713,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                             <td width="140" valign="top"><span style="font-size:12px">Entrada</span><br><br>' + initialHR + '</td>\
                                             <td width="140" valign="top"><span style="font-size:12px">Intervalo</span><br><br>' + lunchHR + '</td>\
                                             <td width="140" valign="top"><span style="font-size:12px">Saída</span><br><br>' + finalHR + '</td>\
-                                            <td width="140" valign="top"><span style="font-size:12px">Improdutividade</span><br><br>' + itensApontamento.unproductiveHours + ':00' + '</td>\
+                                            <td width="140" valign="top"><span style="font-size:12px">Improdutividade</span><br><br>' + moment(itensApontamento.unproductiveHours).format('HH:mm:ss') + '</td>\
                                             <td width="138" valign="top"><span style="font-size:12px">Total</span><br><br>' + totalHoras + '</td>\
                                         </tr>\
                                     </table>\
@@ -2860,13 +2867,13 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.newAppointment.initialDate = moment(response.data[0].initialDate, "YYYY-MM-DD").format("DD/MM/YYYY");
                         $("#labelAppointmentDate").addClass("active");
 
-                        $scope.newAppointment.initialHour =moment(response.data[0].initialHour, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.initialHour = moment(response.data[0].initialHour, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelInitialHour").addClass("active");
-                        $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelHourLunch").addClass("active");
-                        $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelLastHour").addClass("active");
-                        $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").format("HH:mm");
+                        $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelUnproductiveHours").addClass("active");
 
                         $scope.newAppointment.expenseType = response.data[0].project.expenseType
