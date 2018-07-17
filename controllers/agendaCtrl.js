@@ -1643,10 +1643,8 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             obj.cost = obj.cost.replaceAll(".", "").replaceAll(",", ".");
                         })
                     }
-                    console.log(JSON.stringify($scope.newAppointment.initialHour));
-                    console.log($scope.newAppointment.hourLunch).toLocaleTimeString('pt-BR').sub_str(0, 5);
-                    console.log(moment($scope.newAppointment.lastHour).format('HH:mm:ss'));
                     
+
                     appointmentAPIService.insertAppointment($scope.newAppointment).then(
                         function() {
 
@@ -1654,10 +1652,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             // var lunchHR = $scope.newAppointment.hourLunch + ':00';
                             // var finalHR = $scope.newAppointment.lastHour + ':00';
 
-                            var initialHR = moment($scope.newAppointment.initialHour).format('HH:mm:ss'); //.toLocaleTimeString('pt-BR').sub_str(0, 5);
-                            var lunchHR = moment($scope.newAppointment.hourLunch).format('HH:mm:ss'); //toLocaleTimeString('pt-BR').sub_str(0, 5) + ':00';
-                            var finalHR = moment($scope.newAppointment.lastHour).format('HH:mm:ss'); //.toLocaleTimeString('pt-BR').sub_str(0, 5) + ':00';
-
+                            var initialHR = $scope.newAppointment.initialHour.toLocaleTimeString('pt-BR').substr(0, 5);
+                            var lunchHR = $scope.newAppointment.hourLunch.toLocaleTimeString('pt-BR').substr(0, 5);
+                            var finalHR = $scope.newAppointment.lastHour.toLocaleTimeString('pt-BR').substr(0, 5);
+                            var unproductiveHours = $scope.newAppointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0, 5);
                             
 
                             var totalHoras = diffHoras(initialHR, finalHR, lunchHR);
