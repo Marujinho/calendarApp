@@ -96,13 +96,12 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
     };
 
     let _insertAppointment = function(appointment) {
-        $scope.editDocument = angular.copy(appointment.initialHour.toLocaleTimeString('pt-BR').substr(0,5));
         appointment.token = localStorage.getItem('userToken');
-        appointment.login = $rootScope.global.idUser;
-        appointment.initialHourEdit = appointment.initialHour.toLocaleTimeString('pt-BR').substr(0,5);
-        appointment.hourLunch = appointment.hourLunch.toLocaleTimeString('pt-BR').substr(0,5);
-        appointment.lastHour = appointment.lastHour.toLocaleTimeString('pt-BR').substr(0,5);
-        appointment.unproductiveHours = appointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0,5);
+        appointment.login = localStorage.getItem('userCode');
+        // appointment.initialHour = appointment.initialHour.toLocaleTimeString('pt-BR').substr(0,5);
+        // appointment.hourLunch = appointment.hourLunch.toLocaleTimeString('pt-BR').substr(0,5);
+        // appointment.lastHour = appointment.lastHour.toLocaleTimeString('pt-BR').substr(0,5);
+        // appointment.unproductiveHours = appointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0,5);
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/insertAppointment',
