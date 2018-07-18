@@ -2873,11 +2873,22 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelUnproductiveHours").addClass("active");
 
+                        function formatReal(int) {
+                            var tmp = int + '';
+                            tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+                            if (tmp.length > 6)
+                                tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+                        
+                            return tmp;
+                        }
+
                         $scope.newAppointment.expenseType = response.data[0].project.expenseType
 
                         if ($scope.newAppointment.expenseType == 1) {
-                            $scope.newAppointment.despesa = formatMoney(response.data[0].project.expense);
+                            $scope.newAppointment.despesa = formatReal(response.data[0].project.expense);
                         }
+
+                        
 
                         $scope.newAppointment.activity = response.data[0].activity;
                         $("#labelActivity").addClass("active");
