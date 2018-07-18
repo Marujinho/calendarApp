@@ -1,7 +1,8 @@
 angularApp.controller('welcomeCtrl', function($scope, $timeout, $rootScope) {
 
-    if (localStorage["userCode"]) {
+    if (localStorage.getItem("userCode") !== null) {
         $state.go('agenda');
-      }
+    }
+
 
 });
