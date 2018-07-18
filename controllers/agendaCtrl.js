@@ -3,7 +3,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     if (localStorage.getItem("infiniteScrollEnabled") === null) {
         alert('Ops, você não está logado');
         $state.go('welcome');
-      }
+    }
 
 
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
