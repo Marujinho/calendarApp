@@ -99,7 +99,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         appointment.token = localStorage.getItem('userToken');
         appointment.login = $rootScope.global.idUser;
         appointment.initialHour = appointment.initialHour.toLocaleTimeString('pt-BR').substr(0,5);
-        appointment.lunchHour = appointment.hourLunch.toLocaleTimeString('pt-BR').substr(0,5);
+        appointment.hourLunch = appointment.hourLunch.toLocaleTimeString('pt-BR').substr(0,5);
         appointment.lastHour = appointment.lastHour.toLocaleTimeString('pt-BR').substr(0,5);
         appointment.unproductiveHour = appointment.unproductiveHour.toLocaleTimeString('pt-BR').substr(0,5);
         return $http({
