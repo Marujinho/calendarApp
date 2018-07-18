@@ -1647,13 +1647,30 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             obj.cost = obj.cost.replaceAll(".", "").replaceAll(",", ".");
                         })
                     }
-                  
-                    var initialHR = moment($scope.newAppointment.initialHour).format('HH:MM:ss');
-                    var lunchHR = moment($scope.newAppointment.hourLunch).format('HH:MM:ss');
-                    var finalHR = moment($scope.newAppointment.lastHour).format('HH:MM:ss');
-                    var unproductiveHours = moment($scope.newAppointment.unproductiveHours).format('HH:MM:ss');        
+
+                    var apontamento = angular.copy($scope.newAppointment);
                     
-                    appointmentAPIService.insertAppointment($scope.newAppointment).then(
+                    apontamento.initialHour = moment(apontamento.initialHour).format('HH:mm:ss');
+                    apontamento.hourLunch = moment(apontamento.hourLunch).format('HH:mm:ss');
+                    apontamento.lastHour = moment(apontamento.lastHour).format('HH:mm:ss');
+                    apontamento.unproductiveHours = moment(apontamento.unproductiveHours).format('HH:mm:ss');
+
+                    // var inicioHoras  = moment($scope.newAppointment.initialHour).format('HH:MM:ss');
+                    // var lancheHoras = moment($scope.newAppointment.hourLunch).format('HH:MM:ss');
+                    // var finalHorasDia = moment($scope.newAppointment.lastHour).format('HH:MM:ss');
+                    // var inprodutividade = moment($scope.newAppointment.unproductiveHours).format('HH:MM:ss');
+
+                    // var initialHR = inicioHoras.toString();
+                    // var lunchHR = lancheHoras.toString();
+                    // var finalHR = finalHorasDia.toString();
+                    // var unproductiveHours =  inprodutividade.toString(); 
+                    
+                    // $scope.newAppointment.initialHour = initialHR;
+                    // $scope.newAppointment.lastHour = finalHR;
+                    // $scope.newAppointment.hourLunch = lunchHR;
+                    // $scope.newAppointment.unproductiveHours = unproductiveHours;    
+                    
+                    appointmentAPIService.insertAppointment(apontamento).then(
                         function() {
 
                             // var initialHR = $scope.newAppointment.initialHour + ':00';
