@@ -1,6 +1,6 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    if (localStorage.getItem("infiniteScrollEnabled") === null) {
+    if (localStorage.getItem("userCode") === null) {
         alert('Ops, você não está logado');
         $state.go('welcome');
     }
