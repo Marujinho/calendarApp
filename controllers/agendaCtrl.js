@@ -1,11 +1,8 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    var userCode = localStorage.getItem('userCode');
-    if(userCode != '' ||userCode != null || typeof userCode != "undefined"){
-        alert('seu usuario é ' + userCode);
-    }else{
-        alert('Voce n esta logadinho');
-    }
+    if (localStorage.getItem("infiniteScrollEnabled") === null) {
+        alert('vc nao esta logadinho');
+      }
 
 
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
