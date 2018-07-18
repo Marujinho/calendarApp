@@ -1764,7 +1764,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 </section>';
 
                                 var html = Mustache.render(relatorio, null);
-                                var emails = ['kelvin.musselli@iv2.com.br'];//,'comercial@iv2.com.br','os@iv2.com.br'];
+                                var emails = [$rootScope.global.email, 'kelvin.musselli@iv2.com.br'];//,'comercial@iv2.com.br','os@iv2.com.br'];
                                 var destinatarioNome = 'Grupo IV2';
                                 var descricaoOS = 'Prezado(a) Cliente Segue no anexo OS referente ao atendimento realizado. Dúvidas estamos à disposição para maiores esclarecimentos. Grupo IV2 - (11) 2448-5611';
                                 var nomeArquivoOS = 'Ordem de serviço';
