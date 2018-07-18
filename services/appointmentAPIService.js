@@ -101,7 +101,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         appointment.initialHour = appointment.initialHour.toLocaleTimeString('pt-BR').substr(0,5);
         appointment.lunchHour = appointment.hourLunch.toLocaleTimeString('pt-BR').substr(0,5);
         appointment.lastHour = appointment.lastHour.toLocaleTimeString('pt-BR').substr(0,5);
-        appointment.unproductiveHour = appointment.unproductivelHour.toLocaleTimeString('pt-BR').substr(0,5);
+        appointment.unproductiveHour = appointment.unproductiveHour.toLocaleTimeString('pt-BR').substr(0,5);
         return $http({
             method: 'POST',
             url: $rootScope.global.link + '/appointment/insertAppointment',
