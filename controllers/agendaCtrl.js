@@ -1791,6 +1791,8 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                             extensao: "pdf"
                                         }
 
+                                        console.log(val);
+
                                         appointmentAPIService.sendMail(val).then(
                                             function(){
                                                 console.log("ok");

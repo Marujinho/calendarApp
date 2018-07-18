@@ -230,7 +230,6 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         getmonthappointment: _getmonthappointment,
         getByUser: _getByUser,
         getrequestByAppointment: _getrequestByAppointment,
-        sendMail: _sendMail,
         getFromRangeDate: _getFromRangeDate,
         getallAgenda: _getallAgenda,
         getListAppointment: _getListAppointment,
