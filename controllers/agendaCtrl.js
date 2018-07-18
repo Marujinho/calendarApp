@@ -1652,7 +1652,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     var lunchHR = moment($scope.newAppointment.hourLunch).format('HH:MM:ss');
                     var finalHR = moment($scope.newAppointment.lastHour).format('HH:MM:ss');
                     var unproductiveHours = moment($scope.newAppointment.unproductiveHours).format('HH:MM:ss');        
-                    $scope.$apply();
+                    
                     appointmentAPIService.insertAppointment($scope.newAppointment).then(
                         function() {
 
