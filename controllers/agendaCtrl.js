@@ -1655,6 +1655,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     apontamento.lastHour = moment(apontamento.lastHour).format('HH:mm:ss');
                     apontamento.unproductiveHours = moment(apontamento.unproductiveHours).format('HH:mm:ss');
                     
+                    
                     appointmentAPIService.insertAppointment(apontamento).then(
                         function() {
 
@@ -1662,7 +1663,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             var lunchHR =  apontamento.hourLunch;
                             var finalHR = apontamento.lastHour;
                             var unproductiveHours = apontamento.unproductiveHours;        
-                                                        
 
                             var totalHoras = diffHoras(initialHR, finalHR, lunchHR);
                             var itensApontamento = $scope.newAppointment;
@@ -1790,8 +1790,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                             mensagem: 'Prezado(a) Cliente Segue no anexo OS referente ao atendimento realizado. Dúvidas estamos à disposição para maiores esclarecimentos. Grupo IV2 - (11) 2448-5611',
                                             extensao: "pdf"
                                         }
-
-                                        console.log(val);
 
                                         appointmentAPIService.sendMail(val).then(
                                             function(){
