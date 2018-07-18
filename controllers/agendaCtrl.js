@@ -1648,17 +1648,21 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         })
                     }
                   
-
+                    var initialHR = moment($scope.newAppointment.initialHour).format('HH:MM:ss');
+                    var lunchHR = moment($scope.newAppointment.hourLunch).format('HH:MM:ss');
+                    var finalHR = moment($scope.newAppointment.lastHour).format('HH:MM:ss');
+                    var unproductiveHours = moment($scope.newAppointment.unproductiveHours).format('HH:MM:ss');        
+                    $scope.$apply();
                     appointmentAPIService.insertAppointment($scope.newAppointment).then(
                         function() {
 
                             // var initialHR = $scope.newAppointment.initialHour + ':00';
                             // var lunchHR = $scope.newAppointment.hourLunch + ':00';
                             // var finalHR = $scope.newAppointment.lastHour + ':00';
-                        var initialHR = $scope.newAppointment.initialHour.toLocaleTimeString('pt-BR').substr(0, 5);
-                        var lunchHR = $scope.newAppointment.hourLunch.toLocaleTimeString('pt-BR').substr(0, 5);
-                        var finalHR = $scope.newAppointment.lastHour.toLocaleTimeString('pt-BR').substr(0, 5);
-                        var unproductiveHours = $scope.newAppointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0, 5);        
+                        // var initialHR = $scope.newAppointment.initialHour.toLocaleTimeString('pt-BR').substr(0, 5);
+                        // var lunchHR = $scope.newAppointment.hourLunch.toLocaleTimeString('pt-BR').substr(0, 5);
+                        // var finalHR = $scope.newAppointment.lastHour.toLocaleTimeString('pt-BR').substr(0, 5);
+                        // var unproductiveHours = $scope.newAppointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0, 5);        
                                                         
 
                             var totalHoras = diffHoras(initialHR, finalHR, lunchHR);
