@@ -1,7 +1,12 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    console.log('lolipop');
+    if(localStorage.getItem('userCode') == '' ||localStorage.getItem('userCode') == null){
+        alert('seu usuario é ' + localStorage.getItem('userCode'));
+    }else{
+        alert('Voce n esta logadinho');
+    }
 
+    
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
