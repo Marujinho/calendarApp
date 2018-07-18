@@ -1643,11 +1643,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                             obj.cost = obj.cost.replaceAll(".", "").replaceAll(",", ".");
                         })
                     }
-                    
-                    $scope.newAppointment.initialHour = $scope.newAppointment.initialHour.toLocaleTimeString('pt-BR').substr(0, 5);
-                    $scope.newAppointment.hourLunch = $scope.newAppointment.hourLunch.toLocaleTimeString('pt-BR').substr(0, 5);
-                    $scope.newAppointment.lastHour = $scope.newAppointment.lastHour.toLocaleTimeString('pt-BR').substr(0, 5);
-                    $scope.newAppointment.unproductiveHours = $scope.newAppointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0, 5);
+                  
 
                     appointmentAPIService.insertAppointment($scope.newAppointment).then(
                         function() {
@@ -1761,7 +1757,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 </section>';
 
                                 var html = Mustache.render(relatorio, null);
-                                var emails = [$rootScope.global.email, 'kelvin.musselli@iv2.com.br'];//,'comercial@iv2.com.br','os@iv2.com.br'];
+                                var emails = [$rootScope.global, 'kelvin.musselli@iv2.com.br'];//,'comercial@iv2.com.br','os@iv2.com.br'];
                                 var destinatarioNome = 'Grupo IV2';
                                 var descricaoOS = 'Prezado(a) Cliente Segue no anexo OS referente ao atendimento realizado. Dúvidas estamos à disposição para maiores esclarecimentos. Grupo IV2 - (11) 2448-5611';
                                 var nomeArquivoOS = 'Ordem de serviço';
