@@ -1654,32 +1654,14 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     apontamento.hourLunch = moment(apontamento.hourLunch).format('HH:mm:ss');
                     apontamento.lastHour = moment(apontamento.lastHour).format('HH:mm:ss');
                     apontamento.unproductiveHours = moment(apontamento.unproductiveHours).format('HH:mm:ss');
-
-                    // var inicioHoras  = moment($scope.newAppointment.initialHour).format('HH:MM:ss');
-                    // var lancheHoras = moment($scope.newAppointment.hourLunch).format('HH:MM:ss');
-                    // var finalHorasDia = moment($scope.newAppointment.lastHour).format('HH:MM:ss');
-                    // var inprodutividade = moment($scope.newAppointment.unproductiveHours).format('HH:MM:ss');
-
-                    // var initialHR = inicioHoras.toString();
-                    // var lunchHR = lancheHoras.toString();
-                    // var finalHR = finalHorasDia.toString();
-                    // var unproductiveHours =  inprodutividade.toString(); 
-                    
-                    // $scope.newAppointment.initialHour = initialHR;
-                    // $scope.newAppointment.lastHour = finalHR;
-                    // $scope.newAppointment.hourLunch = lunchHR;
-                    // $scope.newAppointment.unproductiveHours = unproductiveHours;    
                     
                     appointmentAPIService.insertAppointment(apontamento).then(
                         function() {
 
-                            // var initialHR = $scope.newAppointment.initialHour + ':00';
-                            // var lunchHR = $scope.newAppointment.hourLunch + ':00';
-                            // var finalHR = $scope.newAppointment.lastHour + ':00';
-                        // var initialHR = $scope.newAppointment.initialHour.toLocaleTimeString('pt-BR').substr(0, 5);
-                        // var lunchHR = $scope.newAppointment.hourLunch.toLocaleTimeString('pt-BR').substr(0, 5);
-                        // var finalHR = $scope.newAppointment.lastHour.toLocaleTimeString('pt-BR').substr(0, 5);
-                        // var unproductiveHours = $scope.newAppointment.unproductiveHours.toLocaleTimeString('pt-BR').substr(0, 5);        
+                            var initialHR = apontamento.initialHour;
+                            var lunchHR =  apontamento.hourLunch;
+                            var finalHR = apontamento.lastHour;
+                            var unproductiveHours = apontamento.unproductiveHours;        
                                                         
 
                             var totalHoras = diffHoras(initialHR, finalHR, lunchHR);
