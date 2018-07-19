@@ -377,7 +377,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         orderCellsTop: true,
                         scrollX: true,
                         responsive: false,
-                        "bPaginate": true,
+                        "bPaginate": false,
                         "bLengthChange": false,
                         "bFilter": true,
                         "bInfo": false,
@@ -392,13 +392,13 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                             "sLengthMenu": "_MENU_ resultados por página",
                             "sLoadingRecords": "Carregando...",
                             "sProcessing": "Processando...",
-                            "sZeroRecords": "Nenhum registro encontrado",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
+                            // "sZeroRecords": "Nenhum registro encontrado",
+                            // "oPaginate": {
+                            //     "sNext": "Próximo",
+                            //     "sPrevious": "Anterior",
+                            //     "sFirst": "Primeiro",
+                            //     "sLast": "Último"
+                            // },
                             "oAria": {
                                 "sSortAscending": ": Ordenar colunas de forma ascendente",
                                 "sSortDescending": ": Ordenar colunas de forma descendente"
