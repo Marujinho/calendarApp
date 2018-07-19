@@ -5,7 +5,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         $state.go('welcome');
     }
 
-
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
@@ -305,6 +304,15 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                         }
 
                         $('#calendar').fullCalendar('renderEvents', filtroCheckBox, true);
+                    }
+                }
+
+                $scope.SomenteNumero  = function(e) {
+                    var tecla=(window.event)?event.keyCode:e.which;                                                     
+                    if((tecla>47 && tecla<58)) return true;
+                    else{
+                        if (tecla==8 || tecla==0) return true;
+                    else  return false;
                     }
                 }
 
@@ -1651,9 +1659,9 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                     var apontamento = angular.copy($scope.newAppointment);
                     
                     apontamento.initialHour = moment(apontamento.initialHour).format('HH:mm:ss');
-                    apontamento.hourLunch = moment(apontamento.hourLunch).format('HH:mm:ss');
+                    apontamento.hourLunch = moment(apontamento.hourLunch, "HH:mm").format('HH:mm:ss');
                     apontamento.lastHour = moment(apontamento.lastHour).format('HH:mm:ss');
-                    apontamento.unproductiveHours = moment(apontamento.unproductiveHours).format('HH:mm:ss');
+                    apontamento.unproductiveHours = moment(apontamento.unproductiveHours, "HH:mm").format('HH:mm:ss');
                     
                     
                     appointmentAPIService.insertAppointment(apontamento).then(
@@ -1717,7 +1725,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                             <td width="140" valign="top"><span style="font-size:12px">Entrada</span><br><br>' + initialHR + '</td>\
                                             <td width="140" valign="top"><span style="font-size:12px">Intervalo</span><br><br>' + lunchHR + '</td>\
                                             <td width="140" valign="top"><span style="font-size:12px">Saída</span><br><br>' + finalHR + '</td>\
-                                            <td width="140" valign="top"><span style="font-size:12px">Improdutividade</span><br><br>' + moment(itensApontamento.unproductiveHours).format('HH:mm:ss') + '</td>\
+                                            <td width="140" valign="top"><span style="font-size:12px">Improdutividade</span><br><br>' + unproductiveHours + '</td>\
                                             <td width="138" valign="top"><span style="font-size:12px">Total</span><br><br>' + totalHoras + '</td>\
                                         </tr>\
                                     </table>\
@@ -1764,7 +1772,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
                                 </section>';
 
                                 var html = Mustache.render(relatorio, null);
-                                var emails = [$rootScope.global.email, 'kelvin.musselli@iv2.com.br'];//,'comercial@iv2.com.br','os@iv2.com.br'];
+                                var emails = [$rootScope.global.email];//,'comercial@iv2.com.br','os@iv2.com.br'];
                                 var destinatarioNome = 'Grupo IV2';
                                 var descricaoOS = 'Prezado(a) Cliente Segue no anexo OS referente ao atendimento realizado. Dúvidas estamos à disposição para maiores esclarecimentos. Grupo IV2 - (11) 2448-5611';
                                 var nomeArquivoOS = 'Ordem de serviço';
@@ -2873,11 +2881,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
                         $scope.newAppointment.initialHour = moment(response.data[0].initialHour, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelInitialHour").addClass("active");
-                        $scope.newAppointment.hourLunch = moment(response.data[0].hourLunch, "HH:mm:ss").toDate(); //.format("HH:mm");
+                        $scope.newAppointment.hourLunch = '01:00';//moment(response.data[0].hourLunch, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelHourLunch").addClass("active");
                         $scope.newAppointment.lastHour = moment(response.data[0].lastHour, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelLastHour").addClass("active");
-                        $scope.newAppointment.unproductiveHours = moment(response.data[0].unproductiveHours, "HH:mm:ss").toDate(); //.format("HH:mm");
+                        $scope.newAppointment.unproductiveHours = '00:00';//moment(response.data[0].unproductiveHours, "HH:mm:ss").toDate(); //.format("HH:mm");
                         $("#labelUnproductiveHours").addClass("active");
 
                         function formatReal(int) {
