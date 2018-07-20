@@ -4,7 +4,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         alert('Ops, você não está logado');
         $state.go('welcome');
     }
-
+    alert('aqui é dev');
     //TEST IDB
     var thePromise = idb.open('teste', 1, function(upgradeDb){ 
         var keyValStore = upgradeDb.createObjectStore('keyval');
