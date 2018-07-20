@@ -20,7 +20,7 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
         keyValStore.put(userToken, 'userToken');
 
       });
-
+      localStorage.setItem('userToken', userToken);
      
       //FIM TESTE
 

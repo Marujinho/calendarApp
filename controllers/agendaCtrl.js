@@ -1,15 +1,15 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    if (localStorage.getItem("userCode") === null) {
-        alert('Ops, você não está logado');
-        $state.go('welcome');
-    }
+    // if (localStorage.getItem("userCode") === null) {
+    //     alert('Ops, você não está logado');
+    //     $state.go('welcome');
+    // }
     
-    $rootScope.global.getUserCode(function(value) {
-        alert('novo ' + value);
+    var getUserCode = $rootScope.global.getUserCode(function(value) {
+        return value;
     });
-
-    usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
+    alert('o usercode é '+ getUserCode);
+    usersAPIService.login(getUserCode).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
                 
