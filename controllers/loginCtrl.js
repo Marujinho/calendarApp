@@ -1,5 +1,25 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $stateParams, usersAPIService) {
   
+    //TEST IDB
+    var thePromise = idb.open('teste', 1, function(upgradeDb){ 
+      var keyValStore = upgradeDb.createObjectStore('keyval');
+      // keyValStore.put('val', 'key');
+      keyValStore.put('Douglas', 'first');
+    });
+    
+    thePromise.then(function(db){
+    var tx = db.transaction('keyval');
+    var keyValStore = tx.objectStore('keyval');
+    return keyValStore.get('first');
+  }).then(function(val){
+    alert(val);  
+  });
+    
+  //FIM TESTE
+
+
+
+
       $scope.param = $stateParams;
 
     if($scope.param != '' && $scope.param != null){
