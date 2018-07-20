@@ -31,7 +31,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
       thePromise.then(function(db){
         var tx = db.transaction('keyval');
         var keyValStore = tx.objectStore('keyval');
-        return keyValStore.get('whoreHouse');
+        return keyValStore.get('first');
         }).then(function(val){
         alert(val);  
       });
