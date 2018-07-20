@@ -4,43 +4,10 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         alert('Ops, você não está logado');
         $state.go('welcome');
     }
-    alert('aqui é dev');
-    //TEST IDB
-    // var thePromise = idb.open('teste2', 1, function(upgradeDb){ 
-    //     var keyValStore = upgradeDb.createObjectStore('keyval');
-    //     // keyValStore.put('val', 'key');
-    //     keyValStore.put('Douglas', 'first');
-    //   });
-    
-    //   thePromise.then(function(db){
-    //   var tx = db.transaction('keyval');
-    //   var keyValStore = tx.objectStore('keyval');
-    //   return keyValStore.get('first');
-    // }).then(function(val){
-    //   alert(val);  
-    // });
-
-    var thePromise = idb.open('teste2', 1, function(upgradeDb){
-
-        // var keyValStore = upgradeDb.createObjectStore('keyval');
-        // keyValStore.put('val', 'key');
-        // keyValStore.put('Douglas', 'first');
-  
-      });
-  
-      thePromise.then(function(db){
-        var tx = db.transaction('keyval');
-        var keyValStore = tx.objectStore('keyval');
-        return keyValStore.get('first');
-        }).then(function(val){
-        alert(val);  
-      });
-  
-      
-    //FIM TESTE
-    
-
-
+   
+    $rootScope.global.getUserCode(function(value) {
+        alert(value);
+    });
 
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
