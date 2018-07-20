@@ -6,35 +6,35 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     }
 
     //TEST IDB
-    // var thePromise = idb.open('teste', 1, function(upgradeDb){ 
-    //     var keyValStore = upgradeDb.createObjectStore('keyval');
-    //     // keyValStore.put('val', 'key');
-    //     keyValStore.put('Douglas', 'first');
-    //   });
-    
-    //   thePromise.then(function(db){
-    //   var tx = db.transaction('keyval');
-    //   var keyValStore = tx.objectStore('keyval');
-    //   return keyValStore.get('first');
-    // }).then(function(val){
-    //   alert(val);  
-    // });
-
-    var thePromise = idb.open('teste', 1, function(upgradeDb){
-
-        // var keyValStore = upgradeDb.createObjectStore('keyval');
+    var thePromise = idb.open('teste', 1, function(upgradeDb){ 
+        var keyValStore = upgradeDb.createObjectStore('keyval');
         // keyValStore.put('val', 'key');
-        // keyValStore.put('Douglas', 'first');
-  
+        keyValStore.put('Douglas', 'first');
       });
-  
+    
       thePromise.then(function(db){
-        var tx = db.transaction('keyval');
-        var keyValStore = tx.objectStore('keyval');
-        return keyValStore.get('first');
-        }).then(function(val){
-        alert(val);  
-      });
+      var tx = db.transaction('keyval');
+      var keyValStore = tx.objectStore('keyval');
+      return keyValStore.get('first');
+    }).then(function(val){
+      alert(val);  
+    });
+
+    // var thePromise = idb.open('teste', 1, function(upgradeDb){
+
+    //     // var keyValStore = upgradeDb.createObjectStore('keyval');
+    //     // keyValStore.put('val', 'key');
+    //     // keyValStore.put('Douglas', 'first');
+  
+    //   });
+  
+    //   thePromise.then(function(db){
+    //     var tx = db.transaction('keyval');
+    //     var keyValStore = tx.objectStore('keyval');
+    //     return keyValStore.get('first');
+    //     }).then(function(val){
+    //     alert(val);  
+    //   });
   
       
     //FIM TESTE
