@@ -4,9 +4,9 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         alert('Ops, você não está logado');
         $state.go('welcome');
     }
-   
+    
     $rootScope.global.getUserCode(function(value) {
-        alert(value);
+        alert('novo ' + value);
     });
 
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
