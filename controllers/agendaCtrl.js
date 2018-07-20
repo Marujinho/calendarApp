@@ -5,6 +5,26 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         $state.go('welcome');
     }
 
+    //TEST IDB
+    var thePromise = idb.open('teste', 1, function(upgradeDb){ 
+        var keyValStore = upgradeDb.createObjectStore('keyval');
+        // keyValStore.put('val', 'key');
+        keyValStore.put('Douglas', 'first');
+      });
+    
+      thePromise.then(function(db){
+      var tx = db.transaction('keyval');
+      var keyValStore = tx.objectStore('keyval');
+      return keyValStore.get('first');
+    }).then(function(val){
+      alert(val);  
+    });
+      
+    //FIM TESTE
+    
+
+
+
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   

@@ -96,7 +96,7 @@ angularApp.controller('listCustomersCtrl', function($scope, customersAPIService,
                         colReorder: true,
                         orderCellsTop: true,
                         responsive: true,
-                        "bPaginate": true,
+                        "bPaginate": false,
                         "bLengthChange": false,
                         "bFilter": true,
                         "bInfo": false,
@@ -112,12 +112,12 @@ angularApp.controller('listCustomersCtrl', function($scope, customersAPIService,
                             "sLoadingRecords": "Carregando...",
                             "sProcessing": "Processando...",
                             "sZeroRecords": "Nenhum registro encontrado",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
+                            // "oPaginate": {
+                            //     "sNext": "Próximo",
+                            //     "sPrevious": "Anterior",
+                            //     "sFirst": "Primeiro",
+                            //     "sLast": "Último"
+                            // },
                             "oAria": {
                                 "sSortAscending": ": Ordenar colunas de forma ascendente",
                                 "sSortDescending": ": Ordenar colunas de forma descendente"
