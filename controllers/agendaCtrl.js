@@ -6,7 +6,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     }
     alert('aqui é dev');
     //TEST IDB
-    var thePromise = idb.open('teste', 1, function(upgradeDb){ 
+    var thePromise = idb.open('teste2', 1, function(upgradeDb){ 
         var keyValStore = upgradeDb.createObjectStore('keyval');
         // keyValStore.put('val', 'key');
         keyValStore.put('Douglas', 'first');
