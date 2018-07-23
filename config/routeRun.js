@@ -11,20 +11,20 @@ angularApp.run(function($rootScope, usersAPIService, $location) {
 		 
     //DB
 	
-	getUserCode: function(callback){ 
-		var calendarDb = idb.open('calendarDb', 1, function(upgradeDb){
-		});
+	// getUserCode: function(callback){ 
+	// 	var calendarDb = idb.open('calendarDb', 1, function(upgradeDb){
+	// 	});
 
-		calendarDb.then(function(db){
-		var tx = db.transaction('user');
-		var keyValStore = tx.objectStore('user');
-		return keyValStore.get('userCode');
-		}).then(function(val){
-			alert(val);  
-			return callback(val);
-		});
-		//DB
-	}
+	// 	calendarDb.then(function(db){
+	// 	var tx = db.transaction('user');
+	// 	var keyValStore = tx.objectStore('user');
+	// 	return keyValStore.get('userCode');
+	// 	}).then(function(val){
+	// 		alert(val);  
+	// 		return callback(val);
+	// 	});
+	// 	//DB
+	// }
 
 
 
