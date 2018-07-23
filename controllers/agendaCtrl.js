@@ -18,7 +18,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         $scope.userCode = val;
     }).then(function(){
 
-    
+    alert($scope.userCode);
     usersAPIService.login($scope.userCode).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
