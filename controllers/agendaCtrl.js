@@ -13,7 +13,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     var keyValStore = tx.objectStore('user');
     return keyValStore.get('userCode');
     }).then(function(val){
-        //alert(val);  
+        alert(val);  
         // return callback(val);
         $scope.userCode = val;
     }).then(function(){
