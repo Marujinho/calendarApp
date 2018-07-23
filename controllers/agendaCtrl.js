@@ -5,11 +5,9 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //     $state.go('welcome');
     // }
     
-    var getUserCode = $rootScope.global.getUserCode(function(value) {
-        return value;
-    });
-    alert('o usercode é '+ getUserCode);
-    usersAPIService.login(getUserCode).then(function(responseUser) {
+    var getUserCode = $rootScope.global.getUserCode(function(value) {    
+    
+    usersAPIService.login(value).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
                 
@@ -3005,6 +3003,8 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
             Materialize.toast('Erro 03 - contate o administrador ' + localStorage.getItem('userCode'), 5500, 'toast-container');
         }
     )
+
+    });
 
    
 });
