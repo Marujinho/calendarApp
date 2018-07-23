@@ -5,7 +5,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //     $state.go('welcome');
     // }
     
-    var getUserCode = $rootScope.global.getUserCode(function(value) {    
+    $rootScope.global.getUserCode(function(value) {    
     
     usersAPIService.login(value).then(function(responseUser) {
         
