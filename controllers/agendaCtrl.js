@@ -5,8 +5,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     //     $state.go('welcome');
     // }
     
-    var calendarDb = idb.open('calendarDb', 1, function(upgradeDb){
-    });
+    var calendarDb = idb.open('calendarDb');
 
     calendarDb.then(function(db){
     var tx = db.transaction('user');
