@@ -8,6 +8,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     alert('entrou na controller');
 
     var calendarDb = idb.open('calendarDb');
+    var calendarDb = idb.open('banana');
 
     alert(calendarDb);
 
