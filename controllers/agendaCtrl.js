@@ -22,7 +22,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         // return callback(val);
     var key = val;
     
-    alert('a key é' + key);
+    alert('a key é' +  key);
     });
     // usersAPIService.login(val).then(function(responseUser) {
         
