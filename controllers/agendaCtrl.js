@@ -13,13 +13,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     var keyValStore = tx.objectStore('user');
     return keyValStore.get('userCode');
     }).then(function(val){
-        alert(val);  
+        alert('user code é ' + val);  
         // return callback(val);
-        $scope.userCode = val;
-    }).then(function(){
-
-    alert($scope.userCode);
-    usersAPIService.login($scope.userCode).then(function(responseUser) {
+    var key = val;    
+    
+    usersAPIService.login(val).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
                 
@@ -3016,6 +3014,6 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         }
     )
 
-});
+    });
    
 });
