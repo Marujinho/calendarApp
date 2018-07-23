@@ -8,9 +8,11 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     alert('entrou na controller');
 
     var calendarDb = idb.open('calendarDb');
-    var calendarDb = idb.open('banana');
+    var banana = idb.open('banana');
 
-    alert(calendarDb);
+    alert('o banco  q eu quero abrir é ' + calendarDb);
+
+    alert('banana é ' + banana);
 
 
     calendarDb.then(function(db){
