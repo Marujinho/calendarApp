@@ -13,11 +13,11 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
 
       
       //TEST IDB
-      var calendarDb = idb.open('calendarDb', 1, function(upgradeDb){
+      var calendarDb = idb.open('calendarDb2', 1, function(upgradeDb){
 
-        var keyValStore = upgradeDb.createObjectStore('user');
-        keyValStore.put(userCode, 'userCode');
-        keyValStore.put(userToken, 'userToken');
+        var keyValStore = upgradeDb.createObjectStore('user2');
+        keyValStore.put(userCode, 'userCode2');
+        keyValStore.put(userToken, 'userToken2');
 
       });
       localStorage.setItem('userToken', userToken);

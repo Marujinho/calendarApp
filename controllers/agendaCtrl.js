@@ -7,7 +7,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
     
     // alert('entrou na controller');
 
-    var calendarDb = idb.open('calendarDb');
+    var calendarDb = idb.open('calendarDb2');
     // var banana = idb.open('banana');
 
     // alert('o banco  q eu quero abrir é ' + calendarDb);
@@ -16,9 +16,9 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
 
     calendarDb.then(function(db){
-    var tx = db.transaction('user');
-    var keyValStore = tx.objectStore('user');
-    return keyValStore.get('userCode');
+    var tx = db.transaction('user2');
+    var keyValStore = tx.objectStore('user2');
+    return keyValStore.get('userCode2');
     }).then(function(val){
         alert('user code é ' + val);  
 
