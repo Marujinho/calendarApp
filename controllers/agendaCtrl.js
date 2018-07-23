@@ -9,7 +9,7 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
 
     var calendarDb = idb.open('calendarDb');
 
-    alert('ja abriu essa porra');
+    alert(calendarDb);
 
 
     calendarDb.then(function(db){
