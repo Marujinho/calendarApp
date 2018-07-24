@@ -1,33 +1,48 @@
 angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
 
-    // if (localStorage.getItem("userCode") === null) {
-    //     alert('Ops, você não está logado');
-    //     $state.go('welcome');
-    // }
+    if (localStorage.getItem("userCode") === null) {
+        alert('Ops, você não está logado');
+        $state.go('welcome');
+    }
+
+    // //TEST IDB
+    // var thePromise = idb.open('teste', 1, function(upgradeDb){ 
+    //     var keyValStore = upgradeDb.createObjectStore('keyval');
+    //     // keyValStore.put('val', 'key');
+    //     keyValStore.put('Douglas', 'first');
+    //   });
     
-    // alert('entrou na controller');
+    //   thePromise.then(function(d9b){
+    //   var tx = db.transaction('keyval');
+    //   var keyValStore = tx.objectStore('keyval');
+    //   return keyValStore.get('first');
+    // }).then(function(val){
+    //   alert(val);  
+    // });
 
-    var calendarDb = idb.open('calendarDb2');
-    // var banana = idb.open('banana');
+    // var thePromise = idb.open('teste', 1, function(upgradeDb){
 
-    // alert('o banco  q eu quero abrir é ' + calendarDb);
-
-    // alert('banana é ' + banana);
-
-
-    calendarDb.then(function(db){
-    var tx = db.transaction('user2');
-    var keyValStore = tx.objectStore('user2');
-    return keyValStore.get('userCode2');
-    }).then(function(val){
-        alert('user code é ' + val);  
-
-    //     // return callback(val);
-    // var key = val;
+    //     // var keyValStore = upgradeDb.createObjectStore('keyval');
+    //     // keyValStore.put('val', 'key');
+    //     // keyValStore.put('Douglas', 'first');
+  
+    //   });
+  
+    //   thePromise.then(function(db){
+    //     var tx = db.transaction('keyval');
+    //     var keyValStore = tx.objectStore('keyval');
+    //     return keyValStore.get('first');
+    //     }).then(function(val){
+    //     alert(val);  
+    //   });
+  
+      
+    //FIM TESTE
     
-    // alert('a key é' +  key);
-    
-    usersAPIService.login(val).then(function(responseUser) {
+
+
+
+    usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
                 
@@ -3024,6 +3039,5 @@ angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $roo
         }
     )
 
-    
-});
+   
 });
