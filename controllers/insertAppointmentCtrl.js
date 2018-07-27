@@ -4,6 +4,9 @@ angularApp.controller('insertAppointmentCtrl', function($scope, $timeout, appoin
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -191,7 +194,7 @@ angularApp.controller('insertAppointmentCtrl', function($scope, $timeout, appoin
 
                 $scope.insertAppointment = function() {
                     appointmentAPIService.update($scope.appointment);
-                    $state.reload('listAppointment');
+                    $state.go('listAppointment', {param: localStorage.getItem('param')});
                 };
             }
         }

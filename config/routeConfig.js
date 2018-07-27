@@ -3,7 +3,7 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $urlRouterProvider.otherwise('agenda');
 
     $stateProvider.state('agenda', {
-            url: '/agenda',
+            url: '/agenda/:param',
             templateUrl: 'views/agenda.html',
             controller: 'agendaCtrl'
         })
@@ -13,87 +13,87 @@ angularApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             controller: 'loginCtrl'
         })
         .state('listCustomers', {
-            url: '/listCustomers',
+            url: '/listCustomers/:param',
             templateUrl: 'views/listCustomers.html',
             controller: 'listCustomersCtrl'
         })
         .state('listAppointment', {
-            url: '/listAppointment',
+            url: '/listAppointment/:param',
             templateUrl: 'views/listAppointment.html',
             controller: 'listAppointmentCtrl'
         })
-        .state('insertAppointment', {
-            url: '/insertAppointment',
+        .state('insertAppointment', {           
+            url: '/insertAppointment/:param',
             templateUrl: 'views/insertAppointment.html',
             controller: 'insertAppointmentCtrl'
         })
-        .state('insertAppointment/:id', {
-            url: '/insertAppointment/:id',
+        .state('insertAppointmentEdit', {    //AQUI       
+            url: '/insertAppointment/:param/:id',
             templateUrl: 'views/insertAppointment.html',
             controller: 'insertAppointmentCtrl'
         })
         .state('listProfiles', {
-            url: '/listProfiles',
+            url: '/listProfiles/:param',
             templateUrl: 'views/listProfiles.html',
             controller: 'listProfilesCtrl'
         })
         .state('listProjects', {
-            url: '/listProjects',
+            url: '/listProjects/:param',
             templateUrl: 'views/listProjects.html',
             controller: 'listProjectsCtrl'
         })
         .state('reports', {
-            url: '/reports',
+            url: '/reports/:param',
             templateUrl: 'views/reports.html',
             controller: 'reportsCtrl'
         })
         .state('listUsers', {
-            url: '/listUsers',
+            url: '/listUsers/:param',
             templateUrl: 'views/listUsers.html',
             controller: 'listUsersCtrl'
         })
-        .state('insertCustomers', {
-            url: '/insertCustomers',
+        .state('insertCustomers', {         
+            url: '/insertCustomers/:param',
             templateUrl: 'views/insertCustomers.html',
             controller: 'insertCustomersCtrl'
         })
-        .state('insertCustomers/:id', {
-            url: '/insertCustomers/:id',
+        .state('insertCustomersEdit', {
+            url: '/insertCustomers/:param/:id',
             templateUrl: 'views/insertCustomers.html',
             controller: 'insertCustomersCtrl'
         })
-        .state('insertProfiles', {
-            url: '/insertProfiles',
+        .state('insertProfiles', {          
+            url: '/insertProfiles/:param',
             templateUrl: 'views/insertProfiles.html',
             controller: 'insertProfilesCtrl'
         })
-        .state('insertProfiles/:id', {
-            url: '/insertProfiles/:id',
+        .state('insertProfilesEdit', {         
+            url: '/insertProfiles/:param/:id',
             templateUrl: 'views/insertProfiles.html',
             controller: 'insertProfilesCtrl'
         })
-        .state('insertProjects', {
-            url: '/insertProjects',
-            templateUrl: 'views/insertProjects.html',
-            controller: 'insertProjectsCtrl'
-        })
-        .state('insertProjects/:id', {
+        .state('insertProjects', {          
             url: '/insertProjects/:id',
             templateUrl: 'views/insertProjects.html',
             controller: 'insertProjectsCtrl'
         })
-        .state('insertUsers', {
-            url: '/insertUsers',
-            templateUrl: 'views/insertUsers.html',
-            controller: 'insertUsersCtrl'
+        .state('insertProjectsEdit', {         
+            url: '/insertProjects/:param/:id',
+            templateUrl: 'views/insertProjects.html',
+            controller: 'insertProjectsCtrl'
         })
-        .state('insertUsers/:id', {
+        .state('insertUsers', {         
             url: '/insertUsers/:id',
             templateUrl: 'views/insertUsers.html',
             controller: 'insertUsersCtrl'
         })
+        .state('insertUsersEdit', {         
+            url: '/insertUsers/:param/:id',
+            templateUrl: 'views/insertUsers.html',
+            controller: 'insertUsersCtrl'
+        })
         .state('closingDate', {
-            url: '/closingDate',
+            url: '/closingDate/:param',
             templateUrl: 'views/closingDate.html',
             controller: 'closingDateCtrl'
         })

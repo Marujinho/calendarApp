@@ -1,4 +1,7 @@
 <div class="container caditem" id="container">
+    <div style="border: 1px solid black; width: 50px; margin-bottom: 10px" ui-sref="listUsers({param: '{{theParam}}'})">
+        <i class="material-icons" style="margin-left: 10px; margin-top: 5px">keyboard_return</i>
+    </div>
     <div class="row">
         <form class="col m12 s12" name="insertUser" ng-submit="insertUsers();">
             <div class="row">
@@ -72,8 +75,8 @@
             </div>
             <div class="row">
                 <div class="col m12 s12 right-align">
-                    <button class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listUsers">Cancelar</button>
-                    <button data-ng-disabled="insertUser.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="listUsers" ng-click="insertUsers();">Salvar</button>
+                    <button class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listUsers({param: '{{theParam}}'})">Cancelar</button>
+                    <button data-ng-disabled="insertUser.$invalid" class="waves-effect waves-light btn cyan accent-4" ui-sref="listUsers({param: '{{theParam}}'})" ng-click="insertUsers();">Salvar</button>
                 </div>
             </div>
         </form>

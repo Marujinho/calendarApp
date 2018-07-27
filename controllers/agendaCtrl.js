@@ -1,51 +1,35 @@
-angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile) {
+angularApp.controller('agendaCtrl', function($scope, appointmentAPIService, $rootScope, usersAPIService, projectsAPIService, customersAPIService, holidayAPIService, closingDateAPIService, calendarRequestAPIService, expenseTypeOpenAPIService, $timeout, $state, $compile, $stateParams) {
 
-    if (localStorage.getItem("userCode") === null) {
-        alert('Ops, você não está logado');
-        $state.go('welcome');
+    $scope.param = $stateParams;
+    $rootScope.theParam = $scope.param.param;
+    
+    if(localStorage.getItem("param") === null){
+        localStorage.setItem('param', $scope.param.param);
     }
 
-    // //TEST IDB
-    // var thePromise = idb.open('teste', 1, function(upgradeDb){ 
-    //     var keyValStore = upgradeDb.createObjectStore('keyval');
-    //     // keyValStore.put('val', 'key');
-    //     keyValStore.put('Douglas', 'first');
-    //   });
+     if(localStorage.getItem("userCode") === null){
+  
+      var hash = $scope.param.param.split('Y2lqZXZqZWRvYnJh'); 
+      var hashCode = hash[0];   
+      var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+
+      var userCode = atob(hashCode);
+      var userToken = atob(hashToken);
+
+      localStorage.setItem('userCode', userCode);
+      localStorage.setItem('userToken', userToken);  
+
+   }
+
+//   setTimeout(() => {
+        
+//     }, 1000);
+
     
-    //   thePromise.then(function(d9b){
-    //   var tx = db.transaction('keyval');
-    //   var keyValStore = tx.objectStore('keyval');
-    //   return keyValStore.get('first');
-    // }).then(function(val){
-    //   alert(val);  
-    // });
-
-    // var thePromise = idb.open('teste', 1, function(upgradeDb){
-
-    //     // var keyValStore = upgradeDb.createObjectStore('keyval');
-    //     // keyValStore.put('val', 'key');
-    //     // keyValStore.put('Douglas', 'first');
-  
-    //   });
-  
-    //   thePromise.then(function(db){
-    //     var tx = db.transaction('keyval');
-    //     var keyValStore = tx.objectStore('keyval');
-    //     return keyValStore.get('first');
-    //     }).then(function(val){
-    //     alert(val);  
-    //   });
-  
-      
-    //FIM TESTE
-    
-
-
-
     usersAPIService.login(localStorage.getItem('userCode')).then(function(responseUser) {
         
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {   
-                
+               
                 alert("Você não tem acesso ao Easy Calendar");
                 $state.go('welcome');
             } else {

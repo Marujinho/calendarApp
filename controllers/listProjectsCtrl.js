@@ -3,6 +3,29 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
+    if(localStorage.getItem("userCode") === null){
+  
+      var hash = $scope.param.param.split('Y2lqZXZqZWRvYnJh'); 
+      var hashCode = hash[0];
+      var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+
+      var userCode = atob(hashCode);
+      var userToken = atob(hashToken);
+
+      localStorage.setItem('userCode', userCode);
+      localStorage.setItem('userToken', userToken);
+
+      setTimeout(() => {
+      }, 1500);
+    
+  }
+
+
+    $('#logo').text('Projetos');
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -30,7 +53,7 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                 }
 
                 if ($rootScope.global.permission.project != 1) {
-                    $state.go('agenda');
+                    $state.go('agenda', {param: localStorage.getItem('param')});
                 }
 
                 $rootScope.local = "";
@@ -288,7 +311,10 @@ angularApp.controller('listProjectsCtrl', function($scope, projectsAPIService, $
                         $('.tooltipped').tooltip({ delay: 50 });
                         $scope.editProject = function() {
                             //metodo que vai para edição do item selecionado
-                            $state.go('insertProjects/:id', { id: data.idProject });
+                            $state.go('insertProjectsEdit', {
+                                 param: localStorage.getItem('param'),
+                                  id: data.idProject 
+                                });
                             $('.modal').css('margin-top', '50px');
                         };
                         $scope.closeViewProject = function() {

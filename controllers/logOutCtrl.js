@@ -1,10 +1,11 @@
 angularApp.controller('logOutCtrl', function($scope, $rootScope, $state) {
    
     
-        localStorage.setItem('userCode', '');
-        localStorage.setItem('userToken', '');
+        localStorage.removeItem('userCode');
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('param');
         
-        $state.go('login');
+        $state.go('welcome');
       
 
 });

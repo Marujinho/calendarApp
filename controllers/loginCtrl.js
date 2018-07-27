@@ -1,6 +1,6 @@
 angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $stateParams, usersAPIService) {
   
-      $scope.param = $stateParams;
+    $scope.param = $stateParams;
 
     if($scope.param != '' && $scope.param != null){
 
@@ -11,24 +11,11 @@ angularApp.controller('loginCtrl', function($scope, $rootScope, $state, $statePa
       var userCode = atob(hashCode);
       var userToken = atob(hashToken);
 
-      
-      //TEST IDB
-      var calendarDb = idb.open('calendarDb2', 1, function(upgradeDb){
-
-        var keyValStore = upgradeDb.createObjectStore('user2');
-        keyValStore.put(userCode, 'userCode2');
-        keyValStore.put(userToken, 'userToken2');
-
-      });
+      localStorage.setItem('userCode', userCode);
       localStorage.setItem('userToken', userToken);
-     
-      //FIM TESTE
-
-      // $scope.someData = localStorage.getItem('userCode');
-      // $scope.someData2 = localStorage.getItem('userToken');
 
       setTimeout(() => {
-        $state.go('agenda');
+        $state.go('agenda', {param: localStorage.getItem('param')});
       }, 1500);
     
   }

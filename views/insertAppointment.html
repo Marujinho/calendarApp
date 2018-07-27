@@ -1,4 +1,7 @@
 <div class="container" id="container">
+    <div style="border: 1px solid black; width: 50px; margin-bottom: 10px" ui-sref="listAppointment({param: '{{theParam}}'})">
+        <i class="material-icons" style="margin-left: 10px; margin-top: 5px">keyboard_return</i>
+    </div>
     <div class="row">
         <form class="col m12 s12">
             <div class="row">
@@ -69,8 +72,8 @@
             </div>
             <div class="row">
                 <div class="col m12 s12 right-align botoesSave-Cancel">
-                    <a class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listAppointment">Cancelar</a>
-                    <a class="waves-effect waves-light btn cyan accent-4" ui-sref="listAppointment" ng-click="insertAppointment();">Salvar</a>
+                    <a class="waves-effect white btn z-depth-0 grey-text text-darken-2" ui-sref="listAppointment({param: '{{theParam}}'})">Cancelar</a>
+                    <a class="waves-effect waves-light btn cyan accent-4" ui-sref="listAppointment({param: '{{theParam}}'})" ng-click="insertAppointment();">Salvar</a>
                 </div>
             </div>
         </form>

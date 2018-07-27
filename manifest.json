@@ -29,6 +29,5 @@
 		"platform": "play"
 	  }],
 	"orientation": "portrait",
-	 "start_url": ".",
 	"theme_color": "#00b8d4"
 }

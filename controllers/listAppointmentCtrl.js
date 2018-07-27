@@ -1,9 +1,31 @@
-angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appointmentAPIService, $compile, $state, usersAPIService) {
+angularApp.controller('listAppointmentCtrl', function($scope, $rootScope,$stateParams, appointmentAPIService, $compile, $state, usersAPIService) {
 
     
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.seach.splice(0, 2);
     //---
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
+    if(localStorage.getItem("userCode") === null){
+  
+      var hash = $scope.param.param.split('Y2lqZXZqZWRvYnJh'); 
+      var hashCode = hash[0];
+      var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+
+      var userCode = atob(hashCode);
+      var userToken = atob(hashToken);
+
+      localStorage.setItem('userCode', userCode);
+      localStorage.setItem('userToken', userToken);
+
+      setTimeout(() => {
+      }, 1500);
+    
+  }
+
+
+    $('#logo').text('Apontamentos');
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -32,7 +54,7 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
 
 
                 if($rootScope.global.permission.appointment != 1){
-                    $state.go('agenda');
+                    $state.go('agenda', {param: localStorage.getItem('param')});
                 }
 
                 $rootScope.local = "";
@@ -601,8 +623,9 @@ angularApp.controller('listAppointmentCtrl', function($scope, $rootScope, appoin
                         
                             
                         $scope.editAppointment = function() {
-                            $state.go('insertAppointment/:id', { id: data.idAppointment });
+                            $state.go('insertAppointmentEdit', {param: localStorage.getItem('param'),  id: data.idAppointment });
                         };
+                        
                         $scope.deleteAppointment =  function(){            
                             var remove = confirm("Confirme a exclusão");
                             if (remove == true) {

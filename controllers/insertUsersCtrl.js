@@ -6,6 +6,11 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
      // $.fn.dataTable.ext.search.splice(0, 2);
     // }
     
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
+
+
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -33,7 +38,7 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                 }
 
                 if($rootScope.global.permission.user != 1){
-                    $state.go('agenda');
+                    $state.go('agenda', {param: localStorage.getItem('param')});
                 }
 
                 $scope.changeMask= function(myData, myData2){
@@ -160,8 +165,9 @@ angularApp.controller('insertUsersCtrl', function ($scope, $http, usersAPIServic
                         $scope.user.remuneration = $scope.user.remuneration.replaceAll(".", "").replaceAll(",", ".")
                     }
                     usersAPIService.save($scope.user).then(function () {
-                        $state.reload('listUsers');
+                       
                         Materialize.toast('Usuário cadastrado!', 1500, 'toast-container');
+                        $state.go('listUsers', {param: localStorage.getItem('param')});
                     });
                 };
             }

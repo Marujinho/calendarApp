@@ -1,8 +1,32 @@
-angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $compile, $state, $rootScope, usersAPIService) {
+angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $compile, $state, $rootScope, $stateParams, usersAPIService) {
 
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
+    if(localStorage.getItem("userCode") === null){
+  
+      var hash = $scope.param.param.split('Y2lqZXZqZWRvYnJh'); 
+      var hashCode = hash[0];
+      var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+
+      var userCode = atob(hashCode);
+      var userToken = atob(hashToken);
+
+      localStorage.setItem('userCode', userCode);
+      localStorage.setItem('userToken', userToken);
+
+      setTimeout(() => {
+      }, 1500);
+    
+  }
+
+
+
+    $('#logo').text('Perfis');
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -30,7 +54,7 @@ angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $
                 }
 
                 if($rootScope.global.permission.profile != 1){
-                    $state.go('agenda');
+                    $state.go('agenda', {param: localStorage.getItem('param')});
                 }
 
                 
@@ -206,7 +230,10 @@ angularApp.controller('listProfilesCtrl', function($scope, profilesAPIService, $
                         $('.tooltipped').tooltip({delay: 50});
                         
                         $scope.editProfile = function() {
-                            $state.go('insertProfiles/:id', { id: data.idProfile });
+                            $state.go('insertProfilesEdit', {
+                                param:localStorage.getItem('param'), 
+                                id: data.idProfile 
+                            });
                         };
                         
                         $scope.deleteProfile = function() {

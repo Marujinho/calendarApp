@@ -3,6 +3,10 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function (responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -30,7 +34,7 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                 }
 
                 if ($rootScope.global.permission.project != 1) {
-                    $state.go('agenda');
+                    $state.go('agenda', {param: localStorage.getItem('param')});
                 }
 
                 function formatMoney(val){
@@ -194,7 +198,7 @@ angularApp.controller('insertProjectsCtrl', function ($scope, projectsAPIService
                         Materialize.toast('Projeto cadastrado!', 1500, 'toast-container');
                         // $state.reload('listProjects');
                         // console.log(JSON.stringify($scope.project));
-                        $state.go('listProjects');
+                        $state.go('listProjects', {param: localStorage.getItem('param')});
                     });
                 };
 

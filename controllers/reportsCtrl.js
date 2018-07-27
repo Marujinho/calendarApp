@@ -1,8 +1,30 @@
-angularApp.controller('reportsCtrl', function($scope, $timeout, $rootScope, appointmentAPIService, customersAPIService, usersAPIService, expenseTypeOpenAPIService, $state) {
+angularApp.controller('reportsCtrl', function($scope, $stateParams, $timeout, $rootScope, appointmentAPIService, customersAPIService, usersAPIService, expenseTypeOpenAPIService, $state) {
     
     //necessario para remover o search customizado
-    $.fn.dataTable.ext.search.splice(0, 2);
+    // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
+    if(localStorage.getItem("userCode") === null){
+  
+      var hash = $scope.param.param.split('Y2lqZXZqZWRvYnJh'); 
+      var hashCode = hash[0];
+      var hashToken = hash[1].replace('cGVyYXdhdGFua2Vsb21wb2twcm9wZXJ0aWl2Mg','');
+
+      var userCode = atob(hashCode);
+      var userToken = atob(hashToken);
+
+      localStorage.setItem('userCode', userCode);
+      localStorage.setItem('userToken', userToken);
+
+      setTimeout(() => {
+      }, 1500);
+    
+  }
+
+
     usersAPIService.login(WCMAPI.userCode).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {

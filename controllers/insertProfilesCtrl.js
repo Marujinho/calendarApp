@@ -3,6 +3,10 @@ angularApp.controller('insertProfilesCtrl', function($scope, profilesAPIService,
     //necessario para remover o search customizado
     // $.fn.dataTable.ext.search.splice(0, 2);
     //---
+
+    $scope.param = $stateParams;
+    $rootScope.theParam = localStorage.getItem('param');
+
     usersAPIService.login(localStorage.getItem('userCode')).then(
         function(responseUser) {
             if (responseUser.data[0] == "" || responseUser.data[0] == null) {
@@ -30,7 +34,7 @@ angularApp.controller('insertProfilesCtrl', function($scope, profilesAPIService,
                 }
     
                 if($rootScope.global.permission.profile != 1){
-                    $state.go('agenda');
+                    $state.go('agenda', {param: localStorage.getItem('param')});
                 }
 
                 $rootScope.local = "";  
@@ -73,7 +77,7 @@ angularApp.controller('insertProfilesCtrl', function($scope, profilesAPIService,
                     $scope.profile.token = $scope.token;
                     profilesAPIService.saveProfile($scope.profile).then(function() {
                         Materialize.toast('Perfil cadastrado!', 1500, 'toast-container');
-                        $state.reload('listProfiles')
+                        $state.go('listProfiles', {param: localStorage.getItem('param')})
                     });
                 };
             }

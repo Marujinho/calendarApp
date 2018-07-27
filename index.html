@@ -86,8 +86,6 @@
         <script src="lib/fullcalendar/js/fullcalendar.min.js"></script>
         <script src="lib/fullcalendar/js/pt-br.js"></script>
 
-
-
         <!-- appJs -->
         <!-- controllers -->
         <!-- agenda -->
@@ -147,13 +145,13 @@
 		<div class="navbar-fixed">
             <nav class="cyan accent-4">
                 <a class="brand-logo" id="logo">{{titulo}}</a>
-                
+               
                 <p data-activates="slide-out" id="menu" class="button-collapse" style="position: absolute; top: 15px; color: #fff !important;">
                     <i class="material-icons" style="height: 25px; line-height: 25px;">menu</i>
                 </p>
                 <ul id="slide-out" class="side-nav"  style="z-index: 9999999;">
                     <li>
-                        <a ui-sref="agenda">
+                        <a ui-sref="agenda({param: '{{theParam}}' })">
                             <i class="material-icons medium">date_range</i> Agenda
                         </a>
                     </li>
@@ -161,37 +159,37 @@
                         <div class="divider"></div>
                     </li>
                     <li>
-                        <a class="waves-effect" ui-sref="listAppointment" data-ng-if="global.permission.appointment == 1">
+                        <a class="waves-effect" ui-sref="listAppointment({param: '{{theParam}}'})" data-ng-if="global.permission.appointment == 1">
                             <i class="material-icons medium">touch_app</i>Apontamentos
                         </a>
                     </li>
                     <li data-ng-if="global.permission.customer == 1">
-                        <a class="waves-effect" ui-sref="listCustomers">
+                        <a class="waves-effect" ui-sref="listCustomers({param: '{{theParam}}'})">
                             <i class="material-icons medium">business</i>Clientes
                         </a>
                     </li>
                     <li data-ng-if="global.permission.project == 1">
-                        <a class="waves-effect" ui-sref="listProjects">
+                        <a class="waves-effect" ui-sref="listProjects({param: '{{theParam}}'})">
                             <i class="material-icons medium">assignment</i>Projetos
                         </a>
                     </li>
                     <li data-ng-if="global.permission.profile == 1">
-                        <a class="waves-effect" ui-sref="listProfiles">
+                        <a class="waves-effect" ui-sref="listProfiles({param: '{{theParam}}' })">
                             <i class="material-icons medium">supervisor_account</i>Perfis
                         </a>
                     </li>
                     <!-- <li data-ng-if="global.permission.user == 1">
-                        <a class="waves-effect" ui-sref="listUsers">
+                        <a class="waves-effect" ui-sref="listUsers(param: '{{param}}')">
                             <i class="material-icons medium">person</i>Usuários
                         </a>
                     </li> -->
                     <li data-ng-if="global.permission.closure == 1" >
-                        <a class="waves-effect" ui-sref="closingDate">
+                        <a class="waves-effect" ui-sref="closingDate({param: '{{theParam}}' })">
                             <i class="material-icons medium">code</i>Data de Corte
                         </a>
                     </li>
                     <!-- <li data-ng-if="global.permission.report  == 1">
-                        <a class="waves-effect" ui-sref="reports">
+                        <a class="waves-effect" ui-sref="reports(param: '{{param}}')">
                             <i class="material-icons medium">receipt</i>Relatórios
                         </a>
                     </li> -->
