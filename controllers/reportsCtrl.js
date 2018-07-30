@@ -284,7 +284,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                     var despesa = 0.00;
                                     if (row.workplace.toString() == "2") {
                                         if (row.expenseType.toString() == "1") {
-                                            var despesa = 'R$ ' + row.expense.replaceAll(".", ",");
+                                            var despesa = 'R$ ' + row.expense.toString().replaceAll(".", ",");
                                         } else {
                                             $.each(row.appointmentExpense, function (key, obj) {
                                                 despesa += parseFloat(obj.cost);
