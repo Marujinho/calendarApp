@@ -196,7 +196,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                         }
                                     })
 
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
