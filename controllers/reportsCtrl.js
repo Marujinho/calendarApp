@@ -38,13 +38,13 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                 });
                 $('ul.tabs').tabs('select_tab', 'divApontamentos');
 
-                // function formatReal(intvariavel) {
-                //     var tmp = int + '';
-                //     tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
-                //     if (tmp.length > 6)
-                //         tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
-                //     return tmp;
-                // }
+                function formatReal(intvariavel) {
+                    var tmp = int + '';
+                    tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+                    if (tmp.length > 6)
+                        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+                    return tmp;
+                }
 
                 function diffHoras(hora1, hora2, intervalo) {
                     var data1Quebrada = hora1.split(":");
