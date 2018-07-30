@@ -209,7 +209,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             valorFinal += parseFloat(obj.cost);
                                         }
                                     })
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
@@ -222,7 +222,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             valorFinal += parseFloat(obj.cost);
                                         }
                                     })
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
@@ -235,7 +235,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             valorFinal += parseFloat(obj.cost);
                                         }
                                     })
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
@@ -248,7 +248,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             valorFinal += parseFloat(obj.cost);
                                         }
                                     })
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
@@ -261,7 +261,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             valorFinal += parseFloat(obj.cost);
                                         }
                                     })
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
@@ -274,7 +274,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             valorFinal += parseFloat(obj.cost);
                                         }
                                     })
-                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replaceAll(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
+                                    return valorFinal.toString().split(".").length > 1 ? 'R$ ' + valorFinal.toString().replace(".", ",") : 'R$ ' + valorFinal.toString() + ',00';
                                 },
                                 className: "total"
                             },
@@ -289,7 +289,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             $.each(row.appointmentExpense, function (key, obj) {
                                                 despesa += parseFloat(obj.cost);
                                             })
-                                            despesa = despesa.toString().split(".").length > 1 ? 'R$ ' + despesa.toString().replaceAll(".", ",") : 'R$ ' + despesa.toString() + ',00';
+                                            despesa = despesa.toString().split(".").length > 1 ? 'R$ ' + despesa.toString().replace(".", ",") : 'R$ ' + despesa.toString() + ',00';
                                         }
                                     } else {
                                         var despesa = "R$ 0,00";
@@ -403,11 +403,11 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             return totalResultado;
                                         } else {
 
-                                            var x = parseFloat(total.toString().replaceAll('R$ ', '').replaceAll('.', '').replaceAll(',', '.'));
-                                            var y = parseFloat(item.toString().replaceAll('R$ ', '').replaceAll('.', '').replaceAll(',', '.'));
+                                            var x = parseFloat(total.toString().replace('R$ ', '').replace('.', '').replace(',', '.'));
+                                            var y = parseFloat(item.toString().replace('R$ ', '').replace('.', '').replace(',', '.'));
 
                                             var soma = x + y;
-                                            return 'R$ ' + soma.formatarMoney(2, ',', '.').replaceAll('R$ ', '');
+                                            return 'R$ ' + soma.formatarMoney(2, ',', '.').replace('R$ ', '');
 
                                         }
                                     }, 0);
@@ -502,31 +502,31 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
 
                                             if (valores.expenseOpenTypeId.idExpenseOpenType == "1") {
                                                 km = valores.cost;
-                                                totalKM += parseInt(km.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalKM += parseInt(km.toString().replace('.', '').replace(',', ''));
 
                                             } else if (valores.expenseOpenTypeId.idExpenseOpenType == "2") {
                                                 estacionamento = valores.cost;
-                                                totalEstacionamento += parseInt(estacionamento.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalEstacionamento += parseInt(estacionamento.toString().replace('.', '').replace(',', ''));
 
                                             } else if (valores.expenseOpenTypeId.idExpenseOpenType == "3") {
                                                 refeicao = valores.cost;
-                                                totalRefeicao += parseInt(refeicao.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalRefeicao += parseInt(refeicao.toString().replace('.', '').replace(',', ''));
 
                                             } else if (valores.expenseOpenTypeId.idExpenseOpenType == "4") {
                                                 pedagio = valores.cost;
-                                                totalPedagio += parseInt(pedagio.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalPedagio += parseInt(pedagio.toString().replace('.', '').replace(',', ''));
 
                                             } else if (valores.expenseOpenTypeId.idExpenseOpenType == "5") {
                                                 hospedagem = valores.cost;
-                                                totaloHospedagem += parseInt(hospedagem.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totaloHospedagem += parseInt(hospedagem.toString().replace('.', '').replace(',', ''));
 
                                             } else if (valores.expenseOpenTypeId.idExpenseOpenType == "6") {
                                                 taxi = valores.cost;
-                                                totalTaxi += parseInt(taxi.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalTaxi += parseInt(taxi.toString().replace('.', '').replace(',', ''));
 
                                             } else if (valores.expenseOpenTypeId.idExpenseOpenType == "7") {
                                                 outros = valores.cost;
-                                                totalOutros += parseInt(outros.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalOutros += parseInt(outros.toString().replace('.', '').replace(',', ''));
                                             } else {
 
                                                 km = 0.00;
@@ -537,13 +537,13 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                                 taxi = 0.00;
                                                 outros = 0.00;
                                                 //incremento para calculo
-                                                totalKM += parseInt(km.toString().replaceAll('.', '').replaceAll(',', ''));
-                                                totalEstacionamento += parseInt(estacionamento.toString().replaceAll('.', '').replaceAll(',', ''));
-                                                totalRefeicao += parseInt(refeicao.toString().replaceAll('.', '').replaceAll(',', ''));
-                                                totalPedagio += parseInt(pedagio.toString().replaceAll('.', '').replaceAll(',', ''));
-                                                totaloHospedagem += parseInt(hospedagem.toString().replaceAll('.', '').replaceAll(',', ''));
-                                                totalTaxi += parseInt(taxi.toString().replaceAll('.', '').replaceAll(',', ''));
-                                                totalOutros += parseInt(outros.toString().replaceAll('.', '').replaceAll(',', ''));
+                                                totalKM += parseInt(km.toString().replace('.', '').replace(',', ''));
+                                                totalEstacionamento += parseInt(estacionamento.toString().replace('.', '').replace(',', ''));
+                                                totalRefeicao += parseInt(refeicao.toString().replace('.', '').replace(',', ''));
+                                                totalPedagio += parseInt(pedagio.toString().replace('.', '').replace(',', ''));
+                                                totaloHospedagem += parseInt(hospedagem.toString().replace('.', '').replace(',', ''));
+                                                totalTaxi += parseInt(taxi.toString().replace('.', '').replace(',', ''));
+                                                totalOutros += parseInt(outros.toString().replace('.', '').replace(',', ''));
 
                                             }
                                         });
@@ -557,23 +557,23 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                         taxi = 0.00;
                                         outros = 0.00;
                                         //incremento para calculo
-                                        totalKM += parseInt(km.toString().replaceAll('.', '').replaceAll(',', ''));
-                                        totalEstacionamento += parseInt(estacionamento.toString().replaceAll('.', '').replaceAll(',', ''));
-                                        totalRefeicao += parseInt(refeicao.toString().replaceAll('.', '').replaceAll(',', ''));
-                                        totalPedagio += parseInt(pedagio.toString().replaceAll('.', '').replaceAll(',', ''));
-                                        totaloHospedagem += parseInt(hospedagem.toString().replaceAll('.', '').replaceAll(',', ''));
-                                        totalTaxi += parseInt(taxi.toString().replaceAll('.', '').replaceAll(',', ''));
-                                        totalOutros += parseInt(outros.toString().replaceAll('.', '').replaceAll(',', ''));
+                                        totalKM += parseInt(km.toString().replace('.', '').replace(',', ''));
+                                        totalEstacionamento += parseInt(estacionamento.toString().replace('.', '').replace(',', ''));
+                                        totalRefeicao += parseInt(refeicao.toString().replace('.', '').replace(',', ''));
+                                        totalPedagio += parseInt(pedagio.toString().replace('.', '').replace(',', ''));
+                                        totaloHospedagem += parseInt(hospedagem.toString().replace('.', '').replace(',', ''));
+                                        totalTaxi += parseInt(taxi.toString().replace('.', '').replace(',', ''));
+                                        totalOutros += parseInt(outros.toString().replace('.', '').replace(',', ''));
                                     }
 
                                     //preparando para imputar maskara
-                                    var kmFormatadao = parseInt(km.toString().replaceAll('.', '').replaceAll(',', ''));
-                                    var estacionamentoFormatado = parseInt(estacionamento.toString().replaceAll('.', '').replaceAll(',', ''));
-                                    var refeicaoFormatado = parseInt(refeicao.toString().replaceAll('.', '').replaceAll(',', ''));
-                                    var pedagioFormatado = parseInt(pedagio.toString().replaceAll('.', '').replaceAll(',', ''));
-                                    var hospedagemFormatado = parseInt(hospedagem.toString().replaceAll('.', '').replaceAll(',', ''));
-                                    var taxiFormatado = parseInt(taxi.toString().replaceAll('.', '').replaceAll(',', ''));
-                                    var outrosFormatado = parseInt(outros.toString().replaceAll('.', '').replaceAll(',', ''));
+                                    var kmFormatadao = parseInt(km.toString().replace('.', '').replace(',', ''));
+                                    var estacionamentoFormatado = parseInt(estacionamento.toString().replace('.', '').replace(',', ''));
+                                    var refeicaoFormatado = parseInt(refeicao.toString().replace('.', '').replace(',', ''));
+                                    var pedagioFormatado = parseInt(pedagio.toString().replace('.', '').replace(',', ''));
+                                    var hospedagemFormatado = parseInt(hospedagem.toString().replace('.', '').replace(',', ''));
+                                    var taxiFormatado = parseInt(taxi.toString().replace('.', '').replace(',', ''));
+                                    var outrosFormatado = parseInt(outros.toString().replace('.', '').replace(',', ''));
                                     //fim
                                     relatorioHTML += '            <td>R$ ' + formatReal(kmFormatadao) + '</td>';
                                     relatorioHTML += '            <td>R$ ' + formatReal(estacionamentoFormatado) + '</td>';
@@ -587,7 +587,7 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                     if (val.workplace.toString() == "2") {
                                         if (val.expenseType.toString() == "1") {
                                             // se tiver despesa fixa entrará aquiva
-                                            var valExpense = val.expense.replaceAll('.', '');
+                                            var valExpense = val.expense.replace('.', '');
                                             parseInt(valExpense);
                                             despesa = valExpense;
                                         } else {
@@ -595,12 +595,12 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                             $.each(val.appointmentExpense, function (key, obj) {
                                                 despesa += parseFloat(obj.cost);
                                             });
-                                            despesa = despesa.toFixed(2).toString().replaceAll(".", "").length > 1 ? despesa.toFixed(2).toString().replaceAll(".", "") : despesa.toFixed(2).toString();
+                                            despesa = despesa.toFixed(2).toString().replace(".", "").length > 1 ? despesa.toFixed(2).toString().replace(".", "") : despesa.toFixed(2).toString();
                                         }
                                     } else {
                                         despesa = 000;
                                     }
-                                    totalDespesa += parseInt(despesa.toString().replaceAll('.', '').replaceAll(',', ''));
+                                    totalDespesa += parseInt(despesa.toString().replace('.', '').replace(',', ''));
 
                                     // final calculo despesas
                                     relatorioHTML += '            <td>R$ ' + formatReal(despesa) + '</td>';
@@ -772,20 +772,20 @@ angularApp.controller('reportsCtrl', function ($scope, $rootScope, appointmentAP
                                     calculoTotalGP += totalGP[j];
                                 }
                                 //total só consultor///
-                                var totalHRSEMGPFormat = 'R$ ' + totalConsultorValor.formatarMoney(2, ',', '.').replaceAll('R$ ', '');
+                                var totalHRSEMGPFormat = 'R$ ' + totalConsultorValor.formatarMoney(2, ',', '.').replace('R$ ', '');
                                 //só GP
-                                var formatGPTotal = 'R$ ' + calculoTotalGP.formatarMoney(2, ',', '.').replaceAll('R$ ', '');
+                                var formatGPTotal = 'R$ ' + calculoTotalGP.formatarMoney(2, ',', '.').replace('R$ ', '');
                                 //consultor+gp
                                 totaisHRMaisGP = parseFloat(totalConsultorValor) + parseFloat(calculoTotalGP);
-                                var consultorMAISGPFormat = 'R$ ' + totaisHRMaisGP.formatarMoney(2, ',', '.').replaceAll('R$ ', '');
+                                var consultorMAISGPFormat = 'R$ ' + totaisHRMaisGP.formatarMoney(2, ',', '.').replace('R$ ', '');
                                 //////gp+consultor com impostos
                                 var totaisHRMaisGPIMPOSTOS = totaisHRMaisGP / tributo;
-                                var totalcomImpostoFormat = 'R$ ' + totaisHRMaisGPIMPOSTOS.formatarMoney(2, ',', '.').replaceAll('R$ ', '');
+                                var totalcomImpostoFormat = 'R$ ' + totaisHRMaisGPIMPOSTOS.formatarMoney(2, ',', '.').replace('R$ ', '');
                                 ////passando format para despesa e imposto
                                 var converterDespesa = totalDespesa;
                                 var despesaNAOFormat = parseInt(converterDespesa);
                                 var despesaIMPOSTO = despesaNAOFormat / tributo;
-                                var despesaImpostoFormat = 'R$ ' + despesaIMPOSTO.formatarMoney(2, ',', '.').replaceAll('R$ ', '');
+                                var despesaImpostoFormat = 'R$ ' + despesaIMPOSTO.formatarMoney(2, ',', '.').replace('R$ ', '');
 
                                 relatorioHTML += '           <th>' + hrTotal + '</th>';
                                 relatorioHTML += '           <th>' + totalHRSEMGPFormat + '</th>';
