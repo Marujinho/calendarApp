@@ -49,6 +49,19 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         });
     };
 
+
+    var _getFromRangeDateListReport = function(initialDate, lastDate){
+        return $http({
+            method: 'POST',
+            url: $rootScope.global.link + '/appointment/getfromrangedatelistreport',
+            data:{
+                initialDate: initialDate,
+                lastDate: lastDate,
+                token: localStorage.getItem('userToken')
+            }
+        });
+    };
+
     let _update = function(appointment) {
         appointment.login = $rootScope.global.idUser;
         return $http({
@@ -229,6 +242,7 @@ angularApp.service('appointmentAPIService', function($http, $rootScope) {
         getFromRangeDate: _getFromRangeDate,
         getallAgenda: _getallAgenda,
         getListAppointment: _getListAppointment,
-        getListByUser: _getListByUser
+        getListByUser: _getListByUser,
+        getFromRangeDateListReport: _getFromRangeDateListReport
     }
 });
