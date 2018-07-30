@@ -1,6 +1,6 @@
 if('serviceWorker' in navigator) {
     navigator
-        .serviceWorker.register('./service-worker.js', {scope: '/release/'})
+        .serviceWorker.register('./service-worker.js', {scope: '/calendarApp/'})
         .then(function(registration) {
            
             console.log(' new Service Worker Registered: ', registration);
